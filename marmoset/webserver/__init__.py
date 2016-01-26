@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 from flask.ext import restful
 from .flask import auth
+import json
 
 API_VERSION = '1'
 config = None
@@ -40,6 +41,17 @@ def app(config):
         api.add_resource(installimage.InstallimageCollection, '/installimage')
         api.add_resource(installimage.InstallimageObject, '/installimage/<mac>')
         api.add_resource(installimage.InstallimageConfigCommand, '/installimage/<mac>/config')
+
+    if config['Modules'].getboolean('DHCP'):
+        from . import dhcp
+
+        additional_statements_str = config['DHCPConfig'].get('additional_statements')
+        additional_statements = additional_statements_str.split(',')
+        dhcp.build_parameters(additional_statements)
+
+        api.add_resource(dhcp.DhcpCollection, '/dhcp')
+        api.add_resource(dhcp.DhcpIpv4Object, '/dhcp/ipv4/<ipv4>')
+        api.add_resource(dhcp.DhcpMacObject, '/dhcp/mac/<mac>')
 
     @app.errorhandler(404)
     def not_found(ex):

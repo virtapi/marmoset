@@ -3,13 +3,35 @@ from flask.ext.restful import reqparse, Resource, url_for, abort
 from werkzeug.exceptions import NotFound
 from .. import dhcp
 
+parser = None
+
+
+def build_parameters(additional_statements):
+    global parser
+
+    parser = reqparse.RequestParser()
+    parser.add_argument('mac', type=str, required=True)
+    parser.add_argument('ip_address', type=str, required=True)
+    parser.add_argument('gateway', type=str, required=True)
+    parser.add_argument('dhcp_hostname', type=str, required=True)
+
+    for additional_statement in additional_statements:
+        parser.add_argument(additional_statement, type=str, required=False)
+
 
 class DhcpCollection(Resource):
     def get(self):
         return [vars(c) for c in dhcp.DhcpConfig]
 
     def post(self):
-        pass
+        args = parser.parse_args()
+        dhcp_config = dhcp.DhcpConfig(args.mac, args.ip_address, args.gateway, args.dhcp_hostname)
+
+        for args_item in parser.args:
+            if not args_item.required and args_item.name in args and args[args_item.name] is not None:
+                dhcp_config.add_additional_statement(args_item.name, args[args_item.name])
+
+        dhcp_config.create_isc_ldap()
 
 
 class DhcpIpv4Object(Resource):
