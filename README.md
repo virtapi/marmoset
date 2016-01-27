@@ -16,6 +16,7 @@ Monkeying around with virtual machines and pxe configs.
     - [HTTP PXE](#http-pxe)
     - [HTTP VM](#http-vm)
     - [HTTP installimage](#http-installimage)
+    - [HTTP DHCP](#http-dhcp)
 + [Issues](#issues)
 + [Copyright](#copyright)
 + [Name origin](#name-origin)
@@ -24,9 +25,25 @@ Monkeying around with virtual machines and pxe configs.
 
 ## Setup
 
-Create `marmoset.conf` before using marmoset! See `Configuration` for details.
+Clone the repo, for example into /opt. Than copy the service file into the systemd directory and reload systemd to recognize the file:
+```bash
+cd /opt
+git clone https://github.com/virtapi/marmoset.git
+cd marmoset
+cp ext/marmoset.service /usr/lib/systemd/system/
+systemctl daemon-reload
+```
 Copy the `marmoset.conf.example` to `marmoset.conf` and adjust the settings to your needs.
 Checkout the Comments in the file our our [Configuration](#configuration) section.
+
+Now we need to setup a virtualenv and install the requirement python packages (remove libvirt from the requirements.txt and `pkg-config libvirt gcc` from the list of packages to install if you don't want to manage VMs with marmoset):
+```bash
+pacman -Syu python-virtualenv pkg-config libvirt gcc
+virtualenv prod
+source prod/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
 
 ---
 
@@ -478,6 +495,9 @@ Errormessage if you want to delete or list a nonexistent entry:
     "message": "The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again. You have requested this URI [/v1/installimage/b8:ac:6f:97:7e:77] but did you mean /v1/installimage/<mac> or /v1/installimage/<mac>/config or /v1/installimage ?"
 }
 ```
+
+### HTTP DHCP
+This endpoint allows us the throw static IP/MAC combinations into an openldap database. This database is connected to an isc-dhcpd. We can identify an object by its IP or MAC address.
 
 ---
 
