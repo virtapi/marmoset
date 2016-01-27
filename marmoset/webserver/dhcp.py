@@ -15,7 +15,6 @@ def build_parameters(additional_statements):
     parser.add_argument('ip_address', type=str, required=True)
     parser.add_argument('gateway', type=str, required=False, default=None)
     parser.add_argument('networkmask', type=str, required=False, default=None)
-    parser.add_argument('dhcp_hostname', type=str, required=True)
 
     for additional_statement in additional_statements:
         parser.add_argument(additional_statement, type=str, required=False)
