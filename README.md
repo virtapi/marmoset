@@ -499,6 +499,55 @@ Errormessage if you want to delete or list a nonexistent entry:
 ### HTTP DHCP
 This endpoint allows us the throw static IP/MAC combinations into an openldap database. This database is connected to an isc-dhcpd. We can identify an object by its IP or MAC address.
 
+#### List Entries
+		curl -u admin:secret  http://localhost:5000/v1/dhcp
+```json
+[
+    {
+        "additional_statements": {},
+        "dhcp_hostname": "odin.fritz.box",
+        "gateway": "option routers 192.168.10.1",
+        "ip_address": "192.168.10.5",
+        "mac": "00:00:00:00:00:00",
+        "networkmask": "option subnet-mask 255.255.255.0"
+    },
+    {
+        "additional_statements": {},
+        "dhcp_hostname": "odin.fritz.box",
+        "gateway": "option routers 10.3.7.1",
+        "ip_address": "10.3.7.41",
+        "mac": "00:00:00:00:00:00",
+        "networkmask": "option subnet-mask 255.255.255.0"
+    }
+]
+```
+
+#### List One Entry based on MAC
+		curl -u admin:secret  http://localhost:5000/v1/dhcp/mac/00:00:00:00:00:00
+```json
+{
+		"additional_statements": {},
+		"dhcp_hostname": "odin.fritz.box",
+		"gateway": "option routers 10.3.7.1",
+		"ip_address": "10.3.7.41",
+		"mac": "00:00:00:00:00:00",
+		"networkmask": "option subnet-mask 255.255.255.0"
+}
+```
+
+#### List one Entry based on IP
+		curl -u admin:secret  http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
+```json
+{
+		"additional_statements": {},
+		"dhcp_hostname": "odin.fritz.box",
+		"gateway": "option routers 10.3.7.1",
+		"ip_address": "10.3.7.41",
+		"mac": "00:00:00:00:00:00",
+		"networkmask": "option subnet-mask 255.255.255.0"
+}
+```
+
 ---
 
 ## Issues
