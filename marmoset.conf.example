@@ -5,7 +5,7 @@
 [Modules]
 PXE: True
 VM: True
-INSTALLIMAGE: True
+Installimage: True
 
 [Webserver]
 # Settings for HTTP Basic Auth
