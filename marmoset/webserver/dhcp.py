@@ -1,5 +1,8 @@
 from flask import request
-from flask.ext.restful import reqparse, Resource, url_for, abort
+from flask.ext.restful import reqparse
+from flask.ext.restful import Resource
+from flask.ext.restful import url_for
+from flask.ext.restful import abort
 from marmoset import dhcp
 
 parser = None
