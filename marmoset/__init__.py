@@ -1,4 +1,4 @@
-from . import config, cli
+from . import config, cli, validation
 
 def run(config_file = None):
     cfg = config.load(config_file)
