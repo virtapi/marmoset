@@ -2,6 +2,7 @@ from flask import request, make_response
 from flask.ext.restful import reqparse, Resource, url_for, abort
 from werkzeug.exceptions import NotFound
 from .. import dhcp
+from marmoset import validation
 
 parser = None
 
@@ -12,7 +13,8 @@ def build_parameters(additional_statements):
     parser = reqparse.RequestParser()
     parser.add_argument('mac', type=str, required=True)
     parser.add_argument('ip_address', type=str, required=True)
-    parser.add_argument('gateway', type=str, required=True)
+    parser.add_argument('gateway', type=str, required=False, default=None)
+    parser.add_argument('networkmask', type=str, required=False, default=None)
     parser.add_argument('dhcp_hostname', type=str, required=True)
 
     for additional_statement in additional_statements:
@@ -25,7 +27,8 @@ class DhcpCollection(Resource):
 
     def post(self):
         args = parser.parse_args()
-        dhcp_config = dhcp.DhcpConfig(args.mac, args.ip_address, args.gateway, args.dhcp_hostname)
+
+        dhcp_config = dhcp.DhcpConfig(args.mac, args.ip_address, args.gateway, args.networkmask)
 
         for args_item in parser.args:
             if not args_item.required and args_item.name in args and args[args_item.name] is not None:
