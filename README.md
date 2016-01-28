@@ -145,10 +145,11 @@ Start it like this:
 
     $ ./marmoset.py server
 
-Or copy our systemd service file from ext/ to /etc/systemd/system/, run `systemctl daemon-reload` and start the service:
+Or use our systemd service:
+
     $ systemctl start marmoset
 
-A third solution is to use nginx + uwsgi to power the app.
+A third solution is to use nginx + uwsgi to power the app. This is the recommended way if you expect a high amount of requests.
 
 ### HTTP PXE
 
