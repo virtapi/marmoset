@@ -36,7 +36,7 @@ systemctl daemon-reload
 Copy the `marmoset.conf.example` to `marmoset.conf` and adjust the settings to your needs.
 Checkout the Comments in the file our our [Configuration](#configuration) section.
 
-Now we need to setup a virtualenv and install the requirement python packages (remove libvirt from the requirements.txt and `pkg-config libvirt gcc` from the list of packages to install if you don't want to manage VMs with marmoset):
+Now we need to setup a virtualenv and install the required python packages (remove libvirt from the requirements.txt and `pkg-config libvirt gcc` from the list of packages to install if you don't want to manage VMs with marmoset):
 ```bash
 pacman -Syu python-virtualenv pkg-config libvirt gcc
 virtualenv prod
