@@ -30,7 +30,7 @@ Clone the repo, for example into /opt. Than copy the service file into the syste
 cd /opt
 git clone https://github.com/virtapi/marmoset.git
 cd marmoset
-cp ext/marmoset.service /usr/lib/systemd/system/
+cp ext/marmoset.service /etc/systemd/system/
 systemctl daemon-reload
 ```
 Copy the `marmoset.conf.example` to `marmoset.conf` and adjust the settings to your needs.
@@ -145,9 +145,10 @@ Start it like this:
 
     $ ./marmoset.py server
 
-Or with gunicorn:
+Or copy our systemd service file from ext/ to /etc/systemd/system/, run `systemctl daemon-reload` and start the service:
+    $ systemctl start marmoset
 
-    $ gunicorn marmoset.app:app
+A third solution is to use nginx + uwsgi to power the app.
 
 ### HTTP PXE
 
