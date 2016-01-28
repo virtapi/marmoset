@@ -35,11 +35,11 @@ Network:
 # storage name is given.
 Storage:
 
-# this gets used for storing PXE options
+# this will be used for storing PXE options
 [PXEConfig]
 ConfigDirectory: /srv/tftp/pxelinux.cfg/
 
-# this gets used for storing installimage options
+# this will be used for storing installimage options
 [Config]
 ConfigDirectory: /srv/tftp/config/
 # The PXELabel section has no defaults, as its entries depend on
