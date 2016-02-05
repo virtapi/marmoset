@@ -45,10 +45,6 @@ def app(config):
     if config['Modules'].getboolean('DHCP'):
         from . import dhcp
 
-        additional_statements_str = config['DHCPConfig'].get('additional_statements')
-        additional_statements = additional_statements_str.split(',')
-        dhcp.build_parameters(additional_statements)
-
         api.add_resource(dhcp.DhcpCollection, '/dhcp')
         api.add_resource(dhcp.DhcpIpv4Object, '/dhcp/ipv4/<ipv4>')
         api.add_resource(dhcp.DhcpMacObject, '/dhcp/mac/<mac>')
