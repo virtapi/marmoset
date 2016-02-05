@@ -24,6 +24,9 @@ def is_ipv6(ip):
 
 def is_cidr(cidr):
     try:
+        if "/" not in cidr:
+            return False
+
         ipaddress.IPv4Interface(cidr)
     except:
         return False
