@@ -1,0 +1,25 @@
+---
+sudo: required
+dist: trusty
+language: python
+python:
+  - "3.3"
+before_install:
+  - sudo apt-get update -q
+  - sudo apt-get -y install libvirt-bin libvirt-dev
+install:
+  - pip install tox
+script: tox -e testxunit
+env:
+  matrix:
+    - TOXENV=py33
+    - TOXENV=py34
+    - TOXENV=py35
+    - TOXENV=pypy3
+notifications:
+  irc:
+    on_success: change
+    on_failure: always
+    channels:
+      - "irc.freenode.org#virtapi"
+  email: false
