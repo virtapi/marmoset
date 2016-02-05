@@ -15,13 +15,13 @@ class DhcpConfig:
 
         self.set_settings(True, mac, ip_address, gateway, networkmask)
 
-    def set_settings(self, set_not_required_if_none=False, mac=None, ip_address=None, gateway=None, networkmask=None):
+    def set_settings(self, allow_none_value_for_not_required_parameter=False, mac=None, ip_address=None, gateway=None, networkmask=None):
         self.mac = mac
 
-        if gateway is not None or set_not_required_if_none:
+        if gateway is not None or allow_none_value_for_not_required_parameter:
             self.gateway = gateway
 
-        if networkmask is not None or set_not_required_if_none:
+        if networkmask is not None or allow_none_value_for_not_required_parameter:
             self.networkmask = networkmask
 
         if validation.is_cidr(ip_address):
