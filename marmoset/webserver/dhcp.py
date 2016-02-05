@@ -5,6 +5,7 @@ from flask.ext.restful import url_for
 from flask.ext.restful import abort
 from marmoset import dhcp
 from marmoset import config as config_reader
+from marmoset import validation
 
 config = config_reader.load()
 
@@ -27,6 +28,9 @@ class DhcpCollection(Resource):
 
     def post(self):
         args = parser.parse_args()
+
+        if (args.gateway is None or args.networkmask is None) and not validation.is_cidr(args.ip_address):
+            return 'missing parameter gateway and networkmask or give an ip address in CIDR notation', 406
 
         dhcp_config = dhcp.DhcpConfig(args.mac, args.ip_address, args.gateway, args.networkmask)
 
