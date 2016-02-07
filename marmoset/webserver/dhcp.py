@@ -41,7 +41,8 @@ class DhcpCollection(Resource):
         dhcp_config = dhcp.DhcpConfig(args.mac, args.ip_address, args.gateway, args.networkmask)
 
         for args_item in parser.args:
-            if not args_item.required and args_item.name in args and args[args_item.name] is not None and args_item.name is not 'gateway' and args_item.name is not 'networkmask':
+            if not args_item.required and args_item.name in args and args[args_item.name] is not None and \
+                            args_item.name is not 'gateway' and args_item.name is not 'networkmask':
                 dhcp_config.add_additional_statement(args_item.name, args[args_item.name])
 
         dhcp_config.create_isc_ldap()
@@ -76,7 +77,8 @@ class DhcpIpv4Object(Resource):
         dhcp_config.set_settings(False, args.mac, args.ip_address, args.gateway, args.networkmask)
 
         for args_item in parser.args:
-            if not args_item.required and args_item.name in args and args[args_item.name] is not None and args_item.name is not 'gateway' and args_item.name is not 'networkmask':
+            if not args_item.required and args_item.name in args and args[args_item.name] is not None and \
+                            args_item.name is not 'gateway' and args_item.name is not 'networkmask':
                 dhcp_config.add_additional_statement(args_item.name, args[args_item.name])
 
         dhcp_config.remove()
@@ -125,7 +127,8 @@ class DhcpMacObject(Resource):
         dhcp_config.set_settings(False, args.mac, args.ip_address, args.gateway, args.networkmask)
 
         for args_item in parser.args:
-            if not args_item.required and args_item.name in args and args[args_item.name] is not None and args_item.name is not 'gateway' and args_item.name is not 'networkmask':
+            if not args_item.required and args_item.name in args and args[args_item.name] is not None and \
+                            args_item.name is not 'gateway' and args_item.name is not 'networkmask':
                 dhcp_config.add_additional_statement(args_item.name, args[args_item.name])
 
         dhcp_config.remove()
