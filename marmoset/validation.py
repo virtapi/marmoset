@@ -3,7 +3,7 @@ import re
 
 
 def is_mac(mac):
-    return True if re.match("^([0-9a-f]{2}:){5}[0-9a-f]{2}$", mac) else False
+    return True if re.match("^([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}$", mac) else False
 
 
 def is_ipv4(ip):
