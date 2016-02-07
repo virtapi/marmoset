@@ -5,6 +5,7 @@
 [Modules]
 PXE: True
 VM: True
+Webserver: True
 Installimage: True
 DHCP: True
 
