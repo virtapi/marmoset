@@ -32,6 +32,12 @@ class DhcpCollection(Resource):
         if (args.gateway is None or args.networkmask is None) and not validation.is_cidr(args.ip_address):
             return 'missing parameter gateway and networkmask or give an ip address in CIDR notation', 406
 
+        if not validation.is_ipv4(args.ipaddress):
+            return 'please provide a valid ipv4 address', 406
+
+        if not validation.is_mac(args.mac):
+            return 'please provide a valid mac address', 406
+
         dhcp_config = dhcp.DhcpConfig(args.mac, args.ip_address, args.gateway, args.networkmask)
 
         for args_item in parser.args:
@@ -46,6 +52,9 @@ class DhcpCollection(Resource):
 
 class DhcpIpv4Object(Resource):
     def get(self, ipv4):
+        if not validation.is_ipv4(ipv4):
+            return 'please provide a valid ipv4 address', 406
+
         if not dhcp.DhcpConfig.exists_ipv4(ipv4):
             return abort(404)
 
@@ -55,6 +64,9 @@ class DhcpIpv4Object(Resource):
 
     def put(self, ipv4):
         args = parser.parse_args(request)
+
+        if not validation.is_ipv4(ipv4):
+            return 'please provide a valid ipv4 address', 406
 
         if not dhcp.DhcpConfig.exists_ipv4(ipv4):
             return abort(404)
@@ -75,6 +87,9 @@ class DhcpIpv4Object(Resource):
         return vars(dhcp_config), 201, {'Location': location}
 
     def delete(self, ipv4):
+        if not validation.is_ipv4(ipv4):
+            return 'please provide a valid ipv4 address', 406
+
         if not dhcp.DhcpConfig.exists_ipv4(ipv4):
             return abort(404)
 
@@ -86,6 +101,9 @@ class DhcpIpv4Object(Resource):
 
 class DhcpMacObject(Resource):
     def get(self, mac):
+        if not validation.is_mac(mac):
+            return 'please provide a valid mac address', 406
+
         dhcp_config = dhcp.DhcpConfig.get_by_mac(mac)
 
         if not dhcp.DhcpConfig.exists_mac(mac):
@@ -95,6 +113,9 @@ class DhcpMacObject(Resource):
 
     def put(self, mac):
         args = parser.parse_args(request)
+
+        if not validation.is_mac(mac):
+            return 'please provide a valid mac address', 406
 
         if not dhcp.DhcpConfig.exists_mac(mac):
             return abort(404)
@@ -115,6 +136,9 @@ class DhcpMacObject(Resource):
         return vars(dhcp_config), 201, {'Location': location}
 
     def delete(self, mac):
+        if not validation.is_mac(mac):
+            return 'please provide a valid mac address', 406
+
         if not dhcp.DhcpConfig.exists_mac(mac):
             return abort(404)
 
