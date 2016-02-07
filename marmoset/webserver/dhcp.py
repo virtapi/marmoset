@@ -106,10 +106,10 @@ class DhcpMacObject(Resource):
         if not validation.is_mac(mac):
             return 'please provide a valid mac address', 406
 
-        dhcp_config = dhcp.DhcpConfig.get_by_mac(mac)
-
         if not dhcp.DhcpConfig.exists_mac(mac):
             return abort(404)
+
+        dhcp_config = dhcp.DhcpConfig.get_by_mac(mac)
 
         return vars(dhcp_config)
 

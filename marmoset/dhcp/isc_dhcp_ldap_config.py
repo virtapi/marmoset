@@ -143,11 +143,21 @@ class ISCDhcpLdapConfig:
 
     @staticmethod
     def get_by_ip(ip_address):
-        return ISCDhcpLdapConfig.__get_dhcp_config(ISCDhcpLdapConfig.__get_dn_by_ipv4(ip_address))
+        dn = ISCDhcpLdapConfig.__get_dn_by_ipv4(ip_address)
+
+        if dn is None:
+            return None
+
+        return ISCDhcpLdapConfig.__get_dhcp_config(dn)
 
     @staticmethod
     def get_by_mac(mac_address):
-        return ISCDhcpLdapConfig.__get_dhcp_config(ISCDhcpLdapConfig.__get_dn_by_mac(mac_address))
+        dn = ISCDhcpLdapConfig.__get_dn_by_mac(mac_address)
+
+        if dn is None:
+            return None
+
+        return ISCDhcpLdapConfig.__get_dhcp_config(dn)
 
     @staticmethod
     def remove(ipv4):
