@@ -36,9 +36,9 @@ def is_cidr(cidr):
 def get_cidr(cidr):
     interface = ipaddress.IPv4Interface(cidr)
     gateway = list(interface.network.hosts())[0]
-    return {'ip': interface.ip,
-            'nm': interface.netmask,
-            'gw': gateway}
+    return {'ip': str(interface.ip),
+            'nm': str(interface.netmask),
+            'gw': str(gateway)}
 
 
 def get_ip_from_cidr(cidr):
