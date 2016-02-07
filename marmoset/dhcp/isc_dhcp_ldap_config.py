@@ -71,7 +71,7 @@ class ISCDhcpLdapConfig:
 
         entries = conn.response
 
-        if len(entries) == 0:
+        if entries is None or len(entries) == 0:
             return None
 
         return entries[0]['dn']
@@ -87,7 +87,7 @@ class ISCDhcpLdapConfig:
 
         entries = conn.response
 
-        if len(entries) == 0:
+        if entries is None or len(entries) == 0:
             return None
 
         return entries[0]['dn']
