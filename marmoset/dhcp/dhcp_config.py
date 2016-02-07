@@ -1,7 +1,8 @@
 from .isc_dhcp_ldap_config import ISCDhcpLdapConfig
 from marmoset import validation
-import socket
+from marmoset import config as config_reader
 
+config = config_reader.load()
 
 class DhcpConfig:
     def __init__(self, mac, ip_address, gateway=None, networkmask=None):
@@ -35,7 +36,7 @@ class DhcpConfig:
         else:
             self.ip_address = ip_address
 
-        self.dhcp_hostname = socket.getfqdn()
+        self.dhcp_hostname = config['Common'].get('FQDN')
 
     def add_additional_statement(self, key, value):
         self.additional_statements[key] = value
