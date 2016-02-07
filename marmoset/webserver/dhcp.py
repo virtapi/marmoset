@@ -32,7 +32,7 @@ class DhcpCollection(Resource):
         if (args.gateway is None or args.networkmask is None) and not validation.is_cidr(args.ip_address):
             return 'missing parameter gateway and networkmask or give an ip address in CIDR notation', 406
 
-        if not validation.is_ipv4(args.ipaddress):
+        if not validation.is_ipv4(args.ip_address) and not validation.is_cidr(args.ip_address):
             return 'please provide a valid ipv4 address', 406
 
         if not validation.is_mac(args.mac):
