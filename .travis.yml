@@ -9,7 +9,9 @@ before_install:
   - sudo apt-get -y install libvirt-bin libvirt-dev
 install:
   - pip install tox
-script: tox -e testxunit
+script:
+  - tox -e lint
+  - tox -e testxunit
 env:
   matrix:
     - TOXENV=py33
