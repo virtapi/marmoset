@@ -22,6 +22,7 @@ notifications:
   irc:
     on_success: change
     on_failure: always
+    skip_join: true
     channels:
       - "irc.freenode.org#virtapi"
   email: false
