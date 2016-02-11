@@ -390,6 +390,18 @@ ldap-debug-file "/var/log/dhcp-ldap-startup.log";
 systemctl start dhcpd4.service
 ```
 
+We also provide a prepacked nspawn container. It has a working openldap + DHCP server,
+the openldap is configured to start at boot. Systemd is so awesome that it supports downloading the tar,
+so no fiddeling with curl/wget. machinectl will throw the image into a btrfs subvol and requires you to run /var/lib/machines on btrfs:
+```bash
+pacman -Syu btrfs-progs
+modprobe loop
+machinectl pull-tar https://p.bastelfreak.de/g5Wocw/ marmoset_container
+machinectl start marmoset_container
+machinectl login marmoset_container
+```
+
+If you don't run btrfs you can still download the tar to /var/lib/machines, extract it by hand and then continue with the machinectl commands (or start it oldschool like with systemd-nspawn).
 
 ## Issues
 
