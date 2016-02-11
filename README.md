@@ -396,7 +396,7 @@ so no fiddeling with curl/wget. machinectl will throw the image into a btrfs sub
 ```bash
 pacman -Syu btrfs-progs
 modprobe loop
-machinectl pull-tar https://p.bastelfreak.de/g5Wocw/ marmoset_container
+machinectl pull-tar https://bastelfreak.de/marmoset_container.tar marmoset_container
 machinectl start marmoset_container
 machinectl login marmoset_container
 ```
