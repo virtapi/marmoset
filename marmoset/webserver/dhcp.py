@@ -96,7 +96,7 @@ class DhcpIpv4Object(Resource):
             return abort(404)
 
         dhcp_config = dhcp.DhcpConfig.get_by_ip(ipv4)
-        dhcp_config.remove()
+        dhcp_config.remove_by_ipv4()
 
         return '', 204
 
@@ -146,6 +146,6 @@ class DhcpMacObject(Resource):
             return abort(404)
 
         dhcp_config = dhcp.DhcpConfig.get_by_mac(mac)
-        dhcp_config.remove()
+        dhcp_config.remove_by_mac()
 
         return '', 204
