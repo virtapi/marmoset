@@ -61,7 +61,7 @@ class ISCDhcpLdapConfig:
         return result
 
     @staticmethod
-    def __get_dn_by_ipv4(ip_address):
+    def __get_dn_by_ipv4(ip_address, multi=False):
         conn = ISCDhcpLdapConfig.__get_server_connection()
         conn.search(search_base=config['DHCPConfig'].get('ldap_client_base_dn'),
                     search_filter='(cn=%s)' % ip_address,
@@ -72,12 +72,21 @@ class ISCDhcpLdapConfig:
         entries = conn.response
 
         if entries is None or len(entries) == 0:
+            if multi:
+                return []
             return None
+
+        if multi:
+            dn_list = []
+            for entry in entries:
+                dn_list.append(entry['dn'])
+
+            return dn_list
 
         return entries[0]['dn']
 
     @staticmethod
-    def __get_dn_by_mac(mac_address):
+    def __get_dn_by_mac(mac_address, multi=False):
         conn = ISCDhcpLdapConfig.__get_server_connection()
         conn.search(search_base=config['DHCPConfig'].get('ldap_client_base_dn'),
                     search_filter='(dhcpHWAddress=ethernet %s)' % mac_address,
@@ -88,7 +97,16 @@ class ISCDhcpLdapConfig:
         entries = conn.response
 
         if entries is None or len(entries) == 0:
+            if multi:
+                return []
             return None
+
+        if multi:
+            dn_list = []
+            for entry in entries:
+                dn_list.append(entry['dn'])
+
+            return dn_list
 
         return entries[0]['dn']
 
