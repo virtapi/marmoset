@@ -47,8 +47,17 @@ class DhcpConfig:
         isc_dhcp_config = ISCDhcpLdapConfig(self)
         isc_dhcp_config.save()
 
-    def remove(self):
-        return ISCDhcpLdapConfig.remove(self.ip_address) is not None
+    def remove_by_ipv4(self):
+        return ISCDhcpLdapConfig.remove_by_ipv4(self.ip_address) > 0
+
+    def remove_by_mac(self):
+        return ISCDhcpLdapConfig.remove_by_mac(self.mac) > 0
+
+    def remove_all(self):
+        ipv4_removed_count = ISCDhcpLdapConfig.remove_by_ipv4(self.ip_address)
+        mac_removed_count = ISCDhcpLdapConfig.remove_by_mac(self.mac)
+
+        return (ipv4_removed_count + mac_removed_count) > 0
 
     @staticmethod
     def all():
