@@ -178,9 +178,23 @@ class ISCDhcpLdapConfig:
         return ISCDhcpLdapConfig.__get_dhcp_config(dn)
 
     @staticmethod
-    def remove(ipv4):
-        dn = ISCDhcpLdapConfig.__get_dn_by_ipv4(ipv4)
+    def remove_by_ipv4(ipv4):
+        dn_list = ISCDhcpLdapConfig.__get_dn_by_ipv4(ipv4, multi=True)
 
-        conn = ISCDhcpLdapConfig.__get_server_connection()
-        conn.delete(dn)
-        conn.unbind()
+        for dn in dn_list:
+            conn = ISCDhcpLdapConfig.__get_server_connection()
+            conn.delete(dn)
+            conn.unbind()
+
+        return len(dn_list)
+
+    @staticmethod
+    def remove_by_mac(mac):
+        dn_list = ISCDhcpLdapConfig.__get_dn_by_mac(mac, multi=True)
+
+        for dn in dn_list:
+            conn = ISCDhcpLdapConfig.__get_server_connection()
+            conn.delete(dn)
+            conn.unbind()
+
+        return len(dn_list)
