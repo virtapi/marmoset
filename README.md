@@ -16,6 +16,7 @@ Monkeying around with virtual machines and pxe configs.
     - [HTTP PXE](#http-pxe)
     - [HTTP VM](#http-vm)
     - [HTTP installimage](#http-installimage)
+    - [HTTP DHCP](#http-dhcp)
 + [Issues](#issues)
 + [Copyright](#copyright)
 + [Name origin](#name-origin)
@@ -24,9 +25,25 @@ Monkeying around with virtual machines and pxe configs.
 
 ## Setup
 
-Create `marmoset.conf` before using marmoset! See `Configuration` for details.
+Clone the repo into /opt, then copy the service file into the systemd directory and reload systemd to recognize the file:
+```bash
+cd /opt
+git clone https://github.com/virtapi/marmoset.git
+cd marmoset
+cp ext/marmoset.service /etc/systemd/system/
+systemctl daemon-reload
+```
 Copy the `marmoset.conf.example` to `marmoset.conf` and adjust the settings to your needs.
 Checkout the Comments in the file our our [Configuration](#configuration) section.
+
+Now we need to setup a virtualenv and install the required python packages (remove libvirt from the requirements.txt and `pkg-config libvirt gcc` from the list of packages to install if you don't want to manage VMs with marmoset):
+```bash
+pacman -Syu python-virtualenv pkg-config libvirt gcc
+virtualenv prod
+source prod/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
 
 ---
 
@@ -49,6 +66,7 @@ Please checkout our [requirements.txt](requirements.txt) for a complete and auth
 * wheel
 
 In addition to these python packages, you also need Python 3. This project originally started with Python 3.3, we are currently developing and testing on 3.5 but we plan to support Python 3.3 and 3.4 as well.
+We also need pkg-config and libvirt, which you need to install via your system-wide package manager (these aren't python packages).
 
 ---
 
@@ -128,9 +146,11 @@ Start it like this:
 
     $ ./marmoset.py server
 
-Or with gunicorn:
+Or use our systemd service:
 
-    $ gunicorn marmoset.app:app
+    $ systemctl start marmoset
+
+A third solution is to use nginx + uwsgi to power the app. This is the recommended way if you expect a high amount of requests.
 
 ### HTTP PXE
 
@@ -381,7 +401,7 @@ Remove a VM:
 This endpoint is meant to work together with our [installimage](https://github.com/virtapi/installimage). We identify each dataset by its MAC address and store the key:value config pairs for the installimage.
 
 #### List Entries
-    curl -u admin:secret http://localhost:8080/v1/installimage
+    curl -u admin:secret http://localhost:5000/v1/installimage
 
 ```json
 [
@@ -414,7 +434,7 @@ This endpoint is meant to work together with our [installimage](https://github.c
 ```
 
 #### List a single Entry
-		curl -u admin:secret http://localhost:8080/v1/installimage/b8:ac:6f:97:7e:77
+		curl -u admin:secret http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77
 
 ```json
 {
@@ -434,7 +454,7 @@ This endpoint is meant to work together with our [installimage](https://github.c
 ```
 
 #### List a single Entry in the installimage format
-		curl -u admin:secret http://localhost:8080/v1/installimage/b8:ac:6f:97:7e:77/config
+		curl -u admin:secret http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77/config
 
 ```
 PART / ext4 all
@@ -449,7 +469,7 @@ HOSTNAME CentOS-71-64-minimal
 ```
 
 #### Create a record
-		curl -u admin:secret --data "drive1=/dev/sda&bootloader=grub&hostname=CentOS-71-64-minimal&PART=/ ext4 all&image=/root/.installimage/../images/CentOS-71-64-minimal.tar.gz" http://localhost:8080/v1/installimage/b8:ac:6f:97:7e:77
+		curl -u admin:secret --data "drive1=/dev/sda&bootloader=grub&hostname=CentOS-71-64-minimal&PART=/ ext4 all&image=/root/.installimage/../images/CentOS-71-64-minimal.tar.gz" http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77
 
 Returns the created record:
 ```json
@@ -470,12 +490,105 @@ Returns the created record:
 ```
 
 #### Delete a Record
-		curl -u admin:secret -X DELETE http://localhost:8080/v1/installimage/b8:ac:6f:97:7e:77
+		curl -u admin:secret -X DELETE http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77
 
 Errormessage if you want to delete or list a nonexistent entry:
 ```json
 {
     "message": "The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again. You have requested this URI [/v1/installimage/b8:ac:6f:97:7e:77] but did you mean /v1/installimage/<mac> or /v1/installimage/<mac>/config or /v1/installimage ?"
+}
+```
+
+### HTTP DHCP
+This endpoint allows us the throw static IP/MAC combinations into a ldap database. Currently tested is only the [openldap](http://www.openldap.org/) backend. This database is connected to an isc-dhcpd. We can identify an object by its IP or MAC address.
+
+#### List Entries
+		curl -u admin:secret  http://localhost:5000/v1/dhcp
+```json
+[
+    {
+        "additional_statements": {},
+        "dhcp_hostname": "odin.fritz.box",
+        "gateway": "192.168.10.1",
+        "ip_address": "192.168.10.5",
+        "mac": "00:00:00:00:00:00",
+        "networkmask": "255.255.255.0"
+    },
+    {
+        "additional_statements": {},
+        "dhcp_hostname": "odin.fritz.box",
+        "gateway": "10.3.7.1",
+        "ip_address": "10.3.7.41",
+        "mac": "00:00:00:00:00:00",
+        "networkmask": "255.255.255.0"
+    }
+]
+```
+
+#### List One Entry based on MAC
+		curl -u admin:secret  http://localhost:5000/v1/dhcp/mac/00:00:00:00:00:00
+```json
+{
+		"additional_statements": {},
+		"dhcp_hostname": "odin.fritz.box",
+		"gateway": "10.3.7.1",
+		"ip_address": "10.3.7.41",
+		"mac": "00:00:00:00:00:00",
+		"networkmask": "255.255.255.0"
+}
+```
+
+or:
+	curl -u admin:secret http://localhost:5000/v1/dhcp/mac/23.45.67.8
+```
+"please provide a valid mac address"
+```
+
+#### List one Entry based on IP
+		curl -u admin:secret  http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
+```json
+{
+		"additional_statements": {},
+		"dhcp_hostname": "odin.fritz.box",
+		"gateway": "10.3.7.1",
+		"ip_address": "10.3.7.41",
+		"mac": "00:00:00:00:00:00",
+		"networkmask": "255.255.255.0"
+}
+```
+
+or:
+		curl -u admin:secret http://localhost:5000/v1/dhcp/ipv4/23.45.67.888
+```
+"please provide a valid ipv4 address"
+```
+
+#### Create a new Entry:
+this will return the new created entry:
+		curl -u admin:secret --data 'ip_address=10.3.7.41&mac=b8:ac:6f:97:7e:77&gateway=10.3.7.1&networkmask=255.255.255.0' http://localhost:5000/v1/dhcp
+```json
+{
+    "additional_statements": {},
+    "dhcp_hostname": "example.com",
+    "gateway": "10.3.7.1",
+    "ip_address": "10.3.7.41",
+    "mac": "b8:ac:6f:97:7e:77",
+    "networkmask": "255.255.255.0"
+}
+```
+
+an update works the same way, just submit the command again and change new updated params, again the API will respond with the updated entry.
+
+#### Delete an Entry:
+    curl -u admin:secret -X DELETE http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
+
+Deleting a nonexistent entry:
+    curl -u admin:secret -X DELETE http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
+
+will return:
+```json
+{
+  "message": "The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again. You have requested this URI [/v1/dhcp/ipv4/10.3.7.41] but did you mean /v1/dhcp/ipv4/<ipv4> ?"
 }
 ```
 

@@ -5,7 +5,9 @@
 [Modules]
 PXE: True
 VM: True
-INSTALLIMAGE: True
+Webserver: True
+Installimage: True
+DHCP: True
 
 [Webserver]
 # Settings for HTTP Basic Auth
@@ -34,9 +36,13 @@ Network:
 # storage name is given.
 Storage:
 
+# this will be used for storing PXE options
 [PXEConfig]
 ConfigDirectory: /srv/tftp/pxelinux.cfg/
 
+# this will be used for storing installimage options
+[Config]
+ConfigDirectory: /srv/tftp/config/
 # The PXELabel section has no defaults, as its entries depend on
 # the PXE configuration. The syntax is `label: callbackmethod`.
 # If the entry doesn't need any callback, just let callbackmethod
@@ -47,3 +53,13 @@ ConfigDirectory: /srv/tftp/pxelinux.cfg/
 #freebsd: createpwhashfile
 #openbsd:
 
+[DHCPConfig]
+# list of all statements that we allow
+# see https://github.com/virtapi/marmoset/issues/7#issuecomment-175262281
+# and see https://github.com/virtapi/marmoset/issues/7#issuecomment-175275522
+additional_statements = option domain-name-servers,option domain-name,max-lease-time,default-lease-time,option ntp-servers
+ldap_server = localhost
+ldap_port = 389
+ldap_bind_dn = cn=root,dc=example,dc=com
+ldap_passwort = secret
+ldap_client_base_dn = cn=static,cn=DHCP Service Config,dc=example,dc=com
