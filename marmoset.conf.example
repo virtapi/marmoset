@@ -62,4 +62,4 @@ ldap_server = localhost
 ldap_port = 389
 ldap_bind_dn = cn=root,dc=example,dc=com
 ldap_passwort = secret
-ldap_client_base_dn = DHCP Service Config,dc=example,dc=com
+ldap_client_base_dn = cn=DHCP Service Config,cn=static,dc=example,dc=com
