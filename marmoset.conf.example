@@ -20,7 +20,7 @@ Port: 5000
 # Domain that is used by clients to address the server. It is used to
 # build absolute urls. If unset, it defaults to 'localhost'.
 # take a look here about the syntax: http://stackoverflow.com/a/23312820
-ServerName:
+ServerName: localhost:5000
 Debug: False
 
 [Libvirt]
