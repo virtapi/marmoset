@@ -539,7 +539,7 @@ This endpoint allows us the throw static IP/MAC combinations into a ldap databas
 ```
 
 or:
-	curl -u admin:secret http://dhcp01.intern.webpack.hosteurope.de:8080/v1/dhcp/mac/23.45.67.8
+	curl -u admin:secret http://localhost:5000/v1/dhcp/mac/23.45.67.8
 ```
 "please provide a valid mac address"
 ```
@@ -580,10 +580,10 @@ this will return the new created entry:
 an update works the same way, just submit the command again and change new updated params, again the API will respond with the updated entry.
 
 #### Delete an Entry:
-    curl -u admin:secret -X DELETE http://dhcp01.intern.webpack.hosteurope.de:8080/v1/dhcp/ipv4/10.3.7.41
+    curl -u admin:secret -X DELETE http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
 
 Deleting a nonexistent entry:
-    curl -u admin:secret -X DELETE http://dhcp01.intern.webpack.hosteurope.de:8080/v1/dhcp/ipv4/10.3.7.41
+    curl -u admin:secret -X DELETE http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
 
 will return:
 ´´´json
