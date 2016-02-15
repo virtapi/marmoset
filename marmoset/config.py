@@ -1,10 +1,16 @@
 from os import path
-import configparser, warnings
+import configparser
+import warnings
+import socket
 
 PATH = path.join(path.dirname(__file__), '../marmoset.conf')
 
 def default():
     config = configparser.ConfigParser()
+
+    config['Common'] = dict(
+        FQDN=socket.getfqdn()
+    )
 
     config['Modules'] = dict(
         Webserver = 'True',

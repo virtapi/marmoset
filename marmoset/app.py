@@ -1,4 +1,6 @@
 from . import config, webserver
 
-app = webserver.app(config.load())
+config = config.load()
+
+app = webserver.app(config)
 

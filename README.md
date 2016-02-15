@@ -481,6 +481,61 @@ Errormessage if you want to delete or list a nonexistent entry:
 
 ---
 
+## Setup LDAP + isc-dhcpd
+We will do all this in a clean Arch nspawn container (login for a new container is always root without password):
+```bash
+mkdir marmoset_container
+sudo pacman -Syu arch-install-scripts
+sudo pacstrap -c -d marmoset_container
+sudo systemd-nspawn -b -D marmoset_container/
+pacman -Syu git openldap
+```
+
+Installing the isc-dhcpd is currently a bit tricky because the default package is not linked against ldap. You can get the sources and replace the PKGBUILD with [mine](https://p.bastelfreak.de/U6f5/) or use the package that I [built](https://p.bastelfreak.de/C6An/). The needed data can be found [here](https://p.bastelfreak.de/t5XS/). Please adjust the params `suffix` and `rootdn` for your needs (in /etc/openldap/slapd.conf), we use `dc=example,dc=com` and `cn=root,dc=example,dc=com` in our example.
+
+```bash
+curl -JO https://p.bastelfreak.de/C6An/
+pacman -U dhcp*.pkg.tar.xz
+cd /etc/openldap/schema
+curl -JO https://raw.githubusercontent.com/dcantrell/ldap-for-dhcp/master/dhcp.schema
+cd ..
+echo 'include /etc/openldap/schema/dhcp.schema' >> slapd.conf
+echo 'index dhcpHWAddress eq' >> slapd.conf
+echo 'index dhcpClassData eq' >> slapd.conf
+cp DB_CONFIG.example /var/lib/openldap/openldap-data/DB_CONFIG
+curl https://p.bastelfreak.de/j63 > initial_data.ldif
+systemctl start slapd
+ldapadd -x -W -D 'cn=root,dc=example,dc=com' -f initial_data.ldif -c
+```
+
+Last step, you need to add the following settings to your `/etc/dhcpd.conf` before you start the daemon:
+```
+ldap-server "localhost";
+ldap-port 389;
+ldap-username "cn=root, dc=example, dc=com";
+ldap-password "secret";
+ldap-base-dn "dc=example, dc=com";
+ldap-method dynamic;
+ldap-debug-file "/var/log/dhcp-ldap-startup.log";
+```
+
+```bash
+systemctl start dhcpd4.service
+```
+
+We also provide a prepacked nspawn container. It has a working openldap + DHCP server,
+the openldap is configured to start at boot. Systemd is so awesome that it supports downloading the tar,
+so no fiddeling with curl/wget. machinectl will throw the image into a btrfs subvol and requires you to run /var/lib/machines on btrfs:
+```bash
+pacman -Syu btrfs-progs
+modprobe loop
+machinectl --verify=no pull-tar https://bastelfreak.de/marmoset_container.tar marmoset_container
+machinectl start marmoset_container
+machinectl login marmoset_container
+```
+
+If you don't run btrfs you can still download the tar to /var/lib/machines, extract it by hand and then continue with the machinectl commands (or start it oldschool like with systemd-nspawn).
+
 ## Issues
 
 Find this code at [the git repo](https://www.github.com/virtapi/marmoset/). Find the original code at [the git repo](https://www.aibor.de/cgit/marmoset/).
