@@ -7,3 +7,6 @@ ExecStart=/opt/marmoset/marmoset.py server
 User=marmoset
 Group=marmoset
 PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
