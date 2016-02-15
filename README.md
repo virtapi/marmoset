@@ -586,7 +586,7 @@ Deleting a nonexistent entry:
     curl -u admin:secret -X DELETE http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
 
 will return:
-´´´json
+```json
 {
   "message": "The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again. You have requested this URI [/v1/dhcp/ipv4/10.3.7.41] but did you mean /v1/dhcp/ipv4/<ipv4> ?"
 }
