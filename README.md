@@ -18,6 +18,7 @@ Monkeying around with virtual machines and pxe configs.
     - [HTTP installimage](#http-installimage)
     - [HTTP DHCP](#http-dhcp)
 + [Issues](#issues)
++ [Contributor Code of Conduct](#contributor-code-of-conduct)
 + [Copyright](#copyright)
 + [Name origin](#name-origin)
 
@@ -654,6 +655,11 @@ If you don't run btrfs you can still download the tar to /var/lib/machines, extr
 Find this code at [the git repo](https://www.github.com/virtapi/marmoset/). Find the original code at [the git repo](https://www.aibor.de/cgit/marmoset/).
 
 Contact the original author at code@aibor.de or us in #virtapi at freenode.
+
+---
+
+## Styleguide
+We defined our own styleguide [here](styleguide-bash.md), this is a work-in-progress style. We discussed all points on IRC, most of them are based on shellcheck suggestions and our own opinion. We update the guide from time to time.
 
 ---
 
