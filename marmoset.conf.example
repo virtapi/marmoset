@@ -53,6 +53,9 @@ ConfigDirectory: /srv/tftp/config/
 #freebsd: createpwhashfile
 #openbsd:
 
+[Installimage]
+ConfigDirectory: /srv/tftp/installimage/
+
 [DHCPConfig]
 # list of all statements that we allow
 # see https://github.com/virtapi/marmoset/issues/7#issuecomment-175262281
