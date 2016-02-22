@@ -63,3 +63,6 @@ ldap_port = 389
 ldap_bind_dn = cn=root,dc=example,dc=com
 ldap_passwort = secret
 ldap_client_base_dn = cn=static,cn=DHCP Service Config,dc=example,dc=com
+
+# No empty gatway are allowed
+force_gateway: True
