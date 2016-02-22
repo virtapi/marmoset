@@ -1,6 +1,7 @@
 from ldap3 import Server, Connection, ALL, SUBTREE, BASE, ALL_ATTRIBUTES, ALL_OPERATIONAL_ATTRIBUTES
 from datetime import datetime
 from marmoset import config as config_reader
+from marmoset import validation
 
 import re
 
@@ -133,7 +134,7 @@ class ISCDhcpLdapConfig:
         regex_gateway = 'option routers\s+([0-9]+.[0-9]+.[0-9]+.[0-9]+)'
         regex_networkmask = 'option subnet-mask\s+([0-9]+.[0-9]+.[0-9]+.[0-9]+)'
 
-        mac = re.search('(([0-9a-f]{2}:){5}[0-9a-f]{2})', mac_option).group(0)
+        mac = re.search('(%s)' % validation.MAC_REGEX, mac_option).group(0)
         ip = entries[0]['attributes']['cn'][0]
 
         gateway = None
