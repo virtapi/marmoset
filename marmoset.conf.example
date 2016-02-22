@@ -40,9 +40,6 @@ Storage:
 [PXEConfig]
 ConfigDirectory: /srv/tftp/pxelinux.cfg/
 
-# this will be used for storing installimage options
-[Config]
-ConfigDirectory: /srv/tftp/config/
 # The PXELabel section has no defaults, as its entries depend on
 # the PXE configuration. The syntax is `label: callbackmethod`.
 # If the entry doesn't need any callback, just let callbackmethod
