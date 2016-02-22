@@ -33,7 +33,7 @@ class DhcpConfig:
             if self.networkmask is None:
                 self.networkmask = validation.get_nm_from_cidr(ip_address)
 
-            if self.gateway is None:
+            if self.gateway is None and config['DHCPConfig'].getboolean('force_gateway'):
                 self.gateway = validation.get_gw_from_cidr(ip_address)
         else:
             self.ip_address = ip_address

@@ -29,7 +29,8 @@ class DhcpCollection(Resource):
     def post(self):
         args = parser.parse_args()
 
-        if (args.gateway is None or args.networkmask is None) and not validation.is_cidr(args.ip_address):
+        if ((args.gateway is None and config['DHCPConfig'].getboolean('force_gateway')) or args.networkmask is None) \
+                and not validation.is_cidr(args.ip_address):
             return {'message': 'missing parameter gateway and networkmask or give an ip address in CIDR notation'}, 406
 
         if not validation.is_ipv4(args.ip_address) and not validation.is_cidr(args.ip_address):

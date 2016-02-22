@@ -28,8 +28,10 @@ class ISCDhcpLdapConfig:
         conn = self.__get_server_connection()
 
         dhcpStatements = ["fixed-address %s;" % self.dhcp_config.ip_address,
-                          "option subnet-mask %s;" % self.dhcp_config.networkmask,
-                          "option routers %s;" % self.dhcp_config.gateway]
+                          "option subnet-mask %s;" % self.dhcp_config.networkmask]
+
+        if self.dhcp_config.gateway is not None:
+            dhcpStatements.append("option routers %s;" % self.dhcp_config.gateway)
 
         for additional_statement in self.dhcp_config.additional_statements:
             dhcpStatements.append("%s %s;" % (additional_statement,
