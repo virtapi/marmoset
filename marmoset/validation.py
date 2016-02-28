@@ -1,9 +1,11 @@
 import ipaddress
 import re
 
+MAC_REGEX = "([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}"
+
 
 def is_mac(mac):
-    return True if re.match("^([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}$", mac) else False
+    return True if re.match("^%s$" % MAC_REGEX, mac) else False
 
 
 def is_ipv4(ip):
