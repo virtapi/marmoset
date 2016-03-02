@@ -62,6 +62,10 @@ def load(file_path = None):
         [pxe.Label(n, cb) for n, cb in config['PXELabel'].items()]
         pxe.ClientConfig.CFG_DIR = config['PXEConfig'].get('ConfigDirectory')
 
+    if config['Modules'].getboolean('Installimage'):
+        from marmoset import installimage
+
+        installimage.InstallimageConfig.CFG_DIR = config['Installimage'].get('ConfigDirectory')
 
     if config['Modules'].getboolean('VM'):
         from . import virt
