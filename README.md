@@ -423,11 +423,7 @@ This endpoint is meant to work together with our [installimage](https://github.c
             "DRIVE1": "/dev/sda",
             "HOSTNAME": "CentOS-71-64-minimal",
             "IMAGE": "/root/.installimage/../images/CentOS-71-64-minimal.tar.gz",
-            "IP_ADDRESS": "10.30.7.41",
-            "LABEL": "archrescue",
             "PART": "/ ext4 all",
-            "PASSWORD": "One123",
-            "SCRIPT": "/usr/local/bin/start_installimage"
         }
     }
 ]
@@ -445,11 +441,7 @@ This endpoint is meant to work together with our [installimage](https://github.c
         "DRIVE1": "/dev/sda",
         "HOSTNAME": "CentOS-71-64-minimal",
         "IMAGE": "/root/.installimage/../images/CentOS-71-64-minimal.tar.gz",
-        "IP_ADDRESS": "10.30.7.41",
-        "LABEL": "archrescue",
         "PART": "/ ext4 all",
-        "PASSWORD": "One123",
-        "SCRIPT": "/usr/local/bin/start_installimage"
     }
 }
 ```
@@ -461,10 +453,6 @@ This endpoint is meant to work together with our [installimage](https://github.c
 PART / ext4 all
 IMAGE /root/.installimage/../images/CentOS-71-64-minimal.tar.gz
 DRIVE1 /dev/sda
-LABEL archrescue
-PASSWORD One123
-IP_ADDRESS 10.30.7.41
-SCRIPT /usr/local/bin/start_installimage
 BOOTLOADER grub
 HOSTNAME CentOS-71-64-minimal
 ```
@@ -481,11 +469,7 @@ Returns the created record:
         "DRIVE1": "/dev/sda",
         "HOSTNAME": "CentOS-71-64-minimal",
         "IMAGE": "/root/.installimage/../images/CentOS-71-64-minimal.tar.gz",
-        "IP_ADDRESS": "10.30.7.41",
-        "LABEL": "archrescue",
         "PART": "/ ext4 all",
-        "PASSWORD": "One123",
-        "SCRIPT": "/usr/local/bin/start_installimage"
     }
 }
 ```
