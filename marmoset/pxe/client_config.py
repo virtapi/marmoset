@@ -106,7 +106,7 @@ class ClientConfig:
         """ Parse the uuid option from the config file."""
         with open(self.file_path()) as f:
             for line in f:
-                m = re.match(' *APPEND.*uuid=(\S+)', line)
+                m = re.match(' *APPEND.*UUID=(\S+)', line)
                 if m is not None:
                     return m.group(1)
 
