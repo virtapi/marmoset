@@ -8,6 +8,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('ip_address', type=str)
 parser.add_argument('password', type=str, default=None)
 parser.add_argument('script', type=str, default=None)
+parser.add_argument('uuid', type=str, default=None)
 parser.add_argument('label', type=str, choices=pxe.Label.names(), default=pxe.Label.names()[0])
 
 class PXECollection(Resource):
@@ -18,9 +19,12 @@ class PXECollection(Resource):
 
 
     def post(self):
-        '''Add a PXE entry for the given ip_address with a given password.'''
+        """Add a PXE entry for the given ip_address. Password, uuid and script
+        are optional parameters. Missing password or uuid will be auto generated
+        by ClientConfig.
+        """
         args = parser.parse_args()
-        re = pxe.ClientConfig(args.ip_address, args.password, args.script)
+        re = pxe.ClientConfig(args.ip_address, args.password, args.script, args.uuid)
 
         try:
             re.create(pxe.Label.find(args.label))
