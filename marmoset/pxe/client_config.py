@@ -1,6 +1,9 @@
 import os, re, crypt, base64
 from textwrap import dedent
 from string import Template as Stringtemplate
+from uuid import UUID, uuid4
+from marmoset import validation
+
 
 class ClientConfig:
 
@@ -42,19 +45,37 @@ class ClientConfig:
                 cbs.append(m[3:])
         return cbs
 
-    def __init__(self, ip_address, password=None, script=None):
+    def __init__(self, ip_address, password=None, script=None, uuid=None):
         if re.match('[0-9A-Z]{8}', ip_address.upper()):
             octets = [str(int(x, 16)) for x in re.findall('..', ip_address)]
             ip_address = '.'.join(octets)
+            get_mode = True
+        else:
+            get_mode = False
 
         self.ip_address = ip_address
         self.script = script
+
+        # if uuid is passed, validate it. In case validation fails
+        # a new uuid is generated
+        if uuid:
+            if validation.is_uuid(uuid):
+                self.uuid = str(UUID(uuid))
+            else:
+                self.uuid = str(uuid4())
+        else:
+            self.uuid = None
 
         if self.exists():
             self.label = self.get_label()
 
             if script is None:
                 self.script = self.get_script()
+
+            # fetch uuid from config file only in get_mode, we don't want
+            # to reuse and old uuid if none was passed
+            if get_mode:
+                self.uuid = self.get_uuid()
 
         if not password in [None, '']:
             self.password = password
@@ -81,6 +102,13 @@ class ClientConfig:
                 if m is not None:
                     return m.group(1)
 
+    def get_uuid(self):
+        """ Parse the uuid option from the config file."""
+        with open(self.file_path()) as f:
+            for line in f:
+                m = re.match(' *APPEND.*uuid=(\S+)', line)
+                if m is not None:
+                    return m.group(1)
 
     def create(self, pxe_label):
         '''Create the config file for this instance.'''
@@ -95,6 +123,9 @@ class ClientConfig:
 
         if self.script is not None:
             options.append("script=%s" % self.script)
+
+        if self.uuid is not None:
+            options.append("UUID=%s" % self.uuid)
 
         content = self.__expand_template(pxe_label.name, options)
         self.__write_config_file(content)
