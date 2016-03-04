@@ -58,13 +58,13 @@ class ClientConfig:
 
         # if uuid is passed, validate it. In case validation fails
         # a new uuid is generated
-        if uuid:
+        if uuid is None :
+            self.uuid = None
+        else:
             if validation.is_uuid(uuid):
                 self.uuid = str(UUID(uuid))
             else:
                 self.uuid = str(uuid4())
-        else:
-            self.uuid = None
 
         if self.exists():
             self.label = self.get_label()
