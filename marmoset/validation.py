@@ -1,5 +1,6 @@
 import ipaddress
 import re
+from uuid import UUID
 
 MAC_REGEX = "([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}"
 
@@ -30,6 +31,14 @@ def is_cidr(cidr):
             return False
 
         ipaddress.IPv4Interface(cidr)
+    except:
+        return False
+    return True
+
+
+def is_uuid(uuid):
+    try:
+        UUID(uuid)
     except:
         return False
     return True

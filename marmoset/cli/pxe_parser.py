@@ -23,6 +23,11 @@ def add_to(parser, name, **kwargs):
     pxe_create.add_argument('-s', '--script',
                             help='''Sciptfilepath''',
                             default=None)
+    pxe_create.add_argument('-u', '--uuid',
+                            help='UUID which will be appended to kernel cmdline,'
+                                 'this will be used for tracking the status'
+                                 'of an installation',
+                            default=None)
 
     pxe_list = subcommands.add_parser('list',
         help='list IP addresses for all currently present PXE client config',
