@@ -4,6 +4,10 @@ from uuid import UUID
 
 
 def get_history(args):
+    """
+    prints status update history related to installimage uuid
+
+    """
     if is_uuid(args.uuid):
         uuid = str(UUID(args.uuid))
         install_status = InstallStatus(uuid)
@@ -16,6 +20,10 @@ def get_history(args):
 
 
 def get_latest(args):
+    """
+    prints latest status update related to installimage uuid
+
+    """
     if is_uuid(args.uuid):
         uuid = str(UUID(args.uuid))
         install_status = InstallStatus(uuid)
@@ -27,6 +35,10 @@ def get_latest(args):
 
 
 def get_stats(args):
+    """
+    prints some stats related to installimage uuid
+
+    """
     if is_uuid(args.uuid):
         uuid = str(UUID(args.uuid))
         install_status = InstallStatus(uuid)
