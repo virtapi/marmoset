@@ -1,6 +1,5 @@
 from marmoset import config as config_reader
 import sqlite3
-import datetime
 
 
 config = config_reader.load()
@@ -8,6 +7,9 @@ DB = config['Installstatus'].get('SQLiteDB')
 
 
 class DBHelper:
+    """
+    Interface to the installstatus SQLite DB
+    """
 
     @classmethod
     def _connect(cls):
