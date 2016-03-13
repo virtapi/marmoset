@@ -49,6 +49,17 @@ def app(config):
         api.add_resource(dhcp.DhcpIpv4Object, '/dhcp/ipv4/<ipv4>')
         api.add_resource(dhcp.DhcpMacObject, '/dhcp/mac/<mac>')
 
+    if config['Modules'].getboolean('INSTALLSTATUS'):
+        from . import installstatus
+        api.add_resource(installstatus.InstallStatusHistory,
+                         '/installstatus/<uuid>/history')
+        api.add_resource(installstatus.InstallStatusLatest,
+                         '/installstatus/<uuid>/latest')
+        api.add_resource(installstatus.InstallStatusReport,
+                         '/installstatus/<uuid>')
+        api.add_resource(installstatus.InstallStatusStats,
+                         '/installstatus/<uuid>/stats')
+
     @app.errorhandler(404)
     def not_found(ex):
         resp = jsonify_nl(message="Route not found.", status=404)
