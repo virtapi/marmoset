@@ -50,6 +50,14 @@ def parse(config):
             help='manage installimage configs'
         )
 
+    if config['Modules'].getboolean('INSTALLSTATUS'):
+        from . import installstatus_parser
+        installstatus_parser.add_to(
+            commands,
+            'installstatus',
+            help='get status information on install jobs'
+        )
+
     args = parser.parse_args()
     if 'func' in args:
         args.func(args)
