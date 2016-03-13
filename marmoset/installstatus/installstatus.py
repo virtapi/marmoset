@@ -34,6 +34,12 @@ class InstallStatus:
         history = DBHelper.get_history(self.uuid)
         return history
 
+    def insert_status(self, status):
+        """
+        insert new status update for installimage job
+        """
+        DBHelper.insert_status(self.uuid, status)
+
     def get_stats(self):
         """
         generates some stats related to the installimage job
