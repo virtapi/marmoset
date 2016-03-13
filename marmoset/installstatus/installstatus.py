@@ -6,18 +6,41 @@ config = config_reader.load()
 
 
 class InstallStatus:
+    """
+    installimage status updates for can be stored/retrieved by uuid
+    in/from database.
+    """
+
     def __init__(self, uuid):
         self.uuid = uuid
 
     def get_latest_status(self):
+        """
+        fetches latest status update for the installimage job
+
+        :return: latest status update for the
+        :rtpye: dict
+        """
         status = DBHelper.get_latest_status(self.uuid)
         return status
 
     def get_history(self):
+        """
+        fetches all status updates related to the installimage job
+
+        :return: a list including one dict per status update
+        :rtype: list
+        """
         history = DBHelper.get_history(self.uuid)
         return history
 
     def get_stats(self):
+        """
+        generates some stats related to the installimage job
+
+        :return: stats
+        :rtype: dict
+        """
         status_history = DBHelper.get_history(self.uuid)
         history_count = len(status_history)
         stats = {}
@@ -45,7 +68,12 @@ class InstallStatus:
         stats['uuid'] = self.uuid
         return stats
 
-    @classmethod
-    def convert_date(cls, date_string):
+    def convert_date(self, date_string):
+        """
+        converts the date string from database to datetime object
+
+        :param date_string:
+        :return: datetime
+        """
         date = datetime.datetime.strptime(date_string, '%Y-%m-%d %H:%M:%S')
         return date
