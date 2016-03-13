@@ -8,6 +8,7 @@ VM: True
 Webserver: True
 Installimage: True
 DHCP: True
+Installimage: True
 
 [Webserver]
 # Settings for HTTP Basic Auth
@@ -66,3 +67,6 @@ ldap_client_base_dn = cn=static,cn=DHCP Service Config,dc=example,dc=com
 
 # No empty gateway are allowed
 force_gateway: True
+
+[Installstatus]
+SQLiteDB: /opt/marmoset/installstatus.db
