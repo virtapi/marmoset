@@ -10,7 +10,7 @@ class ClientConfig:
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
 
     CFG_TEMPLATE = Stringtemplate(dedent('''\
-        INCLUDE pxelinux.cfg/default
+        INCLUDE ${include}
         DEFAULT instantboot
         PROMPT 0
         TIMEOUT 1
@@ -19,6 +19,7 @@ class ClientConfig:
             APPEND ${label} ${options}
         '''))
 
+    CFG_INCLUDE = 'pxelinux.cfg/default'
 
     @classmethod
     def all(cls):
@@ -177,8 +178,10 @@ class ClientConfig:
             options = ''
 
         template = ClientConfig.CFG_TEMPLATE
+        include = ClientConfig.CFG_INCLUDE
         return template.substitute(label=label,
-                                   options=options)
+                                   options=options,
+                                   include=include)
 
 
     def __mkpwhash(self):
