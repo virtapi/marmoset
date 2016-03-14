@@ -25,7 +25,8 @@ def default():
     )
 
     config['PXEConfig'] = dict(
-        ConfigDirectory = '/srv/tftp/pxelinux.cfg'
+        ConfigDirectory = '/srv/tftp/pxelinux.cfg',
+        Include = 'pxelinux.cfg/default'
     )
 
     config['PXELabel']  = dict(
@@ -61,6 +62,7 @@ def load(file_path = None):
         # Create pxe label list.
         [pxe.Label(n, cb) for n, cb in config['PXELabel'].items()]
         pxe.ClientConfig.CFG_DIR = config['PXEConfig'].get('ConfigDirectory')
+        pxe.ClientConfig.CFG_INCLUDE = config['PXEConfig'].get('Include')
 
     if config['Modules'].getboolean('Installimage'):
         from marmoset import installimage
