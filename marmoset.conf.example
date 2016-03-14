@@ -39,6 +39,7 @@ Storage:
 # this will be used for storing PXE options
 [PXEConfig]
 ConfigDirectory: /srv/tftp/pxelinux.cfg/
+Include: pxelinux.cfg/default
 
 # The PXELabel section has no defaults, as its entries depend on
 # the PXE configuration. The syntax is `label: callbackmethod`.
