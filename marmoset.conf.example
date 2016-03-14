@@ -8,7 +8,7 @@ VM: True
 Webserver: True
 Installimage: True
 DHCP: True
-Installimage: True
+Installstatus: True
 
 [Webserver]
 # Settings for HTTP Basic Auth
