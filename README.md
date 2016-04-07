@@ -17,11 +17,11 @@ Monkeying around with virtual machines and pxe configs.
     - [HTTP VM](#http-vm)
     - [HTTP installimage](#http-installimage)
     - [HTTP DHCP](#http-dhcp)
-+ [Issues](#issues)
-+ [Contributor Code of Conduct](#contributor-code-of-conduct)
-+ [Copyright](#copyright)
 + [Name origin](#name-origin)
-
++ [Issues](#issues)
++ [License](#license)
++ [Contact](#contact)
++ [Contribution](#contribution)
 ---
 
 ## Setup
@@ -634,39 +634,27 @@ machinectl login marmoset_container
 
 If you don't run btrfs you can still download the tar to /var/lib/machines, extract it by hand and then continue with the machinectl commands (or start it oldschool like with systemd-nspawn).
 
-## Issues
-
-Find this code at [the git repo](https://www.github.com/virtapi/marmoset/). Find the original code at [the git repo](https://www.aibor.de/cgit/marmoset/).
-
-Contact the original author at code@aibor.de or us in #virtapi at freenode.
-
----
-
-## Styleguide
-We defined our own styleguide [here](styleguide-bash.md), this is a work-in-progress style. We discussed all points on IRC, most of them are based on shellcheck suggestions and our own opinion. We update the guide from time to time.
-
----
-
-## Copyright
-
-GPLv2 license can be found in LICENSE
-
-Copyright (C) 2015 Tobias Böhm code@aibor.de
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License version 2 as
-published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
 ---
 
 ## Name Origin
 The marmosets is a group of monkey species, checkout [wikipedia](https://en.wikipedia.org/wiki/Marmoset) for detailed infos.
+
+---
+
+## Issues
+[Github Issues](https://www.github.com/virtapi/marmoset/issues)
+
+---
+
+## License
+The original [project](https://github.com/aibor/marmoset) and all of our changes are based on the AGPL, you can find the license [here](LICENSE).
+
+---
+
+## Contact
+You can meet us in #virtapi at freenode.
+
+---
+
+## Contribution
+We've defined our contribution rules in [CONTRIBUTING.md](CONTRIBUTING.md).
