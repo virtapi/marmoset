@@ -27,9 +27,11 @@ Monkeying around with virtual machines and pxe configs.
 
 ## Setup
 
-Clone the repo into /opt, then copy the service file into the systemd directory and reload systemd to recognize the file:
+Clone the repo into the home of a normal user, then copy the service file into the systemd directory and reload systemd to recognize the file:
 ```bash
-cd /opt
+useradd -m -g marmoset -s /bin/bash marmoset
+su marmoset
+cd ~
 git clone https://github.com/virtapi/marmoset.git
 cd marmoset
 cp ext/marmoset.service /etc/systemd/system/
@@ -526,6 +528,7 @@ This endpoint allows us the throw static IP/MAC combinations into a ldap databas
 
 or:
     curl -u admin:secret http://localhost:5000/v1/dhcp/mac/23.45.67.8
+
 ```
 "please provide a valid mac address"
 ```
@@ -544,14 +547,17 @@ or:
 ```
 
 or:
-  curl -u admin:secret http://localhost:5000/v1/dhcp/ipv4/23.45.67.888
+    curl -u admin:secret http://localhost:5000/v1/dhcp/ipv4/23.45.67.888
+
 ```
 "please provide a valid ipv4 address"
 ```
 
 #### Create a new Entry:
 this will return the new created entry:
+
     curl -u admin:secret --data 'ip_address=10.3.7.41&mac=b8:ac:6f:97:7e:77&gateway=10.3.7.1&networkmask=255.255.255.0' http://localhost:5000/v1/dhcp
+
 ```json
 {
     "additional_statements": {},
@@ -569,6 +575,7 @@ an update works the same way, just submit the command again and change new updat
     curl -u admin:secret -X DELETE http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
 
 Deleting a nonexistent entry:
+
     curl -u admin:secret -X DELETE http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
 
 will return:
