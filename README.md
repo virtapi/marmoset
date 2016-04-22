@@ -27,9 +27,11 @@ Monkeying around with virtual machines and pxe configs.
 
 ## Setup
 
-Clone the repo into /opt, then copy the service file into the systemd directory and reload systemd to recognize the file:
+Clone the repo into the home of a normal user, then copy the service file into the systemd directory and reload systemd to recognize the file:
 ```bash
-cd /opt
+useradd -m -g marmoset -s /bin/bash marmoset
+su marmoset
+cd ~
 git clone https://github.com/virtapi/marmoset.git
 cd marmoset
 cp ext/marmoset.service /etc/systemd/system/
