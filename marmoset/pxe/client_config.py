@@ -10,7 +10,7 @@ class ClientConfig:
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
 
     CFG_TEMPLATE = Stringtemplate(dedent('''\
-        INCLUDE pxelinux.cfg/default
+        INCLUDE pxelinux.cfg/linux
         DEFAULT instantboot
         PROMPT 0
         TIMEOUT 1
