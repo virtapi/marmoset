@@ -1,8 +1,9 @@
+import uuid
+from pprint import pprint
+
 from .domain import Domain
 from .network import Network
 from .storage import Storage
-from pprint import pprint
-import uuid
 
 
 def create(args):
@@ -16,15 +17,15 @@ def create(args):
     memory, unit = base.parse_unit(args.memory)
 
     domain = Domain.define(
-        uuid = str(uuid.uuid4()),
-        name = args.name,
-        user = args.user,
-        memory = memory,
-        unit = unit,
-        vcpu = args.cpu,
-        disks = [dict(path = disk.path, bus = 'virtio', target = 'hda')],
-        interfaces = [dict(model = 'virtio', network = Network.DEFAULT)],
-        password = args.get('password', base.generate_password)
+        uuid=str(uuid.uuid4()),
+        name=args.name,
+        user=args.user,
+        memory=memory,
+        unit=unit,
+        vcpu=args.cpu,
+        disks=[dict(path=disk.path, bus='virtio', target='hda')],
+        interfaces=[dict(model='virtio', network=Network.DEFAULT)],
+        password=args.get('password', base.generate_password)
     )
 
     network.add_host(
@@ -44,29 +45,30 @@ def list(args):
 def edit(domain, args):
     memory, unit = base.parse_unit(args.get('memory', domain.memory))
     return Domain.define(
-        name = domain.name,
-        user = domain.user,
-        memory = memory,
-        unit = unit,
-        vcpu = args.get('cpu', domain.vcpu),
-        disks = [d.attributes() for d in domain.disks],
-        interfaces = [i.attributes() for i in domain.interfaces],
-        password = args.get(
+        name=domain.name,
+        user=domain.user,
+        memory=memory,
+        unit=unit,
+        vcpu=args.get('cpu', domain.vcpu),
+        disks=[d.attributes() for d in domain.disks],
+        interfaces=[i.attributes() for i in domain.interfaces],
+        password=args.get(
             'password',
             domain.vnc_data.get('password', base.generate_password())
         ),
-        uuid = domain.uuid
+        uuid=domain.uuid
     )
 
 
 def remove(args):
     domain = Domain.find_by('uuid', args.uuid)
-    try: domain.shutdown()
-    except: pass
+    try:
+        domain.shutdown()
+    except:
+        pass
     for interface in domain.interfaces:
         host = interface.host()
         if not host is None:
             host.delete()
     if domain.undefine():
         print('Removed', domain.name())
-

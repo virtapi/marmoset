@@ -1,10 +1,11 @@
 from flask import Flask, jsonify
 from flask.ext import restful
+
 from .flask import auth
-import json
 
 API_VERSION = '1'
 config = None
+
 
 def jsonify_nl(*args, **kwargs):
     resp = jsonify(*args, **kwargs)
@@ -13,16 +14,16 @@ def jsonify_nl(*args, **kwargs):
 
 
 def app(config):
-    auth.Username  = config['Webserver'].get('Username')
-    auth.Password  = config['Webserver'].get('Password')
+    auth.Username = config['Webserver'].get('Username')
+    auth.Password = config['Webserver'].get('Password')
 
     app = Flask(config['Webserver'].get('BasicRealm'))
     auth.for_all_routes(app)
     app.config['SERVER_NAME'] = config['Webserver'].get('ServerName')
 
     api = restful.Api(
-        app = app,
-        prefix = '/v{}'.format(API_VERSION)
+        app=app,
+        prefix='/v{}'.format(API_VERSION)
     )
 
     if config['Modules'].getboolean('PXE'):
@@ -63,13 +64,13 @@ def app(config):
 
     return app
 
+
 def run(args):
     global config
     webserver = app(config)
     print(webserver.url_map)
     webserver.run(
-        host = config['Webserver'].get('Host'),
-        port = config['Webserver'].getint('Port'),
-        debug = config['Webserver'].getboolean('Debug')
+        host=config['Webserver'].get('Host'),
+        port=config['Webserver'].getint('Port'),
+        debug=config['Webserver'].getboolean('Debug')
     )
-

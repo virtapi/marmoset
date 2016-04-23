@@ -1,25 +1,26 @@
+from string import Template
+
+from libvirt import libvirtError
+
+from . import base, domain_states
 from .exceptions import Error
 from .network import Network
-from . import base, domain_states
-from libvirt import libvirtError
-from string import Template
 
 
 class Domain(base.Parent):
-
     _func = dict(
-        all     = 'listAllDomains',
-        uuid    = 'lookupByUUIDString',
-        id      = 'lookupByID',
-        name    = 'lookupByName'
+        all='listAllDomains',
+        uuid='lookupByUUIDString',
+        id='lookupByID',
+        name='lookupByName'
     )
 
     @classmethod
     def define(cls, **attrs):
         for klass in 'Disk', 'Interface':
-            key   = klass.lower() + 's'
+            key = klass.lower() + 's'
             klass = getattr(cls, klass)
-            res   = [klass.xml_template(**r) for r in attrs[key]]
+            res = [klass.xml_template(**r) for r in attrs[key]]
             attrs[key] = '\n'.join(res)
         with open(cls.template_file()) as f:
             xml = Template(f.read()).substitute(attrs)
@@ -43,7 +44,7 @@ class Domain(base.Parent):
 
     @property
     def memory(self):
-        return base.with_unit(int(self.get_xml('memory').text)*1024)
+        return base.with_unit(int(self.get_xml('memory').text) * 1024)
 
     @property
     def vcpu(self):
@@ -52,8 +53,8 @@ class Domain(base.Parent):
     @property
     def state(self):
         state_id, reason_id = self._resource.state()
-        state   = domain_states.States[state_id]
-        reason  = domain_states.Reasons[state][reason_id]
+        state = domain_states.States[state_id]
+        reason = domain_states.Reasons[state][reason_id]
         return dict(state=state, reason=reason)
 
     @property
@@ -73,9 +74,9 @@ class Domain(base.Parent):
             return {}
         else:
             return dict(
-                vnc_port = graphics.attrib.get('port'),
-                ws_port = graphics.attrib.get('websocket'),
-                password = graphics.attrib.get('passwd')
+                vnc_port=graphics.attrib.get('port'),
+                ws_port=graphics.attrib.get('websocket'),
+                password=graphics.attrib.get('passwd')
             )
 
     def info(self):
@@ -98,14 +99,12 @@ class Domain(base.Parent):
         self._command('undefine')
         self._resource = None
 
-
     def _command(self, cmd, *args, **kwargs):
         try:
             func = getattr(self._resource, cmd)
             return func(*args, **kwargs)
         except libvirtError as e:
             raise Error(str(e))
-
 
     class Disk(base.Child):
         @property
@@ -134,10 +133,9 @@ class Domain(base.Parent):
             return base.with_unit(value)
 
         def blockinfo(self):
-            keys    = ['capacity', 'allocation', 'physical']
-            values  = self._parent._resource.blockInfo(self.target)
+            keys = ['capacity', 'allocation', 'physical']
+            values = self._parent._resource.blockInfo(self.target)
             return dict(zip(keys, values))
-
 
     class Interface(base.Child):
         @property
@@ -168,4 +166,3 @@ class Domain(base.Parent):
             host = self.host()
             if host:
                 return host.ip_address
-

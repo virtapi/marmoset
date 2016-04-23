@@ -1,48 +1,48 @@
 <domain type='kvm'>
-  <name>${user}_${name}</name>
-  <uuid>${uuid}</uuid>
-  <metadata>
-    <marmoset>
-      <user>${user}</user>
-      <name>${name}</name>
-    </marmoset>
-  </metadata>
-  <memory unit='${unit}'>${memory}</memory>
-  <vcpu>${vcpu}</vcpu>
-  <os>
-    <type arch='x86_64'>hvm</type>
-    <boot dev='network'/>
-    <boot dev='hd'/>
-    <bootmenu enable='yes'/>
-  </os>
-  <cpu mode='custom' match='exact'>
-    <model fallback='allow'>Opteron_G4</model>
-  </cpu>
-  <features>
-    <acpi/>
-    <apic/>
-    <pae/>
-  </features>
-  <clock offset='utc'>
-    <timer name='rtc' tickpolicy='catchup'/>
-    <timer name='pit' tickpolicy='delay'/>
-    <timer name='hpet' present='no'/>
-  </clock>
-  <on_poweroff>destroy</on_poweroff>
-  <on_reboot>destroy</on_reboot>
-  <on_crash>destroy</on_crash>
-  <pm>
-    <suspend-to-mem enabled='no'/>
-    <suspend-to-disk enabled='no'/>
-  </pm>
-  <devices>
-    <emulator>/usr/bin/qemu-system-x86_64</emulator>
-    ${disks}
-    ${interfaces}
-    <console/>
-    <input type='tablet' bus='usb'>
-      <alias name='input0'/>
-    </input>
-    <graphics type='vnc' port='-1' websocket='-1' passwd='${password}' keymap='de'/>
-  </devices>
+    <name>${user}_${name}</name>
+    <uuid>${uuid}</uuid>
+    <metadata>
+        <marmoset>
+            <user>${user}</user>
+            <name>${name}</name>
+        </marmoset>
+    </metadata>
+    <memory unit='${unit}'>${memory}</memory>
+    <vcpu>${vcpu}</vcpu>
+    <os>
+        <type arch='x86_64'>hvm</type>
+        <boot dev='network'/>
+        <boot dev='hd'/>
+        <bootmenu enable='yes'/>
+    </os>
+    <cpu mode='custom' match='exact'>
+        <model fallback='allow'>Opteron_G4</model>
+    </cpu>
+    <features>
+        <acpi/>
+        <apic/>
+        <pae/>
+    </features>
+    <clock offset='utc'>
+        <timer name='rtc' tickpolicy='catchup'/>
+        <timer name='pit' tickpolicy='delay'/>
+        <timer name='hpet' present='no'/>
+    </clock>
+    <on_poweroff>destroy</on_poweroff>
+    <on_reboot>destroy</on_reboot>
+    <on_crash>destroy</on_crash>
+    <pm>
+        <suspend-to-mem enabled='no'/>
+        <suspend-to-disk enabled='no'/>
+    </pm>
+    <devices>
+        <emulator>/usr/bin/qemu-system-x86_64</emulator>
+        ${disks}
+        ${interfaces}
+        <console/>
+        <input type='tablet' bus='usb'>
+            <alias name='input0'/>
+        </input>
+        <graphics type='vnc' port='-1' websocket='-1' passwd='${password}' keymap='de'/>
+    </devices>
 </domain>

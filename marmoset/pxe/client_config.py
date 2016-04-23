@@ -1,12 +1,15 @@
-import os, re, crypt, base64
-from textwrap import dedent
+import base64
+import crypt
+import os
+import re
 from string import Template as Stringtemplate
+from textwrap import dedent
 from uuid import UUID, uuid4
+
 from marmoset import validation
 
 
 class ClientConfig:
-
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
 
     CFG_TEMPLATE = Stringtemplate(dedent('''\
@@ -19,7 +22,6 @@ class ClientConfig:
             APPEND ${label} ${options}
         '''))
 
-
     @classmethod
     def all(cls):
         '''Return all currently defined client configs.'''
@@ -29,12 +31,10 @@ class ClientConfig:
                 entries.append(ClientConfig(entry_file))
         return entries
 
-
     @classmethod
     def has_callback(cls, name):
         '''Return if the class provides the given callback method.'''
         return name in cls.callbacks()
-
 
     @classmethod
     def callbacks(cls):
@@ -58,7 +58,7 @@ class ClientConfig:
 
         # if uuid is passed, validate it. In case validation fails
         # a new uuid is generated
-        if uuid is None :
+        if uuid is None:
             self.uuid = None
         else:
             if validation.is_uuid(uuid):
@@ -80,11 +80,9 @@ class ClientConfig:
         if not password in [None, '']:
             self.password = password
 
-
     def exists(self):
         '''Return if there is a config file for this instance.'''
         return os.path.isfile(self.file_path())
-
 
     def get_label(self):
         '''Parse the label form the config file.'''
@@ -133,7 +131,6 @@ class ClientConfig:
 
         return options
 
-
     def remove(self):
         '''Remove the config file for this instance.'''
         if self.exists():
@@ -142,12 +139,10 @@ class ClientConfig:
         else:
             return False
 
-
     def file_name(self):
         '''Return the file name in the PXE file name style.'''
         octets = map(int, self.ip_address.split('.'))
         return "%02X%02X%02X%02X" % tuple(octets)
-
 
     def file_path(self, name=None):
         '''Return the path to the config file of th instance.'''
@@ -156,7 +151,6 @@ class ClientConfig:
 
         cfgdir = ClientConfig.CFG_DIR.rstrip('/')
         return cfgdir + '/' + name
-
 
     def __write_config_file(self, content, path=None):
         if path is None:
@@ -167,8 +161,7 @@ class ClientConfig:
         f.write(content)
         f.close()
 
-
-    def __expand_template(self, label, options = None):
+    def __expand_template(self, label, options=None):
         '''Return the config file content expanded with the given values.'''
 
         if options is not None:
@@ -180,7 +173,6 @@ class ClientConfig:
         return template.substitute(label=label,
                                    options=options)
 
-
     def __mkpwhash(self):
         '''Return the hashed password. The password attribute is set if not present.'''
         if 'password' not in vars(self) or self.password in [None, '']:
@@ -188,20 +180,16 @@ class ClientConfig:
             self.password = pw.decode('utf-8')
         return crypt.crypt(self.password, self.__mksalt())
 
-
     def __mksalt(self):
         '''Return a crypt style salt string.'''
         return crypt.mksalt(crypt.METHOD_SHA512)
 
-
     def cb_setpwhash(self):
         '''Callback that adds a HASH= string to the command line.'''
         return 'HASH=' + self.__mkpwhash()
-
 
     def cb_createpwhashfile(self):
         '''Callback that creates a password hash file.'''
         file_path = self.file_path('PWHASH.' + self.ip_address)
         self.__write_config_file(self.__mkpwhash(), file_path)
         return None
-

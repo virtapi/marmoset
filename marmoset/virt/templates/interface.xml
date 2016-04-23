@@ -1,4 +1,4 @@
 <interface type='network'>
-  <source network='${network}'/>
-  <model type='${model}'/>
+    <source network='${network}'/>
+    <model type='${model}'/>
 </interface>

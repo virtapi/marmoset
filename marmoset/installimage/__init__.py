@@ -13,6 +13,7 @@ def create(args):
 
     print(msg)
 
+
 def list(args):
     for install_config in InstallimageConfig.all():
         print('%s' % install_config.mac)
@@ -24,4 +25,3 @@ def remove(args):
         print('Removed', install_config.file_path())
     else:
         print('No entry found for', install_config.mac)
-

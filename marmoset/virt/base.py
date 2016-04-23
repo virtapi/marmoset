@@ -1,12 +1,11 @@
+import xml.etree.ElementTree as ET
 from contextlib import contextmanager, closing
-from functools import wraps
 from os import path, urandom
 from re import match
-import libvirt, base64
-from .exceptions import Error
-import xml.etree.ElementTree as ET
 from string import Template
 
+import base64
+import libvirt
 
 URI = 'qemu:///system'
 
@@ -19,6 +18,7 @@ def connection():
     with closing(libvirt.open(URI)) as conn:
         yield conn
 
+
 def with_unit(value):
     """
     Return a string of the converted numerical @value with the proper
@@ -28,11 +28,12 @@ def with_unit(value):
     for unit in units:
         if value < 1024 or unit == units[-1]:
             break
-        elif value < 1024**2 and value % 1024 != 0:
+        elif value < 1024 ** 2 and value % 1024 != 0:
             break
         else:
             value = value / 1024
     return "%d %s" % (value, unit)
+
 
 def parse_unit(obj):
     """
@@ -50,12 +51,12 @@ def parse_unit(obj):
         value, unit = obj, None
     return int(value), (unit if unit else 'b')
 
-def generate_password(length = 32):
+
+def generate_password(length=32):
     return base64.b64encode(urandom(length)).decode()[:length]
 
 
 class Virt:
-
     TEMPLATE_DIR = path.join(path.dirname(__file__), 'templates')
 
     @classmethod
@@ -68,7 +69,6 @@ class Virt:
         with open(cls.template_file()) as f:
             template = Template(f.read())
         return template.substitute(substitutes)
-
 
     def attributes(self):
         attrs = {}
@@ -83,7 +83,6 @@ class Virt:
 
 
 class Parent(Virt):
-
     _func = {}
 
     @classmethod
@@ -122,7 +121,6 @@ class Parent(Virt):
             except libvirt.libvirtError:
                 return None
 
-
     def __init__(self, resource):
         self._resource = resource
 
@@ -136,7 +134,6 @@ class Parent(Virt):
 
 
 class Child(Virt):
-
     def __init__(self, xml, parent):
         """
         @xml: Libvirt XML Description of the resource part
@@ -144,5 +141,3 @@ class Child(Virt):
         """
         self._xml = xml
         self._parent = parent
-
-

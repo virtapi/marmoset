@@ -1,9 +1,10 @@
-from ldap3 import Server, Connection, ALL, SUBTREE, BASE, ALL_ATTRIBUTES, ALL_OPERATIONAL_ATTRIBUTES
+import re
 from datetime import datetime
+
+from ldap3 import Server, Connection, ALL, SUBTREE, ALL_ATTRIBUTES, ALL_OPERATIONAL_ATTRIBUTES
+
 from marmoset import config as config_reader
 from marmoset import validation
-
-import re
 
 config = config_reader.load()
 

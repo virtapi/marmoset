@@ -1,10 +1,11 @@
 from flask import request
-from flask.ext.restful import reqparse
 from flask.ext.restful import Resource
-from flask.ext.restful import url_for
 from flask.ext.restful import abort
-from marmoset import dhcp
+from flask.ext.restful import reqparse
+from flask.ext.restful import url_for
+
 from marmoset import config as config_reader
+from marmoset import dhcp
 from marmoset import validation
 
 config = config_reader.load()

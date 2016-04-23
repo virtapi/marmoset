@@ -1,5 +1,5 @@
 <disk type='block' device='disk'>
-  <source dev='${path}'/>
-  <backingStore/>
-  <target dev='${target}' bus='${bus}'/>
+    <source dev='${path}'/>
+    <backingStore/>
+    <target dev='${target}' bus='${bus}'/>
 </disk>
