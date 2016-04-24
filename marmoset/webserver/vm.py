@@ -1,6 +1,5 @@
-from flask import request
-from flask.ext.restful import reqparse, Resource, url_for, abort
-from werkzeug.exceptions import NotFound
+from flask.ext.restful import reqparse, Resource, abort
+
 from .. import virt
 
 
@@ -13,7 +12,6 @@ def find_domain(uuid):
 
 
 class VMCollection(Resource):
-
     def get(self):
         domains = virt.Domain.all()
         return [d.attributes() for d in domains]
@@ -32,14 +30,13 @@ class VMCollection(Resource):
             domain = virt.create(args)
             return domain.attributes()
         except Exception as e:
-            abort(422, message = str(e))
+            abort(422, message=str(e))
 
 
 class VMObject(Resource):
-
     def get(self, uuid):
-       domain = find_domain(uuid)
-       return domain.attributes()
+        domain = find_domain(uuid)
+        return domain.attributes()
 
     def put(self, uuid):
         domain = find_domain(uuid)
@@ -52,23 +49,21 @@ class VMObject(Resource):
             domain = virt.edit(domain, args)
             return domain.attributes()
         except Exception as e:
-            abort(422, message = str(e))
-
+            abort(422, message=str(e))
 
     def delete(self, uuid):
         try:
-            virt.remove(dict(uuid = uuid))
+            virt.remove(dict(uuid=uuid))
             return '', 204
         except Exception as e:
-            abort(422, message = str(e))
+            abort(422, message=str(e))
 
 
 class VMCommand(Resource):
-
     def put(self, uuid):
         parser = reqparse.RequestParser()
         parser.add_argument('command', type=str, required=True,
-                choices=['start', 'stop', 'shutdown', 'reset'])
+                            choices=['start', 'stop', 'shutdown', 'reset'])
         parser.add_argument('params', type=str, action='append', default=[])
         args = parser.parse_args()
         domain = find_domain(uuid)
@@ -76,5 +71,4 @@ class VMCommand(Resource):
             res = getattr(domain, args.command)(*args.params)
             return ('', 204) if not res else (res, 200)
         except Exception as e:
-            abort(422, message = str(e))
-
+            abort(422, message=str(e))

@@ -1,8 +1,6 @@
-from flask import request
 from flask.ext.restful import reqparse, Resource, url_for, abort
-from werkzeug.exceptions import NotFound
-from .. import pxe
 
+from .. import pxe
 
 parser = reqparse.RequestParser()
 parser.add_argument('ip_address', type=str)
@@ -11,12 +9,11 @@ parser.add_argument('script', type=str, default=None)
 parser.add_argument('uuid', type=str, default=None)
 parser.add_argument('label', type=str, choices=pxe.Label.names(), default=pxe.Label.names()[0])
 
-class PXECollection(Resource):
 
+class PXECollection(Resource):
     def get(self):
         '''List all PXE entries.'''
         return [vars(c) for c in pxe.ClientConfig.all()]
-
 
     def post(self):
         """Add a PXE entry for the given ip_address. Password, uuid and script
@@ -37,7 +34,6 @@ class PXECollection(Resource):
 
 
 class PXEObject(Resource):
-
     def get(self, ip_address):
         '''Lookup a PXE entry for the given ip_address.'''
         re = pxe.ClientConfig(ip_address)
@@ -46,8 +42,7 @@ class PXEObject(Resource):
         else:
             abort(404)
 
-
-    def delete(self,ip_address):
+    def delete(self, ip_address):
         '''Remove a PXE entry for the given ip_address.'''
         re = pxe.ClientConfig(ip_address)
         if re.exists():
@@ -55,4 +50,3 @@ class PXEObject(Resource):
             return '', 204
         else:
             abort(404)
-

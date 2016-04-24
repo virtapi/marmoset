@@ -31,4 +31,3 @@ def app(import_name, **kwargs):
         app.error_handler_spec[None][code] = error
 
     return app
-

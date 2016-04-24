@@ -1,5 +1,5 @@
-from .label import Label
 from .client_config import ClientConfig
+from .label import Label
 
 
 def create(args):
@@ -9,6 +9,7 @@ def create(args):
     msg = 'Created %s with following Options: %s'
 
     print(msg % (pxe_client.file_path(), " ".join(used_options)))
+
 
 def list(args):
     for pxe_client in ClientConfig.all():
@@ -21,4 +22,3 @@ def remove(args):
         print('Removed', pxe_client.file_path())
     else:
         print('No entry found for', pxe_client.ip_address)
-

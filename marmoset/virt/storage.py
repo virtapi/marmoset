@@ -1,4 +1,5 @@
 from string import Template
+
 from . import base
 
 
@@ -6,10 +7,10 @@ class Storage(base.Parent):
     DEFAULT = 'default'
 
     _func = dict(
-        all     = 'listAllStoragePools',
-        uuid    = 'storagePoolLookupByUUIDString',
-        name    = 'storagePoolLookupByName',
-        path    = 'storagePoolLookupByPath'
+        all='listAllStoragePools',
+        uuid='storagePoolLookupByUUIDString',
+        name='storagePoolLookupByName',
+        path='storagePoolLookupByPath'
     )
 
     @property
@@ -38,8 +39,8 @@ class Storage(base.Parent):
 
 class Volume(base.Parent):
     _func = dict(
-        key     = 'storageVolLookupByKey',
-        path    = 'storageVolLookupByPath'
+        key='storageVolLookupByKey',
+        path='storageVolLookupByPath'
     )
 
     Types = {
@@ -49,7 +50,6 @@ class Volume(base.Parent):
         3: 'network',
         4: 'netdir'
     }
-
 
     def info(self):
         keys = ['type', 'capacity', 'allocation']
@@ -74,4 +74,3 @@ class Volume(base.Parent):
     @property
     def type(self):
         return self.__class__.Types[self.info()['type']]
-

@@ -5,10 +5,10 @@ class Network(base.Parent):
     DEFAULT = 'default'
 
     _func = dict(
-        all     = 'listAllNetworks',
-        uuid    = 'networkLookupByUUIDString',
-        id      = 'networkLookupByID',
-        name    = 'networkLookupByName'
+        all='listAllNetworks',
+        uuid='networkLookupByUUIDString',
+        id='networkLookupByID',
+        name='networkLookupByName'
     )
 
     @property
@@ -40,7 +40,7 @@ class Network(base.Parent):
         host = self.get_xml().find(xpath)
         return False if host is None else True
 
-    def add_host(self, mac_address, ip_address, name = ''):
+    def add_host(self, mac_address, ip_address, name=''):
         attrs = {k: v for k, v in locals().items() if k != 'self'}
         self._update_hosts('add', **attrs)
         return Network.Host(self.get_host(mac_address), self)
@@ -49,10 +49,9 @@ class Network(base.Parent):
         """
         https://www.libvirt.org/html/libvirt-libvirt-network.html
         """
-        commands = dict(add = 3, delete = 2, modify = 1)
+        commands = dict(add=3, delete=2, modify=1)
         xml = Network.Host.XML.format(**kwargs)
         self._resource.update(commands[command], 4, -1, xml)
-
 
     class Host(base.Child):
 
@@ -80,5 +79,3 @@ class Network(base.Parent):
 
         def delete(self):
             self._parent._update_hosts('delete', **self.attributes())
-
-

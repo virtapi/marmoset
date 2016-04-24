@@ -1,9 +1,10 @@
-from os import path
 import configparser
-import warnings
 import socket
+import warnings
+from os import path
 
 PATH = path.join(path.dirname(__file__), '../marmoset.conf')
+
 
 def default():
     config = configparser.ConfigParser()
@@ -13,32 +14,33 @@ def default():
     )
 
     config['Modules'] = dict(
-        Webserver = 'True',
-        PXE = 'True',
-        VM = 'True'
+        Webserver='True',
+        PXE='True',
+        VM='True'
     )
 
     config['Webserver'] = dict(
-        Username    = 'admin',
-        Password    = 'secret',
-        BasicRealm  = __name__
+        Username='admin',
+        Password='secret',
+        BasicRealm=__name__
     )
 
     config['PXEConfig'] = dict(
-        ConfigDirectory = '/srv/tftp/pxelinux.cfg'
+        ConfigDirectory='/srv/tftp/pxelinux.cfg'
     )
 
-    config['PXELabel']  = dict(
+    config['PXELabel'] = dict(
     )
 
-    config['Libvirt']   = dict(
-        URI = 'qemu:///system',
-        Network = 'internet',
-        StoragePool = 'storage'
+    config['Libvirt'] = dict(
+        URI='qemu:///system',
+        Network='internet',
+        StoragePool='storage'
     )
     return config
 
-def read_file(file_path = None):
+
+def read_file(file_path=None):
     global PATH
     config = default()
     if file_path is None:
@@ -49,7 +51,8 @@ def read_file(file_path = None):
         warnings.warn('config file not found: {}'.format(file_path))
     return config
 
-def load(file_path = None):
+
+def load(file_path=None):
     config = read_file(file_path)
 
     if config['Modules'].getboolean('PXE'):
@@ -73,13 +76,12 @@ def load(file_path = None):
         if config['Libvirt'].get('XMLTemplateDirectory'):
             virt.Virt.TEMPLATE_DIR = config['Libvirt']['XMLTemplateDirectory']
 
-        virt.base.URI           = config['Libvirt'].get('URI')
-        virt.Network.DEFAULT    = config['Libvirt'].get('Network', 'default')
-        virt.Storage.DEFAULT    = config['Libvirt'].get('Storage', 'default')
+        virt.base.URI = config['Libvirt'].get('URI')
+        virt.Network.DEFAULT = config['Libvirt'].get('Network', 'default')
+        virt.Storage.DEFAULT = config['Libvirt'].get('Storage', 'default')
 
     if config['Modules'].getboolean('Webserver'):
         from . import webserver
         webserver.config = config
 
     return config
-

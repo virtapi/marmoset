@@ -1,5 +1,5 @@
 <volume>
-  <name>${name}</name>
-  <allocation unit='${aunit}'>${allocation}</allocation>
-  <capacity unit='${cunit}'>${capacity}</capacity>
+    <name>${name}</name>
+    <allocation unit='${aunit}'>${allocation}</allocation>
+    <capacity unit='${cunit}'>${capacity}</capacity>
 </volume>

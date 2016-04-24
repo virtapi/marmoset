@@ -1,6 +1,6 @@
-from .isc_dhcp_ldap_config import ISCDhcpLdapConfig
-from marmoset import validation
 from marmoset import config as config_reader
+from marmoset import validation
+from .isc_dhcp_ldap_config import ISCDhcpLdapConfig
 
 config = config_reader.load()
 

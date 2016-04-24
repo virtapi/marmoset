@@ -1,10 +1,8 @@
 from flask import request, make_response
-from flask.ext.restful import reqparse, Resource, url_for, abort
-from werkzeug.exceptions import NotFound
-from .. import installimage
-from ..installimage.req_argument_parser import ReqArgumentParser
-from ..installimage.installimage_config import InstallimageConfig
+from flask.ext.restful import Resource, url_for, abort
 
+from ..installimage.installimage_config import InstallimageConfig
+from ..installimage.req_argument_parser import ReqArgumentParser
 
 parser = ReqArgumentParser()
 

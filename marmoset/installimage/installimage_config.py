@@ -1,6 +1,7 @@
 import os
 import re
 
+
 class InstallimageConfig:
     CFG_DIR = '/srv/tftp/installimage/'
 
