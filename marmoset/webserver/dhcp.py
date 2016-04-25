@@ -91,7 +91,7 @@ class DhcpIpv4Object(Resource):
                             args_item.name is not 'gateway' and args_item.name is not 'networkmask':
                 dhcp_config.add_additional_statement(args_item.name, args[args_item.name])
 
-        dhcp_config.remove()
+        dhcp_config.remove_by_ipv4()
 
         dhcp_config.create_isc_ldap()
 
@@ -141,7 +141,7 @@ class DhcpMacObject(Resource):
                             args_item.name is not 'gateway' and args_item.name is not 'networkmask':
                 dhcp_config.add_additional_statement(args_item.name, args[args_item.name])
 
-        dhcp_config.remove()
+        dhcp_config.remove_by_mac()
 
         dhcp_config.create_isc_ldap()
 
