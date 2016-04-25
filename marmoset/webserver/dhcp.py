@@ -40,6 +40,14 @@ class DhcpCollection(Resource):
         if not validation.is_mac(args.mac):
             return {'message': 'please provide a valid mac address'}, 406
 
+        if dhcp.DhcpConfig.exists_ipv4(args.ip_address):
+            return {'message': 'dhcp record for ip address %s already exists' %
+                    args.ip_address}, 409
+
+        if dhcp.DhcpConfig.exists_mac(args.mac):
+            return {'message': 'dhcp record for mac address %s already exists' %
+                    args.mac}, 409
+
         dhcp_config = dhcp.DhcpConfig(args.mac, args.ip_address, args.gateway, args.networkmask)
 
         for args_item in parser.args:
