@@ -3,11 +3,12 @@ import re
 
 
 class InstallimageConfig:
+    """Handles installimage configuration for clients"""
     CFG_DIR = '/srv/tftp/installimage/'
 
     @classmethod
     def all(cls):
-        '''Return all currently defined installimage configs.'''
+        """Return all currently defined installimage configs."""
         entries = []
         for entry_file in os.listdir(InstallimageConfig.CFG_DIR):
             if re.match('([0-9A-Za-z]{2}_){5}[0-9A-Za-z]{2}', entry_file):
@@ -22,16 +23,19 @@ class InstallimageConfig:
             self.__read_config_file()
 
     def add_or_set(self, key, value):
+        """adds a new key/value to the config"""
         self.variables[key.upper()] = value
 
     def create(self):
+        """writes the config from memory to disk"""
         self.__write_config_file()
 
     def exists(self):
+        """check if a config is already present on the disk"""
         return os.path.isfile(self.file_path())
 
     def remove(self):
-        '''Remove the installimage file for this instance.'''
+        """Remove the installimage file for this instance."""
         if self.exists():
             os.remove(self.file_path())
             return True
@@ -39,12 +43,11 @@ class InstallimageConfig:
             return False
 
     def file_name(self):
-        '''Return the file name in the Installimage file name style.'''
-
+        """Return the file name in the Installimage file name style."""
         return self.mac.replace(":", "_")
 
     def file_path(self, name=None):
-        '''Return the path to the config file of th instance.'''
+        """Return the path to the config file of th instance."""
         if name is None:
             name = self.file_name()
 
@@ -57,9 +60,9 @@ class InstallimageConfig:
 
         lines = []
 
-        with open(path, 'r') as f:
-            lines = f.readlines()
-            f.close()
+        with open(path, 'r') as file:
+            lines = file.readlines()
+            file.close()
 
         for line in lines:
             if len(line.strip()) > 0:
@@ -69,6 +72,7 @@ class InstallimageConfig:
                 self.variables[key] = value
 
     def get_content(self):
+        """reads a config and parses it"""
         variable_lines = []
         for key in self.variables:
             variable_lines.append("%s %s" % (key, self.variables[key]))
@@ -87,6 +91,6 @@ class InstallimageConfig:
         content = self.get_content()
 
         os.makedirs(InstallimageConfig.CFG_DIR, exist_ok=True)
-        with open(path, 'w') as f:
-            f.write(content)
-            f.close()
+        with open(path, 'w') as file:
+            file.write(content)
+            file.close()
