@@ -17,7 +17,7 @@ parser.add_argument(
 class PXECollection(Resource):
 
     def get(self):
-        '''List all PXE entries.'''
+        """List all PXE entries."""
         return [vars(c) for c in pxe.ClientConfig.all()]
 
     def post(self):
@@ -48,7 +48,7 @@ class PXECollection(Resource):
 class PXEObject(Resource):
 
     def get(self, ip_address):
-        '''Lookup a PXE entry for the given ip_address.'''
+        """Lookup a PXE entry for the given ip_address."""
         re = pxe.ClientConfig(ip_address)
         if re.exists():
             return vars(re)
@@ -56,7 +56,7 @@ class PXEObject(Resource):
             abort(404)
 
     def delete(self, ip_address):
-        '''Remove a PXE entry for the given ip_address.'''
+        """Remove a PXE entry for the given ip_address."""
         re = pxe.ClientConfig(ip_address)
         if re.exists():
             re.remove()
