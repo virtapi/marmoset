@@ -12,18 +12,13 @@ URI = 'qemu:///system'
 
 @contextmanager
 def connection():
-    """
-    Return a contextmanager for a libvirt connection.
-    """
+    """Return a contextmanager for a libvirt connection."""
     with closing(libvirt.open(URI)) as conn:
         yield conn
 
 
 def with_unit(value):
-    """
-    Return a string of the converted numerical @value with the proper
-    unit name.
-    """
+    """Return a string of the converted numerical @value with the proper unit name."""
     units = ['b', 'KiB', 'MiB', 'GiB', 'TiB']
     for unit in units:
         if value < 1024 or unit == units[-1]:
@@ -53,14 +48,17 @@ def parse_unit(obj):
 
 
 def generate_password(length=32):
+    """creates a random base64 encoded string"""
     return base64.b64encode(urandom(length)).decode()[:length]
 
 
 class Virt:
+    """Base class for handling all the virtualization related stuff in marmoset"""
     TEMPLATE_DIR = path.join(path.dirname(__file__), 'templates')
 
     @classmethod
     def template_file(cls):
+        """Returns the file path to a template"""
         file_name = cls.__name__.lower() + '.xml'
         return path.join(cls.TEMPLATE_DIR, file_name)
 
