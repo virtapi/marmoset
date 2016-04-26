@@ -10,6 +10,7 @@ from marmoset import validation
 
 
 class ClientConfig:
+    """Class to handle PXE configs for clients"""
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
 
     CFG_TEMPLATE = Stringtemplate(dedent('''\
@@ -24,7 +25,7 @@ class ClientConfig:
 
     @classmethod
     def all(cls):
-        '''Return all currently defined client configs.'''
+        """Return all currently defined client configs."""
         entries = []
         for entry_file in os.listdir(ClientConfig.CFG_DIR):
             if re.match('[0-9A-Z]{8}', entry_file):
@@ -33,12 +34,12 @@ class ClientConfig:
 
     @classmethod
     def has_callback(cls, name):
-        '''Return if the class provides the given callback method.'''
+        """Return if the class provides the given callback method."""
         return name in cls.callbacks()
 
     @classmethod
     def callbacks(cls):
-        '''List all available callback methods.'''
+        """List all available callback methods."""
         cbs = []
         for m in dir(cls):
             if m[:3] == 'cb_':
@@ -81,11 +82,11 @@ class ClientConfig:
             self.password = password
 
     def exists(self):
-        '''Return if there is a config file for this instance.'''
+        """Return if there is a config file for this instance."""
         return os.path.isfile(self.file_path())
 
     def get_label(self):
-        '''Parse the label form the config file.'''
+        """Parse the label form the config file."""
         with open(self.file_path()) as f:
             for line in f:
                 m = re.match(' *APPEND (\w+)', line)
@@ -93,7 +94,7 @@ class ClientConfig:
                     return m.group(1)
 
     def get_script(self):
-        '''Parse the script option form the config file.'''
+        """Parse the script option form the config file."""
         with open(self.file_path()) as f:
             for line in f:
                 m = re.match(' *APPEND.*script=(\S+)', line)
@@ -101,7 +102,7 @@ class ClientConfig:
                     return m.group(1)
 
     def get_uuid(self):
-        """ Parse the uuid option from the config file."""
+        """Parse the uuid option from the config file."""
         with open(self.file_path()) as f:
             for line in f:
                 m = re.match(' *APPEND.*UUID=(\S+)', line)
@@ -109,7 +110,7 @@ class ClientConfig:
                     return m.group(1)
 
     def create(self, pxe_label):
-        '''Create the config file for this instance.'''
+        """Create the config file for this instance."""
         options = []
         if pxe_label.callback is not None:
             func = getattr(self, 'cb_%s' % pxe_label.callback)
@@ -132,7 +133,7 @@ class ClientConfig:
         return options
 
     def remove(self):
-        '''Remove the config file for this instance.'''
+        """Remove the config file for this instance."""
         if self.exists():
             os.remove(self.file_path())
             return True
@@ -140,12 +141,12 @@ class ClientConfig:
             return False
 
     def file_name(self):
-        '''Return the file name in the PXE file name style.'''
+        """Return the file name in the PXE file name style."""
         octets = map(int, self.ip_address.split('.'))
         return "%02X%02X%02X%02X" % tuple(octets)
 
     def file_path(self, name=None):
-        '''Return the path to the config file of th instance.'''
+        """Return the path to the config file of th instance."""
         if name is None:
             name = self.file_name()
 
@@ -162,7 +163,7 @@ class ClientConfig:
         f.close()
 
     def __expand_template(self, label, options=None):
-        '''Return the config file content expanded with the given values.'''
+        """Return the config file content expanded with the given values."""
 
         if options is not None:
             options = " ".join(options)
@@ -174,22 +175,22 @@ class ClientConfig:
                                    options=options)
 
     def __mkpwhash(self):
-        '''Return the hashed password. The password attribute is set if not present.'''
+        """Return the hashed password. The password attribute is set if not present."""
         if 'password' not in vars(self) or self.password in [None, '']:
             pw = base64.b64encode(os.urandom(16), b'-_')[:16]
             self.password = pw.decode('utf-8')
         return crypt.crypt(self.password, self.__mksalt())
 
     def __mksalt(self):
-        '''Return a crypt style salt string.'''
+        """Return a crypt style salt string."""
         return crypt.mksalt(crypt.METHOD_SHA512)
 
     def cb_setpwhash(self):
-        '''Callback that adds a HASH= string to the command line.'''
+        """Callback that adds a HASH= string to the command line."""
         return 'HASH=' + self.__mkpwhash()
 
     def cb_createpwhashfile(self):
-        '''Callback that creates a password hash file.'''
+        """Callback that creates a password hash file."""
         file_path = self.file_path('PWHASH.' + self.ip_address)
         self.__write_config_file(self.__mkpwhash(), file_path)
         return None
