@@ -3,11 +3,12 @@ from .exceptions import InputError
 
 
 class Label:
+    """class to handle PXE lables"""
     __instances = []
 
     @classmethod
     def find(cls, name):
-        '''Return the instance with the given name.'''
+        """Return the instance with the given name."""
         for i in cls.__instances:
             if name == i.name:
                 return i
