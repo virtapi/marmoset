@@ -1,3 +1,4 @@
+"""File for dealing with PXE lables"""
 from .client_config import ClientConfig
 from .exceptions import InputError
 
