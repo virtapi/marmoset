@@ -40,8 +40,12 @@ def app(config):
     if config['Modules'].getboolean('INSTALLIMAGE'):
         from . import installimage
         api.add_resource(installimage.InstallimageCollection, '/installimage')
-        api.add_resource(installimage.InstallimageObject, '/installimage/<mac>')
-        api.add_resource(installimage.InstallimageConfigCommand, '/installimage/<mac>/config')
+        api.add_resource(
+            installimage.InstallimageObject,
+            '/installimage/<mac>')
+        api.add_resource(
+            installimage.InstallimageConfigCommand,
+            '/installimage/<mac>/config')
 
     if config['Modules'].getboolean('DHCP'):
         from . import dhcp

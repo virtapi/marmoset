@@ -9,7 +9,8 @@ def create(args):
 
     install_config.create()
 
-    msg = 'Created %s with following Options:\n%s' % (install_config.file_path(), install_config.get_content())
+    msg = 'Created %s with following Options:\n%s' % (
+        install_config.file_path(), install_config.get_content())
 
     print(msg)
 

@@ -12,6 +12,7 @@ def find_domain(uuid):
 
 
 class VMCollection(Resource):
+
     def get(self):
         domains = virt.Domain.all()
         return [d.attributes() for d in domains]
@@ -34,6 +35,7 @@ class VMCollection(Resource):
 
 
 class VMObject(Resource):
+
     def get(self, uuid):
         domain = find_domain(uuid)
         return domain.attributes()
@@ -60,6 +62,7 @@ class VMObject(Resource):
 
 
 class VMCommand(Resource):
+
     def put(self, uuid):
         parser = reqparse.RequestParser()
         parser.add_argument('command', type=str, required=True,

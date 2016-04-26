@@ -68,7 +68,8 @@ def load(file_path=None):
     if config['Modules'].getboolean('Installimage'):
         from marmoset import installimage
 
-        installimage.InstallimageConfig.CFG_DIR = config['Installimage'].get('ConfigDirectory')
+        installimage.InstallimageConfig.CFG_DIR = config[
+            'Installimage'].get('ConfigDirectory')
 
     if config['Modules'].getboolean('VM'):
         from . import virt

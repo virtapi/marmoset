@@ -8,11 +8,13 @@ parser = ReqArgumentParser()
 
 
 class InstallimageCollection(Resource):
+
     def get(self):
         return [vars(c) for c in InstallimageConfig.all()]
 
 
 class InstallimageObject(Resource):
+
     def get(self, mac):
         installimage_config = InstallimageConfig(mac)
 
@@ -31,7 +33,10 @@ class InstallimageObject(Resource):
 
         installimage_config.create()
 
-        location = url_for('installimageobject', _method='GET', mac=installimage_config.mac)
+        location = url_for(
+            'installimageobject',
+            _method='GET',
+            mac=installimage_config.mac)
         return vars(installimage_config), 201, {'Location': location}
 
     def delete(self, mac):
@@ -45,6 +50,7 @@ class InstallimageObject(Resource):
 
 
 class InstallimageConfigCommand(Resource):
+
     def get(self, mac):
         installimage_config = InstallimageConfig(mac)
 

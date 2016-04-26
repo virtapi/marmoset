@@ -107,6 +107,7 @@ class Domain(base.Parent):
             raise Error(str(e))
 
     class Disk(base.Child):
+
         @property
         def path(self):
             return self._xml.find('source').attrib.get('dev')
@@ -138,6 +139,7 @@ class Domain(base.Parent):
             return dict(zip(keys, values))
 
     class Interface(base.Child):
+
         @property
         def type(self):
             return self._xml.attrib['type']

@@ -134,6 +134,7 @@ class Parent(Virt):
 
 
 class Child(Virt):
+
     def __init__(self, xml, parent):
         """
         @xml: Libvirt XML Description of the resource part
