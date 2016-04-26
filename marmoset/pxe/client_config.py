@@ -1,3 +1,4 @@
+"""file for dealing with PXE client configs"""
 import base64
 import crypt
 import os
@@ -41,9 +42,9 @@ class ClientConfig:
     def callbacks(cls):
         """List all available callback methods."""
         cbs = []
-        for m in dir(cls):
-            if m[:3] == 'cb_':
-                cbs.append(m[3:])
+        for method in dir(cls):
+            if method[:3] == 'cb_':
+                cbs.append(method[3:])
         return cbs
 
     def __init__(self, ip_address, password=None, script=None, uuid=None):
@@ -87,27 +88,27 @@ class ClientConfig:
 
     def get_label(self):
         """Parse the label form the config file."""
-        with open(self.file_path()) as f:
-            for line in f:
-                m = re.match(' *APPEND (\w+)', line)
-                if m is not None:
-                    return m.group(1)
+        with open(self.file_path()) as file:
+            for line in file:
+                option = re.match(' *APPEND (\w+)', line)
+                if option is not None:
+                    return option.group(1)
 
     def get_script(self):
         """Parse the script option form the config file."""
-        with open(self.file_path()) as f:
-            for line in f:
-                m = re.match(' *APPEND.*script=(\S+)', line)
-                if m is not None:
-                    return m.group(1)
+        with open(self.file_path()) as file:
+            for line in file:
+                option = re.match(' *APPEND.*script=(\S+)', line)
+                if option is not None:
+                    return option.group(1)
 
     def get_uuid(self):
         """Parse the uuid option from the config file."""
-        with open(self.file_path()) as f:
-            for line in f:
-                m = re.match(' *APPEND.*UUID=(\S+)', line)
-                if m is not None:
-                    return m.group(1)
+        with open(self.file_path()) as file:
+            for line in file:
+                option = re.match(' *APPEND.*UUID=(\S+)', line)
+                if option is not None:
+                    return option.group(1)
 
     def create(self, pxe_label):
         """Create the config file for this instance."""
@@ -158,9 +159,9 @@ class ClientConfig:
             path = self.file_path()
 
         os.makedirs(ClientConfig.CFG_DIR, exist_ok=True)
-        f = open(path, 'w')
-        f.write(content)
-        f.close()
+        file = open(path, 'w')
+        file.write(content)
+        file.close()
 
     def __expand_template(self, label, options=None):
         """Return the config file content expanded with the given values."""
@@ -177,8 +178,8 @@ class ClientConfig:
     def __mkpwhash(self):
         """Return the hashed password. The password attribute is set if not present."""
         if 'password' not in vars(self) or self.password in [None, '']:
-            pw = base64.b64encode(os.urandom(16), b'-_')[:16]
-            self.password = pw.decode('utf-8')
+            password = base64.b64encode(os.urandom(16), b'-_')[:16]
+            self.password = password.decode('utf-8')
         return crypt.crypt(self.password, self.__mksalt())
 
     def __mksalt(self):
