@@ -7,6 +7,7 @@ from .storage import Storage
 
 
 def create(args):
+    """creates a libvirt domain"""
     network = Network.find_by('name', Network.DEFAULT)
     if network.knows_ip_address(args.ip_address):
         raise Exception('IP address already assigned')
@@ -38,11 +39,13 @@ def create(args):
 
 
 def list(args):
+    """ list all domains"""
     for domain in Domain.all():
         pprint(domain.attributes())
 
 
 def edit(domain, args):
+    """edit a specific domain"""
     memory, unit = base.parse_unit(args.get('memory', domain.memory))
     return Domain.define(
         name=domain.name,
@@ -61,6 +64,7 @@ def edit(domain, args):
 
 
 def remove(args):
+    """remove a specific domain"""
     domain = Domain.find_by('uuid', args.uuid)
     try:
         domain.shutdown()
