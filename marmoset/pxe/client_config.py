@@ -11,7 +11,9 @@ from marmoset import validation
 
 
 class ClientConfig:
+
     """Class to handle PXE configs for clients"""
+
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
 
     CFG_TEMPLATE = Stringtemplate(dedent('''\
@@ -165,7 +167,6 @@ class ClientConfig:
 
     def __expand_template(self, label, options=None):
         """Return the config file content expanded with the given values."""
-
         if options is not None:
             options = " ".join(options)
         else:
