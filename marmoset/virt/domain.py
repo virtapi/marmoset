@@ -39,7 +39,7 @@ class Domain(base.Parent):
     @property
     def user(self):
         user = self.get_xml('./metadata/marmoset/user')
-        if not user is None:
+        if user is not None:
             return user.text
 
     @property
