@@ -1,3 +1,4 @@
+"""initial file for providing a Flask based API"""
 from flask import Flask, jsonify
 from flask.ext import restful
 
