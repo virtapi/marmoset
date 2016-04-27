@@ -4,6 +4,7 @@ import re
 
 class InstallimageConfig(object):
     """Handles installimage configuration for clients"""
+
     CFG_DIR = '/srv/tftp/installimage/'
 
     @classmethod

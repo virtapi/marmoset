@@ -12,6 +12,7 @@ from marmoset import validation
 
 class ClientConfig(object):
     """Class to handle PXE configs for clients"""
+
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
 
     CFG_TEMPLATE = Stringtemplate(dedent('''\
