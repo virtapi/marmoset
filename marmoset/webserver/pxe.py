@@ -21,7 +21,10 @@ class PXECollection(Resource):
         return [vars(c) for c in pxe.ClientConfig.all()]
 
     def post(self):
-        """Add a PXE entry for the given ip_address. Password, uuid and script
+        """
+        Accepts a new PXE entry
+
+        Add a PXE entry for the given ip_address. Password, uuid and script
         are optional parameters. Missing password or uuid will be auto generated
         by ClientConfig.
         """
