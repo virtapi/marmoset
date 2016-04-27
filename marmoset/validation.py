@@ -15,7 +15,7 @@ def is_ipv4(ip):
     """Returns True if param is a valid IPv4 address"""
     try:
         ipaddress.IPv4Address(ip)
-    except:
+    except ipaddress.AddressValueError:
         return False
     return True
 
@@ -24,7 +24,7 @@ def is_ipv6(ipaddr):
     """Returns True if param is a valid IPv6 address"""
     try:
         ipaddress.IPv6Address(ipaddr)
-    except:
+    except ipaddress.AddressValueError:
         return False
     return True
 
@@ -36,7 +36,7 @@ def is_cidr(cidr):
             return False
 
         ipaddress.IPv4Interface(cidr)
-    except:
+    except ipaddress.AddressValueError:
         return False
     return True
 
@@ -45,7 +45,7 @@ def is_uuid(uuid):
     """Returns True if param is a valid UUID"""
     try:
         UUID(uuid)
-    except:
+    except Exception:
         return False
     return True
 

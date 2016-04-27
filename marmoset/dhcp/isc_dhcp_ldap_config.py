@@ -9,8 +9,7 @@ from marmoset import validation
 config = config_reader.load()
 
 
-class ISCDhcpLdapConfig:
-
+class ISCDhcpLdapConfig(object):
     def __init__(self, dhcp_config):
         self.dhcp_config = dhcp_config
 
@@ -139,6 +138,7 @@ class ISCDhcpLdapConfig:
 
     @staticmethod
     def __get_dhcp_config(dn):
+        #pylint: disable-msg=too-many-locals
         from marmoset.dhcp import DhcpConfig
 
         conn = ISCDhcpLdapConfig.__get_server_connection()
@@ -174,9 +174,7 @@ class ISCDhcpLdapConfig:
 
         dhcp_config = DhcpConfig(mac, ip, gateway, networkmask)
 
-        additional_statements_str = config[
-            'DHCPConfig'].get('additional_statements')
-        additional_statements = additional_statements_str.split(',')
+        additional_statements = config['DHCPConfig'].get('additional_statements').split(',')
 
         for ldap_additional_statement in entries[
                 0]['attributes']['dhcpStatements']:

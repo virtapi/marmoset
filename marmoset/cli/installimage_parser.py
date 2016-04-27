@@ -18,11 +18,10 @@ def add_to(parser, name, **kwargs):
                                      nargs=2,
                                      action='append')
     installimage_create.set_defaults(func=installimage.create)
-    installimage_list = subcommands.add_parser(
         'list',
         help='list MAC addresses for all currently present Installimage configs',
         aliases=['l'])
-    installimage_list.set_defaults(func=installimage.list)
+    installimage_list.set_defaults(func=installimage.dolist)
     installimage_remove = subcommands.add_parser(
         'remove', help='remove a installimage config for a MAC address', aliases=[
             'r', 'delete', 'del', 'd'])

@@ -135,6 +135,7 @@ class Domain(base.Parent):
 
         def blockinfo(self):
             keys = ['capacity', 'allocation', 'physical']
+            #pylint: disable-msg=protected-access
             values = self._parent._resource.blockInfo(self.target)
             return dict(zip(keys, values))
 

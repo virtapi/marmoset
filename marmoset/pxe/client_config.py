@@ -10,9 +10,8 @@ from uuid import UUID, uuid4
 from marmoset import validation
 
 
-class ClientConfig:
+class ClientConfig(object):
     """Class to handle PXE configs for clients"""
-
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
 
     CFG_TEMPLATE = Stringtemplate(dedent('''\
@@ -80,7 +79,7 @@ class ClientConfig:
             if get_mode:
                 self.uuid = self.get_uuid()
 
-        if not password in [None, '']:
+        if password not in [None, '']:
             self.password = password
 
     def exists(self):
@@ -159,6 +158,8 @@ class ClientConfig:
         if path is None:
             path = self.file_path()
 
+        # pylint seems to be wrong on this one
+        #pylint: disable-msg=unexpected-keyword-arg
         os.makedirs(ClientConfig.CFG_DIR, exist_ok=True)
         file = open(path, 'w')
         file.write(content)

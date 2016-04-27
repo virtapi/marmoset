@@ -35,7 +35,7 @@ def add_to(parser, name, **kwargs):
         'list',
         help='list IP addresses for all currently present PXE client config',
         aliases=['l'])
-    pxe_list.set_defaults(func=pxe.list)
+    pxe_list.set_defaults(func=pxe.dolist)
 
     pxe_remove = subcommands.add_parser(
         'remove', help='remove a PXE config for an IP address', aliases=[

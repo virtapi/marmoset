@@ -18,7 +18,12 @@ def connection():
 
 
 def with_unit(value):
-    """Return a string of the converted numerical @value with the proper unit name."""
+    """
+    Convert to string with unit name
+
+    Return a string of the converted numerical @value with
+    the proper unit name.
+    """
     units = ['b', 'KiB', 'MiB', 'GiB', 'TiB']
     for unit in units:
         if value < 1024 or unit == units[-1]:
@@ -27,11 +32,15 @@ def with_unit(value):
             break
         else:
             value = value / 1024
+    # if pylint could do a tiny bit of controlflowanalysis...
+    #pylint: disable-msg=undefined-loop-variable
     return "%d %s" % (value, unit)
 
 
 def parse_unit(obj):
     """
+    Parse unit to (int, unit) tuple
+
     Return value as int and unit as string parsed from @obj.
 
     @obj may be an int, which will always return 'b' as unit, or a
@@ -53,9 +62,8 @@ def generate_password(length=32):
     return base64.b64encode(urandom(length)).decode()[:length]
 
 
-class Virt:
+class Virt(object):
     """Base class for handling all the virtualization related stuff in marmoset"""
-
     TEMPLATE_DIR = path.join(path.dirname(__file__), 'templates')
 
     @classmethod
@@ -100,15 +108,11 @@ class Parent(Virt):
 
     @classmethod
     def find_by(cls, attr, value):
-        """"
+        """
         Return a class instance identified by specific attribute.
 
         @attr: identifier attribute
         @value: value to search for
-        In order to work, the resource must provide the class variable
-        'func', which has to be a dict with at least the name ot the
-        attributes to search for (like id, uuid, name) as keys and the
-        respective libvirt function name to call as values.
         """
         with connection() as conn:
             try:
@@ -128,7 +132,8 @@ class Parent(Virt):
         """
         Return the XML description of the libvirt instance.
 
-        If @node is given, only the child node is returned instead of the root node.
+        If @node is given, only the child node is returned instead of the root
+        node.
         """
         xml = ET.fromstring(self._resource.XMLDesc(1))
         return xml if node is None else xml.find(node)

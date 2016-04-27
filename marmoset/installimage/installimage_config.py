@@ -2,9 +2,8 @@ import os
 import re
 
 
-class InstallimageConfig:
+class InstallimageConfig(object):
     """Handles installimage configuration for clients"""
-
     CFG_DIR = '/srv/tftp/installimage/'
 
     @classmethod
@@ -91,6 +90,8 @@ class InstallimageConfig:
 
         content = self.get_content()
 
+        # pylint is wrong on this one as it seems
+        #pylint: disable-msg=unexpected-keyword-arg
         os.makedirs(InstallimageConfig.CFG_DIR, exist_ok=True)
         with open(path, 'w') as file:
             file.write(content)

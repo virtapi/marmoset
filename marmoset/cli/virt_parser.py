@@ -36,7 +36,7 @@ def add_to(parser, name, **kwargs):
     vm_list = subcommands.add_parser('list',
                                      help='list all currently defined VMs',
                                      aliases=['l'])
-    vm_list.set_defaults(func=virt.list)
+    vm_list.set_defaults(func=virt.dolist)
 
     vm_edit = subcommands.add_parser('edit',
                                      help='edit specs or configs of a VM',

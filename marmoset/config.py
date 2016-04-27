@@ -41,7 +41,6 @@ def default():
 
 
 def read_file(file_path=None):
-    global PATH
     config = default()
     if file_path is None:
         file_path = PATH
@@ -62,7 +61,8 @@ def load(file_path=None):
             raise Exception('No PXELabel defined in config')
 
         # Create pxe label list.
-        [pxe.Label(n, cb) for n, cb in config['PXELabel'].items()]
+        for n, cb in config['PXELabel'].items():
+            pxe.Label(n, cb)
         pxe.ClientConfig.CFG_DIR = config['PXEConfig'].get('ConfigDirectory')
 
     if config['Modules'].getboolean('Installimage'):

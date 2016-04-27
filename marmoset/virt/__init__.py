@@ -39,8 +39,9 @@ def create(args):
     return domain
 
 
-def list(args):
+def dolist(args):
     """list all domains"""
+    #pylint: disable-msg=unused-argument
     for domain in Domain.all():
         pprint(domain.attributes())
 
@@ -69,7 +70,7 @@ def remove(args):
     domain = Domain.find_by('uuid', args.uuid)
     try:
         domain.shutdown()
-    except:
+    except Exception:
         pass
     for interface in domain.interfaces:
         host = interface.host()

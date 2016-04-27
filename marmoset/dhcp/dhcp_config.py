@@ -5,8 +5,7 @@ from .isc_dhcp_ldap_config import ISCDhcpLdapConfig
 config = config_reader.load()
 
 
-class DhcpConfig:
-
+class DhcpConfig(object):
     def __init__(self, mac, ip_address, gateway=None, networkmask=None):
         self.additional_statements = {}
 
@@ -25,6 +24,7 @@ class DhcpConfig:
             ip_address=None,
             gateway=None,
             networkmask=None):
+        #pylint: disable-msg=too-many-arguments
         self.mac = mac
 
         if gateway is not None or allow_none_value_for_not_required_parameter:
