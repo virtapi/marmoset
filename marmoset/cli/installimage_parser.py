@@ -18,6 +18,7 @@ def add_to(parser, name, **kwargs):
                                      nargs=2,
                                      action='append')
     installimage_create.set_defaults(func=installimage.create)
+    installimage_list = subcommands.add_parser(
         'list',
         help='list MAC addresses for all currently present Installimage configs',
         aliases=['l'])
