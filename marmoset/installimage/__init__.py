@@ -1,3 +1,4 @@
+"""initial file for dealing with installimage configs"""
 from .installimage_config import InstallimageConfig
 
 
