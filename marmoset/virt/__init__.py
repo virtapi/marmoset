@@ -1,3 +1,4 @@
+"""initial file for dealing with virtualization"""
 import uuid
 from pprint import pprint
 
@@ -39,7 +40,7 @@ def create(args):
 
 
 def list(args):
-    """ list all domains"""
+    """list all domains"""
     for domain in Domain.all():
         pprint(domain.attributes())
 
@@ -72,7 +73,7 @@ def remove(args):
         pass
     for interface in domain.interfaces:
         host = interface.host()
-        if not host is None:
+        if host is not None:
             host.delete()
     if domain.undefine():
         print('Removed', domain.name())
