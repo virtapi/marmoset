@@ -13,7 +13,6 @@ URI = 'qemu:///system'
 @contextmanager
 def connection():
     """Return a contextmanager for a libvirt connection."""
-
     with closing(libvirt.open(URI)) as conn:
         yield conn
 
@@ -65,6 +64,7 @@ def generate_password(length=32):
 
 class Virt(object):
     """Base class for handling all the virtualization related stuff in marmoset"""
+
     TEMPLATE_DIR = path.join(path.dirname(__file__), 'templates')
 
     @classmethod
