@@ -13,6 +13,7 @@ URI = 'qemu:///system'
 @contextmanager
 def connection():
     """Return a contextmanager for a libvirt connection."""
+
     with closing(libvirt.open(URI)) as conn:
         yield conn
 
