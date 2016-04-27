@@ -54,7 +54,6 @@ def generate_password(length=32):
 
 
 class Virt:
-
     """Base class for handling all the virtualization related stuff in marmoset"""
 
     TEMPLATE_DIR = path.join(path.dirname(__file__), 'templates')
@@ -106,7 +105,6 @@ class Parent(Virt):
 
         @attr: identifier attribute
         @value: value to search for
-
         In order to work, the resource must provide the class variable
         'func', which has to be a dict with at least the name ot the
         attributes to search for (like id, uuid, name) as keys and the

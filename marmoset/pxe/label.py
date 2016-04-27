@@ -4,7 +4,6 @@ from .exceptions import InputError
 
 
 class Label:
-
     """class to handle PXE lables"""
 
     __instances = []

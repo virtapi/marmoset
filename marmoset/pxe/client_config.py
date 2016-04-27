@@ -11,7 +11,6 @@ from marmoset import validation
 
 
 class ClientConfig:
-
     """Class to handle PXE configs for clients"""
 
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
