@@ -46,9 +46,7 @@ class Network(base.Parent):
         return Network.Host(self.get_host(mac_address), self)
 
     def _update_hosts(self, command, **kwargs):
-        """
-        https://www.libvirt.org/html/libvirt-libvirt-network.html
-        """
+        """https://www.libvirt.org/html/libvirt-libvirt-network.html"""
         commands = dict(add=3, delete=2, modify=1)
         xml = Network.Host.XML.format(**kwargs)
         self._resource.update(commands[command], 4, -1, xml)
