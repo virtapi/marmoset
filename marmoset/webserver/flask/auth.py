@@ -23,9 +23,7 @@ def for_all_routes(app):
 
 
 def __check_auth(username, password):
-    """This function is called to check if a username /
-    password combination is valid.
-    """
+    """This function is called to check if a username password combination is valid."""
     return username == Username and password == Password
 
 
