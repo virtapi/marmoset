@@ -27,7 +27,7 @@ class InstallStatusHistory(Resource):
         history = install_status.get_history()
         if len(history) == 0:
             return abort(404)
-        return install_status
+        return history
 
 
 class InstallStatusReport(Resource):
@@ -39,14 +39,17 @@ class InstallStatusReport(Resource):
         if not validation.is_uuid(uuid):
             return abort(404)
 
-        parser = reqparse.RequestParser()
-        parser.add_argument('status', type=str, required=True)
+        parser = reqparse.RequestParser(bundle_errors=True)
+        parser.add_argument('status_code', type=int, required=True)
+        parser.add_argument('step_description', type=str, required=True)
+        parser.add_argument('current_step', type=int, required=True)
+        parser.add_argument('total_steps', type=int, required=True)
         args = parser.parse_args(request)
 
-        if args.status is not None:
-            install = InstallStatus(uuid)
-            install.insert_status(args.status)
-            return
+        install = InstallStatus(uuid)
+        install.insert_status(args.status_code, args.step_description,
+                              args.current_step, args.total_steps)
+        return
 
 
 class InstallStatusStats(Resource):

@@ -49,20 +49,31 @@ class DBHelper:
                         "id INTEGER PRIMARY KEY,"
                         "date DATETIME DEFAULT CURRENT_TIMESTAMP,"
                         "uuid TEXT,"
-                        "status TEXT)")
+                        "status_code INTEGER,"
+                        "step_description TEXT,"
+                        "current_step INTEGER,"
+                        "total_steps INTEGER)")
 
     @classmethod
-    def insert_status(cls, uid, status):
+    def insert_status(cls, uid, status_code, step_description,
+                      current_step, total_steps):
         """
         Inserts a new status update into status table.
 
         :param uid: uuid of the installimage job
-        :param status: the current status from installimage
+        :param status_code: the status code of the current install step from
+        installimage
+        :param step_description: the description of the current install step
+        :param current_step: the current step count from installimage
+        :param total_steps: the total installation steps needed by installimage
         """
         con = cls._connect()
         with con:
-            con.execute("INSERT INTO installstatus(uuid, status)"
-                        "VALUES (?, ?)", (uid, status))
+            con.execute("INSERT INTO installstatus(uuid, status_code, "
+                        "step_description, current_step, total_steps) "
+                        "VALUES (?, ?, ?, ?, ?)",
+                        (uid, status_code, step_description,
+                         current_step, total_steps))
         con.close()
 
     @classmethod
@@ -76,7 +87,8 @@ class DBHelper:
         """
         con = cls._connect()
         with con:
-            rows = con.execute("SELECT date, uuid, status "
+            rows = con.execute("SELECT date, uuid, status_code, "
+                               "step_description, current_step, total_steps "
                                "FROM installstatus "
                                "WHERE uuid = ? "
                                "ORDER BY date ASC", (uid,))
@@ -101,7 +113,8 @@ class DBHelper:
         """
         con = cls._connect()
         with con:
-            rows = con.execute("SELECT date, uuid, status "
+            rows = con.execute("SELECT date, uuid, status_code, "
+                               "step_description, current_step, total_steps "
                                "FROM installstatus")
         rows = rows.fetchall()
         con.close()
@@ -120,10 +133,11 @@ class DBHelper:
         """
         con = cls._connect()
         with con:
-            result = con.execute("SELECT date, uuid, status "
+            result = con.execute("SELECT date, uuid, status_code, "
+                                 "step_description, current_step, total_steps "
                                  "FROM installstatus "
                                  "WHERE uuid = ? "
-                                 "ORDER BY date DESC LIMIT 1", (uid,))
+                                 "ORDER BY current_step DESC LIMIT 1", (uid,))
         result = result.fetchone()
         con.close()
         if result is not None:
