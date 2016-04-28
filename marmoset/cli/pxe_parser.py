@@ -39,7 +39,10 @@ def add_to(parser, name, **kwargs):
 
     pxe_remove = subcommands.add_parser(
         'remove', help='remove a PXE config for an IP address', aliases=[
-            'r', 'delete', 'del', 'd'])
+            'r',
+            'delete',
+            'del',
+            'd'])
     pxe_remove.set_defaults(func=pxe.remove)
     pxe_remove.add_argument(
         'ip_address',
