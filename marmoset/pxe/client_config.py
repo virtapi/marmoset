@@ -162,9 +162,8 @@ class ClientConfig(object):
         # pylint seems to be wrong on this one
         #pylint: disable-msg=unexpected-keyword-arg
         os.makedirs(ClientConfig.CFG_DIR, exist_ok=True)
-        file = open(path, 'w')
-        file.write(content)
-        file.close()
+        with open(path, 'w') as file:
+            file.write(content)
 
     def __expand_template(self, label, options=None):
         """Return the config file content expanded with the given values."""
