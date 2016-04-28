@@ -25,7 +25,10 @@ def add_to(parser, name, **kwargs):
     installimage_list.set_defaults(func=installimage.dolist)
     installimage_remove = subcommands.add_parser(
         'remove', help='remove a installimage config for a MAC address', aliases=[
-            'r', 'delete', 'del', 'd'])
+            'r',
+            'delete',
+            'del',
+            'd'])
     installimage_remove.set_defaults(func=installimage.remove)
     installimage_remove.add_argument(
         'mac', help='Mac address to remove installimage config for')
