@@ -95,4 +95,3 @@ class InstallimageConfig(object):
         os.makedirs(InstallimageConfig.CFG_DIR, exist_ok=True)
         with open(path, 'w') as file:
             file.write(content)
-            file.close()
