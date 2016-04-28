@@ -63,7 +63,6 @@ class InstallimageConfig(object):
 
         with open(path, 'r') as file:
             lines = file.readlines()
-            file.close()
 
         for line in lines:
             if len(line.strip()) > 0:
