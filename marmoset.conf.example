@@ -69,4 +69,4 @@ ldap_client_base_dn = cn=static,cn=DHCP Service Config,dc=example,dc=com
 force_gateway: True
 
 [Installstatus]
-SQLiteDB: /opt/marmoset/installstatus.db
+SQLiteDB: /home/marmoset/installstatus.db
