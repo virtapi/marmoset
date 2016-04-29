@@ -79,7 +79,8 @@ class InstallimageConfig(object):
         """reads a config and parses it"""
         variable_lines = []
         for key in self.variables:
-            variable_lines.append("%s %s" % (key, self.variables[key]))
+            for value in self.variables[key]:
+                variable_lines.append("%s %s" % (key, value))
 
         content = "\n".join(variable_lines)
 
