@@ -1,6 +1,6 @@
 import os
 import re
-
+from collections import defaultdict
 
 class InstallimageConfig(object):
     """Handles installimage configuration for clients"""
@@ -17,7 +17,7 @@ class InstallimageConfig(object):
         return entries
 
     def __init__(self, mac):
-        self.variables = {}
+        self.variables = defaultdict(list)
         self.mac = mac
 
         if self.exists():
@@ -25,7 +25,11 @@ class InstallimageConfig(object):
 
     def add_or_set(self, key, value):
         """adds a new key/value to the config"""
-        self.variables[key.upper()] = value
+        if value not in self.variables[key.upper()]:
+            self.variables[key.upper()].append(value)
+
+    def clear_variables(self):
+        self.variables = defaultdict(list)
 
     def create(self):
         """writes the config from memory to disk"""
@@ -69,13 +73,14 @@ class InstallimageConfig(object):
                 key = line.split(" ")[0]
                 value = line.split(" ", 1)[1].rstrip('\n')
 
-                self.variables[key] = value
+                self.variables[key].append(value)
 
     def get_content(self):
         """reads a config and parses it"""
         variable_lines = []
         for key in self.variables:
-            variable_lines.append("%s %s" % (key, self.variables[key]))
+            for value in self.variables[key]:
+                variable_lines.append("%s %s" % (key, value))
 
         content = "\n".join(variable_lines)
 
