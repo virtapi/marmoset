@@ -29,7 +29,8 @@ class InstallimageObject(Resource):
         installimage_config = InstallimageConfig(mac)
 
         for key in args:
-            installimage_config.add_or_set(key, args[key])
+            for value in args.getlist(key):
+                installimage_config.add_or_set(key, value)
 
         installimage_config.create()
 
