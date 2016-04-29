@@ -16,6 +16,7 @@ parser.add_argument(
 
 
 class PXECollection(Resource):
+    """Collection class to deal with PXE records"""
 
     def get(self):
         """List all PXE entries."""
@@ -50,6 +51,7 @@ class PXECollection(Resource):
 
 
 class PXEObject(Resource):
+    """Class to handle a single PXE record"""
 
     def get(self, ip_address):
         """Lookup a PXE entry for the given ip_address."""
