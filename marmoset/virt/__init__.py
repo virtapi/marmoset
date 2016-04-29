@@ -1,3 +1,4 @@
+"""initial file for dealing with virtualization"""
 import uuid
 from pprint import pprint
 
@@ -7,6 +8,7 @@ from .storage import Storage
 
 
 def create(args):
+    """creates a libvirt domain"""
     network = Network.find_by('name', Network.DEFAULT)
     if network.knows_ip_address(args.ip_address):
         raise Exception('IP address already assigned')
@@ -37,12 +39,15 @@ def create(args):
     return domain
 
 
-def list(args):
+def dolist(args):
+    """list all domains"""
+    #pylint: disable-msg=unused-argument
     for domain in Domain.all():
         pprint(domain.attributes())
 
 
 def edit(domain, args):
+    """edit a specific domain"""
     memory, unit = base.parse_unit(args.get('memory', domain.memory))
     return Domain.define(
         name=domain.name,
@@ -61,14 +66,15 @@ def edit(domain, args):
 
 
 def remove(args):
+    """remove a specific domain"""
     domain = Domain.find_by('uuid', args.uuid)
     try:
         domain.shutdown()
-    except:
+    except Exception:
         pass
     for interface in domain.interfaces:
         host = interface.host()
-        if not host is None:
+        if host is not None:
             host.delete()
     if domain.undefine():
         print('Removed', domain.name())

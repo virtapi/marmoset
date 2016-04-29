@@ -1,3 +1,4 @@
+"""initial file for providing a Flask based API"""
 from flask import Flask, jsonify
 from flask.ext import restful
 
@@ -40,8 +41,12 @@ def app(config):
     if config['Modules'].getboolean('INSTALLIMAGE'):
         from . import installimage
         api.add_resource(installimage.InstallimageCollection, '/installimage')
-        api.add_resource(installimage.InstallimageObject, '/installimage/<mac>')
-        api.add_resource(installimage.InstallimageConfigCommand, '/installimage/<mac>/config')
+        api.add_resource(
+            installimage.InstallimageObject,
+            '/installimage/<mac>')
+        api.add_resource(
+            installimage.InstallimageConfigCommand,
+            '/installimage/<mac>/config')
 
     if config['Modules'].getboolean('DHCP'):
         from . import dhcp
@@ -52,12 +57,16 @@ def app(config):
 
     @app.errorhandler(404)
     def not_found(ex):
+        #pylint: disable-msg=unused-argument
+        #pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Route not found.", status=404)
         resp.status_code = 404
         return resp
 
     @app.errorhandler(401)
-    def not_found(ex):
+    def unauthorized(ex):
+        #pylint: disable-msg=unused-argument
+        #pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Unauthorized", status=401)
         resp.status_code = 401
         return resp
@@ -66,7 +75,7 @@ def app(config):
 
 
 def run(args):
-    global config
+    #pylint: disable-msg=unused-argument
     webserver = app(config)
     print(webserver.url_map)
     webserver.run(

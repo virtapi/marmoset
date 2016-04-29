@@ -1,3 +1,4 @@
+"""initial file for dealing with installimage configs"""
 from .installimage_config import InstallimageConfig
 
 
@@ -9,12 +10,14 @@ def create(args):
 
     install_config.create()
 
-    msg = 'Created %s with following Options:\n%s' % (install_config.file_path(), install_config.get_content())
+    msg = 'Created %s with following Options:\n%s' % (
+        install_config.file_path(), install_config.get_content())
 
     print(msg)
 
 
-def list(args):
+def dolist(args):
+    #pylint: disable-msg=unused-argument
     for install_config in InstallimageConfig.all():
         print('%s' % install_config.mac)
 

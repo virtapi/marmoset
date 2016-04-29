@@ -39,7 +39,7 @@ class Domain(base.Parent):
     @property
     def user(self):
         user = self.get_xml('./metadata/marmoset/user')
-        if not user is None:
+        if user is not None:
             return user.text
 
     @property
@@ -107,6 +107,7 @@ class Domain(base.Parent):
             raise Error(str(e))
 
     class Disk(base.Child):
+
         @property
         def path(self):
             return self._xml.find('source').attrib.get('dev')
@@ -134,10 +135,12 @@ class Domain(base.Parent):
 
         def blockinfo(self):
             keys = ['capacity', 'allocation', 'physical']
+            #pylint: disable-msg=protected-access
             values = self._parent._resource.blockInfo(self.target)
             return dict(zip(keys, values))
 
     class Interface(base.Child):
+
         @property
         def type(self):
             return self._xml.attrib['type']
