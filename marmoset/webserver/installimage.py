@@ -27,6 +27,7 @@ class InstallimageObject(Resource):
         args = parser.parse_args(request)
 
         installimage_config = InstallimageConfig(mac)
+        installimage_config.clear_variables()
 
         for key in args:
             for value in args.getlist(key):
