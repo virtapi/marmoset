@@ -9,6 +9,7 @@ class InstallStatusLatest(Resource):
     """latest status update for uuid"""
 
     def get(self, uuid):
+        """Returns the latest status based on provided UUID"""
         install_status = InstallStatus(uuid)
         latest_status = install_status.get_latest_status()
         if latest_status is None:
@@ -20,6 +21,7 @@ class InstallStatusHistory(Resource):
     """status update history for uuid"""
 
     def get(self, uuid):
+        """Returns the history for a provided UUID"""
         install_status = InstallStatus(uuid)
         history = install_status.get_history()
         if len(history) == 0:
@@ -31,6 +33,7 @@ class InstallStatusReport(Resource):
     """post new status update for uuid"""
 
     def post(self, uuid):
+        """Creates a new statusupdate for a UUID"""
         if not validation.is_uuid(uuid):
             return abort(404)
 
@@ -51,6 +54,7 @@ class InstallStatusStats(Resource):
     """stats related to the installimage job"""
 
     def get(self, uuid):
+        """Return statistics for the performend installation based on provided UUID"""
         install_status = InstallStatus(uuid)
         stats = install_status.get_stats()
         if stats['start_date'] is None:
