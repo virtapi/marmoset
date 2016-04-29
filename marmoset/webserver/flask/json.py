@@ -1,9 +1,12 @@
+"""Flask extension module which holds a few helper functions"""
 from flask import Flask, jsonify
 from werkzeug.exceptions import default_exceptions, HTTPException
 
 
 def response(code=200, headers={}, *args, **kwargs):
-    # pylint: disable-msg=dangerous-default-value
+    """creates a json encoded response"""
+    #pylint: disable-msg=dangerous-default-value
+    #pylint: disable-msg=redefined-outer-name
     response = jsonify(*args, **kwargs)
     response.status_code = code
     response.headers.extend(headers)
@@ -12,6 +15,7 @@ def response(code=200, headers={}, *args, **kwargs):
 
 
 def error(ex=None, code=500, headers={}):
+    """creates a proper HTTP error"""
     # pylint: disable-msg=dangerous-default-value
     code = ex.code if isinstance(ex, HTTPException) else code
     return response(code, headers, message=str(ex))
@@ -27,6 +31,7 @@ def app(import_name, **kwargs):
 
     { "message": "405: Method Not Allowed" }
     """
+    #pylint: disable-msg=redefined-outer-name
     app = Flask(import_name, **kwargs)
 
     for code in default_exceptions.keys():
