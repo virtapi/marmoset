@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
+import os
 
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
+
+def read(fname):
+    return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
     name='marmoset',
@@ -20,6 +24,7 @@ setup(
     license='GNU Affero General Public License',
     author_email='tim@bastelfreak.de',
     zip_safe=False,
+    long_description=read('README.md'),
     classifiers=[
         # How mature is this project? Common values are
         #   3 - Alpha
