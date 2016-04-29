@@ -5,8 +5,8 @@ from werkzeug.exceptions import default_exceptions, HTTPException
 
 def response(code=200, headers={}, *args, **kwargs):
     """creates a json encoded response"""
-    #pylint: disable-msg=dangerous-default-value
-    #pylint: disable-msg=redefined-outer-name
+    # pylint: disable-msg=dangerous-default-value
+    # pylint: disable-msg=redefined-outer-name
     response = jsonify(*args, **kwargs)
     response.status_code = code
     response.headers.extend(headers)
@@ -31,7 +31,7 @@ def app(import_name, **kwargs):
 
     { "message": "405: Method Not Allowed" }
     """
-    #pylint: disable-msg=redefined-outer-name
+    # pylint: disable-msg=redefined-outer-name
     app = Flask(import_name, **kwargs)
 
     for code in default_exceptions.keys():
