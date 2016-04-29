@@ -25,11 +25,14 @@ for additional_statement in additional_statements:
 
 
 class DhcpCollection(Resource):
+    """Collection class to dal with all DHCP records"""
 
     def get(self):
+        """Returns all DHCP records"""
         return [vars(c) for c in dhcp.DhcpConfig.all()]
 
     def post(self):
+        """Creates a new PXE record"""
         args = parser.parse_args()
 
         if ((args.gateway is None and config['DHCPConfig'].getboolean(
@@ -75,8 +78,10 @@ class DhcpCollection(Resource):
 
 
 class DhcpIpv4Object(Resource):
+    """Class to handle a single DHCP record based on IPv4 address"""
 
     def get(self, ipv4):
+        """Returns a single DHCP record based on the provided ipv4"""
         if not validation.is_ipv4(ipv4):
             return {'message': 'please provide a valid ipv4 address'}, 406
 
@@ -88,6 +93,7 @@ class DhcpIpv4Object(Resource):
         return vars(dhcp_config)
 
     def put(self, ipv4):
+        """Updates a DHCP recordd"""
         args = parser.parse_args(request)
 
         if not validation.is_ipv4(ipv4):
@@ -122,6 +128,7 @@ class DhcpIpv4Object(Resource):
         return vars(dhcp_config), 201, {'Location': location}
 
     def delete(self, ipv4):
+        """Deletes a DHCP record"""
         if not validation.is_ipv4(ipv4):
             return {'message': 'please provide a valid ipv4 address'}, 406
 
@@ -135,8 +142,10 @@ class DhcpIpv4Object(Resource):
 
 
 class DhcpMacObject(Resource):
+    """Class to handle a single DHCP record based on a MAC address"""
 
     def get(self, mac):
+        """Returns a single DHCP record based on the provided MAC"""
         if not validation.is_mac(mac):
             return {'message': 'please provide a valid mac address'}, 406
 
@@ -148,6 +157,7 @@ class DhcpMacObject(Resource):
         return vars(dhcp_config)
 
     def put(self, mac):
+        """Updates a DHCP record"""
         args = parser.parse_args(request)
 
         if not validation.is_mac(mac):
@@ -179,6 +189,7 @@ class DhcpMacObject(Resource):
         return vars(dhcp_config), 201, {'Location': location}
 
     def delete(self, mac):
+        """Deletes a DHCP record"""
         if not validation.is_mac(mac):
             return {'message': 'please provide a valid mac address'}, 406
 
