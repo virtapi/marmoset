@@ -1,3 +1,4 @@
+"""File to handle all web interaction with PXE records"""
 from flask.ext.restful import reqparse, Resource, url_for, abort
 
 from .. import pxe

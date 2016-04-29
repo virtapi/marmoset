@@ -1,3 +1,4 @@
+"""File to handle all web interaction with virtual machines"""
 from flask.ext.restful import reqparse, Resource, abort
 
 from .. import virt

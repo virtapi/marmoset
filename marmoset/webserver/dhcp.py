@@ -1,3 +1,4 @@
+"""File to handle all web interaction with DHCP records"""
 from flask import request
 from flask.ext.restful import Resource
 from flask.ext.restful import abort

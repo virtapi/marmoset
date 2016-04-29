@@ -1,3 +1,4 @@
+"""File to handle all web interaction with installimage configurations"""
 from flask import request, make_response
 from flask.ext.restful import Resource, url_for, abort
 

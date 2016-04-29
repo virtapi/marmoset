@@ -1,3 +1,4 @@
+"""File to handle all web interaction with status updates from our installimage"""
 from flask.ext.restful import reqparse, Resource, abort
 from flask import request
 from marmoset.installstatus import InstallStatus
