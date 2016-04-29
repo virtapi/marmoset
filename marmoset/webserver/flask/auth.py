@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import request
+from flask import request, current_app
 from werkzeug.exceptions import Unauthorized
 
 Username = 'admin'
@@ -32,7 +32,20 @@ def __check_auth(username, password):
     return username == Username and password == Password
 
 
+def __is_whitelist_endpoint(endpoint):
+    """ this function will pass the authentication for whitelisted endpoints."""
+
+    whitelist_conf = current_app.config['AUTH_WHITELIST_ENDPOINT']
+    if not whitelist_conf is None:
+        whitelist = whitelist_conf.split(',')
+        if endpoint in whitelist:
+            return True
+    return False
+
+
 def __authenticate():
     auth = request.authorization
-    if not auth or not __check_auth(auth.username, auth.password):
+    if __is_whitelist_endpoint(request.endpoint):
+        pass
+    elif not auth or not __check_auth(auth.username, auth.password):
         raise Unauthorized()

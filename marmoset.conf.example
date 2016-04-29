@@ -23,6 +23,7 @@ Port: 5000
 # take a look here about the syntax: http://stackoverflow.com/a/23312820
 ServerName: localhost:5000
 Debug: False
+AuthWhitelistEndpoint: installstatusreport,installstatushistory
 
 [Libvirt]
 URI: qemu:///system

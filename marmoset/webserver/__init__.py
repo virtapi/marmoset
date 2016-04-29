@@ -21,6 +21,8 @@ def app(config):
     app = Flask(config['Webserver'].get('BasicRealm'))
     auth.for_all_routes(app)
     app.config['SERVER_NAME'] = config['Webserver'].get('ServerName')
+    app.config['AUTH_WHITELIST_ENDPOINT'] = \
+        config['Webserver'].get('AuthWhitelistEndpoint')
 
     api = restful.Api(
         app=app,
