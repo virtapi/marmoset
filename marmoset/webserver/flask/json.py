@@ -3,6 +3,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException
 
 
 def response(code=200, headers={}, *args, **kwargs):
+    # pylint: disable-msg=dangerous-default-value
     response = jsonify(*args, **kwargs)
     response.status_code = code
     response.headers.extend(headers)
@@ -11,6 +12,7 @@ def response(code=200, headers={}, *args, **kwargs):
 
 
 def error(ex=None, code=500, headers={}):
+    # pylint: disable-msg=dangerous-default-value
     code = ex.code if isinstance(ex, HTTPException) else code
     return response(code, headers, message=str(ex))
 
@@ -31,4 +33,3 @@ def app(import_name, **kwargs):
         app.error_handler_spec[None][code] = error
 
     return app
-

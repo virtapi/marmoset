@@ -17,25 +17,28 @@ Monkeying around with virtual machines and pxe configs.
     - [HTTP VM](#http-vm)
     - [HTTP installimage](#http-installimage)
     - [HTTP DHCP](#http-dhcp)
-+ [Issues](#issues)
-+ [Contributor Code of Conduct](#contributor-code-of-conduct)
-+ [Copyright](#copyright)
 + [Name origin](#name-origin)
++ [Issues](#issues)
++ [License](#license)
++ [Contact](#contact)
++ [Contribution](#contribution)
 
 ---
 
 ## Setup
 
-Clone the repo into /opt, then copy the service file into the systemd directory and reload systemd to recognize the file:
+Clone the repo into the home of a normal user, then copy the service file into the systemd directory and reload systemd to recognize the file:
 ```bash
-cd /opt
+useradd -m -g marmoset -s /bin/bash marmoset
+su marmoset
+cd ~
 git clone https://github.com/virtapi/marmoset.git
 cd marmoset
 cp ext/marmoset.service /etc/systemd/system/
 systemctl daemon-reload
 ```
 Copy the `marmoset.conf.example` to `marmoset.conf` and adjust the settings to your needs.
-Checkout the Comments in the file our our [Configuration](#configuration) section.
+Checkout the Comments in the file or in our [Configuration](#configuration) section.
 
 Now we need to setup a virtualenv and install the required python packages (remove libvirt from the requirements.txt and `pkg-config libvirt gcc` from the list of packages to install if you don't want to manage VMs with marmoset):
 ```bash
@@ -431,7 +434,7 @@ This endpoint is meant to work together with our [installimage](https://github.c
 ```
 
 #### List a single Entry
-		curl -u admin:secret http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77
+    curl -u admin:secret http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77
 
 ```json
 {
@@ -447,7 +450,7 @@ This endpoint is meant to work together with our [installimage](https://github.c
 ```
 
 #### List a single Entry in the installimage format
-		curl -u admin:secret http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77/config
+    curl -u admin:secret http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77/config
 
 ```
 PART / ext4 all
@@ -458,7 +461,7 @@ HOSTNAME CentOS-71-64-minimal
 ```
 
 #### Create a record
-		curl -u admin:secret --data "drive1=/dev/sda&bootloader=grub&hostname=CentOS-71-64-minimal&PART=/ ext4 all&image=/root/.installimage/../images/CentOS-71-64-minimal.tar.gz" http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77
+    curl -u admin:secret --data "drive1=/dev/sda&bootloader=grub&hostname=CentOS-71-64-minimal&PART=/ ext4 all&image=/root/.installimage/../images/CentOS-71-64-minimal.tar.gz" http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77
 
 Returns the created record:
 ```json
@@ -475,7 +478,7 @@ Returns the created record:
 ```
 
 #### Delete a Record
-		curl -u admin:secret -X DELETE http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77
+    curl -u admin:secret -X DELETE http://localhost:5000/v1/installimage/b8:ac:6f:97:7e:77
 
 Errormessage if you want to delete or list a nonexistent entry:
 ```json
@@ -488,7 +491,7 @@ Errormessage if you want to delete or list a nonexistent entry:
 This endpoint allows us the throw static IP/MAC combinations into a ldap database. Currently tested is only the [openldap](http://www.openldap.org/) backend. This database is connected to an isc-dhcpd. We can identify an object by its IP or MAC address.
 
 #### List Entries
-		curl -u admin:secret  http://localhost:5000/v1/dhcp
+    curl -u admin:secret  http://localhost:5000/v1/dhcp
 ```json
 [
     {
@@ -511,46 +514,50 @@ This endpoint allows us the throw static IP/MAC combinations into a ldap databas
 ```
 
 #### List One Entry based on MAC
-		curl -u admin:secret  http://localhost:5000/v1/dhcp/mac/00:00:00:00:00:00
+    curl -u admin:secret  http://localhost:5000/v1/dhcp/mac/00:00:00:00:00:00
 ```json
 {
-		"additional_statements": {},
-		"dhcp_hostname": "odin.fritz.box",
-		"gateway": "10.3.7.1",
-		"ip_address": "10.3.7.41",
-		"mac": "00:00:00:00:00:00",
-		"networkmask": "255.255.255.0"
+  "additional_statements": {},
+  "dhcp_hostname": "odin.fritz.box",
+  "gateway": "10.3.7.1",
+  "ip_address": "10.3.7.41",
+  "mac": "00:00:00:00:00:00",
+  "networkmask": "255.255.255.0"
 }
 ```
 
 or:
-	curl -u admin:secret http://localhost:5000/v1/dhcp/mac/23.45.67.8
+    curl -u admin:secret http://localhost:5000/v1/dhcp/mac/23.45.67.8
+
 ```
 "please provide a valid mac address"
 ```
 
 #### List one Entry based on IP
-		curl -u admin:secret  http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
+    curl -u admin:secret  http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
 ```json
 {
-		"additional_statements": {},
-		"dhcp_hostname": "odin.fritz.box",
-		"gateway": "10.3.7.1",
-		"ip_address": "10.3.7.41",
-		"mac": "00:00:00:00:00:00",
-		"networkmask": "255.255.255.0"
+  "additional_statements": {},
+  "dhcp_hostname": "odin.fritz.box",
+  "gateway": "10.3.7.1",
+  "ip_address": "10.3.7.41",
+  "mac": "00:00:00:00:00:00",
+  "networkmask": "255.255.255.0"
 }
 ```
 
 or:
-		curl -u admin:secret http://localhost:5000/v1/dhcp/ipv4/23.45.67.888
+    curl -u admin:secret http://localhost:5000/v1/dhcp/ipv4/23.45.67.888
+
 ```
 "please provide a valid ipv4 address"
 ```
 
 #### Create a new Entry:
 this will return the new created entry:
-		curl -u admin:secret --data 'ip_address=10.3.7.41&mac=b8:ac:6f:97:7e:77&gateway=10.3.7.1&networkmask=255.255.255.0' http://localhost:5000/v1/dhcp
+
+    curl -u admin:secret --data 'ip_address=10.3.7.41&mac=b8:ac:6f:97:7e:77&gateway=10.3.7.1&networkmask=255.255.255.0' http://localhost:5000/v1/dhcp
+
 ```json
 {
     "additional_statements": {},
@@ -568,6 +575,7 @@ an update works the same way, just submit the command again and change new updat
     curl -u admin:secret -X DELETE http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
 
 Deleting a nonexistent entry:
+
     curl -u admin:secret -X DELETE http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
 
 will return:
@@ -634,39 +642,27 @@ machinectl login marmoset_container
 
 If you don't run btrfs you can still download the tar to /var/lib/machines, extract it by hand and then continue with the machinectl commands (or start it oldschool like with systemd-nspawn).
 
-## Issues
-
-Find this code at [the git repo](https://www.github.com/virtapi/marmoset/). Find the original code at [the git repo](https://www.aibor.de/cgit/marmoset/).
-
-Contact the original author at code@aibor.de or us in #virtapi at freenode.
-
----
-
-## Styleguide
-We defined our own styleguide [here](styleguide-bash.md), this is a work-in-progress style. We discussed all points on IRC, most of them are based on shellcheck suggestions and our own opinion. We update the guide from time to time.
-
----
-
-## Copyright
-
-GPLv2 license can be found in LICENSE
-
-Copyright (C) 2015 Tobias Böhm code@aibor.de
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License version 2 as
-published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
-Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-
 ---
 
 ## Name Origin
 The marmosets is a group of monkey species, checkout [wikipedia](https://en.wikipedia.org/wiki/Marmoset) for detailed infos.
+
+---
+
+## Issues
+[Github Issues](https://www.github.com/virtapi/marmoset/issues)
+
+---
+
+## License
+The original [project](https://github.com/aibor/marmoset) and all of our changes are based on the AGPL, you can find the license [here](LICENSE).
+
+---
+
+## Contact
+You can meet us in #virtapi at freenode.
+
+---
+
+## Contribution
+We've defined our contribution rules in [CONTRIBUTING.md](CONTRIBUTING.md).

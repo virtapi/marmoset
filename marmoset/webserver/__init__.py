@@ -1,10 +1,12 @@
+"""initial file for providing a Flask based API"""
 from flask import Flask, jsonify
 from flask.ext import restful
+
 from .flask import auth
-import json
 
 API_VERSION = '1'
 config = None
+
 
 def jsonify_nl(*args, **kwargs):
     resp = jsonify(*args, **kwargs)
@@ -13,16 +15,16 @@ def jsonify_nl(*args, **kwargs):
 
 
 def app(config):
-    auth.Username  = config['Webserver'].get('Username')
-    auth.Password  = config['Webserver'].get('Password')
+    auth.Username = config['Webserver'].get('Username')
+    auth.Password = config['Webserver'].get('Password')
 
     app = Flask(config['Webserver'].get('BasicRealm'))
     auth.for_all_routes(app)
     app.config['SERVER_NAME'] = config['Webserver'].get('ServerName')
 
     api = restful.Api(
-        app = app,
-        prefix = '/v{}'.format(API_VERSION)
+        app=app,
+        prefix='/v{}'.format(API_VERSION)
     )
 
     if config['Modules'].getboolean('PXE'):
@@ -39,8 +41,12 @@ def app(config):
     if config['Modules'].getboolean('INSTALLIMAGE'):
         from . import installimage
         api.add_resource(installimage.InstallimageCollection, '/installimage')
-        api.add_resource(installimage.InstallimageObject, '/installimage/<mac>')
-        api.add_resource(installimage.InstallimageConfigCommand, '/installimage/<mac>/config')
+        api.add_resource(
+            installimage.InstallimageObject,
+            '/installimage/<mac>')
+        api.add_resource(
+            installimage.InstallimageConfigCommand,
+            '/installimage/<mac>/config')
 
     if config['Modules'].getboolean('DHCP'):
         from . import dhcp
@@ -62,25 +68,32 @@ def app(config):
 
     @app.errorhandler(404)
     def not_found(ex):
+        #pylint: disable-msg=unused-argument
+        #pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Route not found.", status=404)
         resp.status_code = 404
         return resp
 
     @app.errorhandler(401)
-    def not_found(ex):
+    def unauthorized(ex):
+        #pylint: disable-msg=unused-argument
+        #pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Unauthorized", status=401)
         resp.status_code = 401
         return resp
 
     return app
 
+
 def run(args):
-    global config
+    #pylint: disable-msg=unused-argument
     webserver = app(config)
     print(webserver.url_map)
     webserver.run(
-        host = config['Webserver'].get('Host'),
-        port = config['Webserver'].getint('Port'),
-        debug = config['Webserver'].getboolean('Debug')
+        #pylint: disable-msg=unsubscriptable-object
+        host=config['Webserver'].get('Host'),
+        #pylint: disable-msg=unsubscriptable-object
+        port=config['Webserver'].getint('Port'),
+        #pylint: disable-msg=unsubscriptable-object
+        debug=config['Webserver'].getboolean('Debug')
     )
-

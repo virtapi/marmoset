@@ -3,7 +3,7 @@ Description=marmoset API
 After=network.target
 
 [Service]
-ExecStart=/opt/marmoset/marmoset.py server
+ExecStart=/home/marmoset/marmoset/marmoset.py server
 User=marmoset
 Group=marmoset
 PrivateTmp=true

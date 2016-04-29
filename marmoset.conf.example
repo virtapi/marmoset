@@ -52,7 +52,7 @@ ConfigDirectory: /srv/tftp/pxelinux.cfg/
 #openbsd:
 
 [Installimage]
-ConfigDirectory: /srv/tftp/installimage/
+ConfigDirectory: /home/marmoset/marmoset/installimageconfigs/
 
 [DHCPConfig]
 # list of all statements that we allow

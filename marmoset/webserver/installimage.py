@@ -1,20 +1,20 @@
 from flask import request, make_response
-from flask.ext.restful import reqparse, Resource, url_for, abort
-from werkzeug.exceptions import NotFound
-from .. import installimage
-from ..installimage.req_argument_parser import ReqArgumentParser
-from ..installimage.installimage_config import InstallimageConfig
+from flask.ext.restful import Resource, url_for, abort
 
+from ..installimage.installimage_config import InstallimageConfig
+from ..installimage.req_argument_parser import ReqArgumentParser
 
 parser = ReqArgumentParser()
 
 
 class InstallimageCollection(Resource):
+
     def get(self):
         return [vars(c) for c in InstallimageConfig.all()]
 
 
 class InstallimageObject(Resource):
+
     def get(self, mac):
         installimage_config = InstallimageConfig(mac)
 
@@ -27,13 +27,18 @@ class InstallimageObject(Resource):
         args = parser.parse_args(request)
 
         installimage_config = InstallimageConfig(mac)
+        installimage_config.clear_variables()
 
         for key in args:
-            installimage_config.add_or_set(key, args[key])
+            for value in args.getlist(key):
+                installimage_config.add_or_set(key, value)
 
         installimage_config.create()
 
-        location = url_for('installimageobject', _method='GET', mac=installimage_config.mac)
+        location = url_for(
+            'installimageobject',
+            _method='GET',
+            mac=installimage_config.mac)
         return vars(installimage_config), 201, {'Location': location}
 
     def delete(self, mac):
@@ -47,6 +52,7 @@ class InstallimageObject(Resource):
 
 
 class InstallimageConfigCommand(Resource):
+
     def get(self, mac):
         installimage_config = InstallimageConfig(mac)
 

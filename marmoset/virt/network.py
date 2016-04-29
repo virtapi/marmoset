@@ -5,10 +5,10 @@ class Network(base.Parent):
     DEFAULT = 'default'
 
     _func = dict(
-        all     = 'listAllNetworks',
-        uuid    = 'networkLookupByUUIDString',
-        id      = 'networkLookupByID',
-        name    = 'networkLookupByName'
+        all='listAllNetworks',
+        uuid='networkLookupByUUIDString',
+        id='networkLookupByID',
+        name='networkLookupByName'
     )
 
     @property
@@ -40,19 +40,17 @@ class Network(base.Parent):
         host = self.get_xml().find(xpath)
         return False if host is None else True
 
-    def add_host(self, mac_address, ip_address, name = ''):
+    def add_host(self, mac_address, ip_address, name=''):
+        #pylint: disable-msg=unused-argument
         attrs = {k: v for k, v in locals().items() if k != 'self'}
         self._update_hosts('add', **attrs)
         return Network.Host(self.get_host(mac_address), self)
 
     def _update_hosts(self, command, **kwargs):
-        """
-        https://www.libvirt.org/html/libvirt-libvirt-network.html
-        """
-        commands = dict(add = 3, delete = 2, modify = 1)
+        """https://www.libvirt.org/html/libvirt-libvirt-network.html"""
+        commands = dict(add=3, delete=2, modify=1)
         xml = Network.Host.XML.format(**kwargs)
         self._resource.update(commands[command], 4, -1, xml)
-
 
     class Host(base.Child):
 
@@ -71,14 +69,15 @@ class Network(base.Parent):
             return self._xml.attrib.get('ip')
 
         def update(self, ip_address=None, name=None):
+            #pylint: disable-msg=unused-argument
             attrs = self.attributes()
             for key in ['ip_address', 'name']:
                 if locals()[key] is not None:
                     attrs[key] = locals()[key]
+            #pylint: disable-msg=protected-access
             self._parent._update_hosts('modify', **attrs)
             self._xml = self._parent.get_host(attrs['mac_address'])
 
         def delete(self):
+            #pylint: disable-msg=protected-access
             self._parent._update_hosts('delete', **self.attributes())
-
-

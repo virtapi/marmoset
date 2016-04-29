@@ -1,11 +1,11 @@
-from .isc_dhcp_ldap_config import ISCDhcpLdapConfig
-from marmoset import validation
 from marmoset import config as config_reader
+from marmoset import validation
+from .isc_dhcp_ldap_config import ISCDhcpLdapConfig
 
 config = config_reader.load()
 
 
-class DhcpConfig:
+class DhcpConfig(object):
     def __init__(self, mac, ip_address, gateway=None, networkmask=None):
         self.additional_statements = {}
 
@@ -17,8 +17,14 @@ class DhcpConfig:
 
         self.set_settings(True, mac, ip_address, gateway, networkmask)
 
-    def set_settings(self, allow_none_value_for_not_required_parameter=False, mac=None, ip_address=None,
-                     gateway=None, networkmask=None):
+    def set_settings(
+            self,
+            allow_none_value_for_not_required_parameter=False,
+            mac=None,
+            ip_address=None,
+            gateway=None,
+            networkmask=None):
+        #pylint: disable-msg=too-many-arguments
         self.mac = mac
 
         if gateway is not None or allow_none_value_for_not_required_parameter:
@@ -33,7 +39,8 @@ class DhcpConfig:
             if self.networkmask is None:
                 self.networkmask = validation.get_nm_from_cidr(ip_address)
 
-            if self.gateway is None and config['DHCPConfig'].getboolean('force_gateway'):
+            if self.gateway is None and config[
+                    'DHCPConfig'].getboolean('force_gateway'):
                 self.gateway = validation.get_gw_from_cidr(ip_address)
         else:
             self.ip_address = ip_address
