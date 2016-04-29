@@ -29,35 +29,26 @@ class ISCDhcpLdapConfig(object):
     def save(self):
         conn = self.__get_server_connection()
 
-        dhcpStatements = [
-            "fixed-address %s;" %
-            self.dhcp_config.ip_address,
-            "option subnet-mask %s;" %
-            self.dhcp_config.networkmask]
+        dhcpStatements = ["fixed-address %s;" % self.dhcp_config.ip_address,
+                          "option subnet-mask %s;" % self.dhcp_config.networkmask]
 
         if self.dhcp_config.gateway is not None:
-            dhcpStatements.append(
-                "option routers %s;" %
-                self.dhcp_config.gateway)
+            dhcpStatements.append("option routers %s;" % self.dhcp_config.gateway)
 
         for additional_statement in self.dhcp_config.additional_statements:
-            dhcpStatements.append(
-                "%s %s;" %
-                (additional_statement,
-                 self.dhcp_config.additional_statements[additional_statement]))
+            dhcpStatements.append("%s %s;" % (additional_statement,
+                                              self.dhcp_config.additional_statements[additional_statement]))
 
         entry_attributes = {
             'dhcpHWAddress': "ethernet %s" % self.dhcp_config.mac,
             'dhcpStatements': dhcpStatements,
             'dhcpComments': "date=%s dhcp-hostname=%s" % (datetime.now().strftime("%Y%m%d_%H%M%S"),
-                                                          self.dhcp_config.dhcp_hostname)}
+                                                          self.dhcp_config.dhcp_hostname)
+        }
 
-        conn.add(
-            "cn=%s,%s" %
-            (self.dhcp_config.ip_address,
-             config['DHCPConfig'].get('ldap_client_base_dn')),
-            'dhcpHost',
-            entry_attributes)
+        conn.add("cn=%s,%s" % (self.dhcp_config.ip_address, config['DHCPConfig'].get('ldap_client_base_dn')),
+                 'dhcpHost',
+                 entry_attributes)
 
     @staticmethod
     def all():
