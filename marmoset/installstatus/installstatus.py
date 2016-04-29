@@ -6,17 +6,14 @@ config = config_reader.load()
 
 
 class InstallStatus:
-    """
-    installimage status updates for can be stored/retrieved by uuid
-    in/from database.
-    """
+
+    """installimage status updates can be stored/retrieved by uuid"""
 
     def __init__(self, uuid):
         self.uuid = uuid
 
     def get_latest_status(self):
-        """
-        fetches latest status update for the installimage job
+        """fetches latest status update for the installimage job
 
         :return: latest status update for the
         :rtpye: dict
@@ -25,8 +22,7 @@ class InstallStatus:
         return status
 
     def get_history(self):
-        """
-        fetches all status updates related to the installimage job
+        """fetches all status updates related to the installimage job
 
         :return: a list including one dict per status update
         :rtype: list
@@ -36,8 +32,8 @@ class InstallStatus:
 
     def insert_status(self, status_code, step_description,
                       current_step, total_steps):
-        """
-        insert new status update for installimage job
+        """insert new status update for installimage job
+
         :param status_code: the status code of the current install step from
         installimage
         :param step_description: the description of the current install step
@@ -48,8 +44,7 @@ class InstallStatus:
                                current_step, total_steps)
 
     def get_stats(self):
-        """
-        generates some stats related to the installimage job
+        """generates some stats related to the installimage job
 
         :return: stats
         :rtype: dict
@@ -83,8 +78,7 @@ class InstallStatus:
         return stats
 
     def convert_date(self, date_string):
-        """
-        converts the date string from database to datetime object
+        """converts the date string from database to datetime object
 
         :param date_string:
         :return: datetime
