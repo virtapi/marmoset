@@ -1,4 +1,3 @@
-die-on-tool-error: true
 test-warnings: true
 doc-warnings: true
 ignore-paths:
