@@ -95,6 +95,7 @@ class Parent(Virt):
     _func = {}
 
     @classmethod
+    #pylint: disable-msg=redefined-builtin
     def all(cls):
         """
         Return a list with all instances.
