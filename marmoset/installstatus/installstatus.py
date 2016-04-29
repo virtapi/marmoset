@@ -75,7 +75,7 @@ class InstallStatus:
             stats['total_steps'] = None
             stats['start_date'] = None
             stats['end_date'] = None
-            stats['last_status'] = None
+            stats['latest_status_code'] = None
             stats['installation_duration'] = None
             stats['latest_status_age'] = None
         stats['status_updates'] = history_count
