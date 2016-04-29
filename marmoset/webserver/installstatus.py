@@ -5,7 +5,6 @@ from marmoset import validation
 
 
 class InstallStatusLatest(Resource):
-
     """latest status update for uuid"""
 
     def get(self, uuid):
@@ -17,7 +16,6 @@ class InstallStatusLatest(Resource):
 
 
 class InstallStatusHistory(Resource):
-
     """status update history for uuid"""
 
     def get(self, uuid):
@@ -29,7 +27,6 @@ class InstallStatusHistory(Resource):
 
 
 class InstallStatusReport(Resource):
-
     """post new status update for uuid"""
 
     def post(self, uuid):
@@ -50,7 +47,6 @@ class InstallStatusReport(Resource):
 
 
 class InstallStatusStats(Resource):
-
     """stats related to the installimage job"""
 
     def get(self, uuid):

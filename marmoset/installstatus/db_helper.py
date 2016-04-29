@@ -7,12 +7,11 @@ DB = config['Installstatus'].get('SQLiteDB')
 
 
 class DBHelper:
-
     """Interface to the installstatus SQLite DB"""
 
     @classmethod
     def _connect(cls):
-        """ Connects to SQLite DB defined in marmoset config.
+        """Connects to SQLite DB defined in marmoset config.
 
         :return: sqlite3 connection to DB using a row cursor.
         """
@@ -50,6 +49,7 @@ class DBHelper:
                         "total_steps INTEGER)")
 
     @classmethod
+    #pylint: disable-msg=too-many-arguments
     def insert_status(cls, uid, status_code, step_description,
                       current_step, total_steps):
         """Inserts a new status update into status table.

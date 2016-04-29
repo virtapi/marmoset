@@ -6,7 +6,6 @@ config = config_reader.load()
 
 
 class InstallStatus:
-
     """installimage status updates can be stored/retrieved by uuid"""
 
     def __init__(self, uuid):
