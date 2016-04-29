@@ -14,6 +14,7 @@ def find_domain(uuid):
 
 class VMCollection(Resource):
     """Collection class to deal with all virtual machines"""
+
     def get(self):
         """returns all domains"""
         domains = virt.Domain.all()
@@ -39,6 +40,7 @@ class VMCollection(Resource):
 
 class VMObject(Resource):
     """Class to handle a single virtual machine"""
+
     def get(self, uuid):
         """returns a single domain based on the UUID"""
         domain = find_domain(uuid)
@@ -69,6 +71,7 @@ class VMObject(Resource):
 
 class VMCommand(Resource):
     """Class to send libvirt commands to a domain"""
+
     def put(self, uuid):
         """Sends the provided command to a given UUID"""
         parser = reqparse.RequestParser()
