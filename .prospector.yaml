@@ -1,6 +1,22 @@
-output-format: json
+die-on-tool-error: true
+test-warnings: true
+doc-warnings: true
 ignore-paths:
   - marmoset/virt/__init__.py
+uses:
+  - flask
 pep257:
+  run: true
   disable:
     - D203
+pep8:
+  run: true
+  full: true
+pyroma:
+  run: true
+pylint:
+  run: true
+dodgy:
+  run: true
+mccabe:
+  run: true
