@@ -129,7 +129,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def __get_dhcp_config(dn):
-        #pylint: disable-msg=too-many-locals
+        # pylint: disable-msg=too-many-locals
         from marmoset.dhcp import DhcpConfig
 
         conn = ISCDhcpLdapConfig.__get_server_connection()

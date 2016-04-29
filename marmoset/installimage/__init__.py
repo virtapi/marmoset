@@ -17,7 +17,7 @@ def create(args):
 
 
 def dolist(args):
-    #pylint: disable-msg=unused-argument
+    # pylint: disable-msg=unused-argument
     for install_config in InstallimageConfig.all():
         print('%s' % install_config.mac)
 

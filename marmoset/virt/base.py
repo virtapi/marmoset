@@ -33,7 +33,7 @@ def with_unit(value):
         else:
             value = value / 1024
     # if pylint could do a tiny bit of controlflowanalysis...
-    #pylint: disable-msg=undefined-loop-variable
+    # pylint: disable-msg=undefined-loop-variable
     return "%d %s" % (value, unit)
 
 
@@ -95,7 +95,7 @@ class Parent(Virt):
     _func = {}
 
     @classmethod
-    #pylint: disable-msg=redefined-builtin
+    # pylint: disable-msg=redefined-builtin
     def all(cls):
         """
         Return a list with all instances.

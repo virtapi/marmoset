@@ -15,7 +15,7 @@ def create(args):
 
 def dolist(args):
     """List all PXE entries"""
-    #pylint: disable-msg=unused-argument
+    # pylint: disable-msg=unused-argument
     for pxe_client in ClientConfig.all():
         print('%s: %s' % (pxe_client.ip_address, pxe_client.label))
 

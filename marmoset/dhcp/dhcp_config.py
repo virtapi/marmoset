@@ -24,7 +24,7 @@ class DhcpConfig(object):
             ip_address=None,
             gateway=None,
             networkmask=None):
-        #pylint: disable-msg=too-many-arguments
+        # pylint: disable-msg=too-many-arguments
         self.mac = mac
 
         if gateway is not None or allow_none_value_for_not_required_parameter:

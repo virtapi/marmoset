@@ -8,7 +8,7 @@ def parse(config):
     commands = parser.add_subparsers(title='commands')
 
     def print_config(*args):
-        #pylint: disable=unused-argument
+        # pylint: disable=unused-argument
         # yepp, it's unused, but the callback needs it this way
         with open('/dev/stdout', 'w') as stdout:
             config.write(stdout)

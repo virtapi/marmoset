@@ -96,7 +96,7 @@ class InstallimageConfig(object):
         content = self.get_content()
 
         # pylint is wrong on this one as it seems
-        #pylint: disable-msg=unexpected-keyword-arg
+        # pylint: disable-msg=unexpected-keyword-arg
         os.makedirs(InstallimageConfig.CFG_DIR, exist_ok=True)
         with open(path, 'w') as file:
             file.write(content)

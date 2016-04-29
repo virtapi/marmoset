@@ -70,16 +70,16 @@ def app(config):
 
     @app.errorhandler(404)
     def not_found(ex):
-        #pylint: disable-msg=unused-argument
-        #pylint: disable-msg=unused-variable
+        # pylint: disable-msg=unused-argument
+        # pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Route not found.", status=404)
         resp.status_code = 404
         return resp
 
     @app.errorhandler(401)
     def unauthorized(ex):
-        #pylint: disable-msg=unused-argument
-        #pylint: disable-msg=unused-variable
+        # pylint: disable-msg=unused-argument
+        # pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Unauthorized", status=401)
         resp.status_code = 401
         return resp
@@ -88,14 +88,14 @@ def app(config):
 
 
 def run(args):
-    #pylint: disable-msg=unused-argument
+    # pylint: disable-msg=unused-argument
     webserver = app(config)
     print(webserver.url_map)
     webserver.run(
-        #pylint: disable-msg=unsubscriptable-object
+        # pylint: disable-msg=unsubscriptable-object
         host=config['Webserver'].get('Host'),
-        #pylint: disable-msg=unsubscriptable-object
+        # pylint: disable-msg=unsubscriptable-object
         port=config['Webserver'].getint('Port'),
-        #pylint: disable-msg=unsubscriptable-object
+        # pylint: disable-msg=unsubscriptable-object
         debug=config['Webserver'].getboolean('Debug')
     )
