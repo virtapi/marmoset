@@ -3,7 +3,6 @@ sudo: required
 dist: trusty
 language: python
 python:
-  - "3.3"
   - "3.4"
   - "3.5"
 before_install:
@@ -13,7 +12,6 @@ install:
   - pip install tox
 script:
   - tox -e lint
-  - tox -e testxunit
 notifications:
   irc:
     on_success: change

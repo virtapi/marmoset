@@ -105,8 +105,8 @@ class Parent(Virt):
         and the the name of the libvirt function to call as value.
         """
         with connection() as conn:
-            all = getattr(conn, cls._func['all'])()
-        return [cls(i) for i in all]
+            instances = getattr(conn, cls._func['all'])()
+        return [cls(instance) for instance in instances]
 
     @classmethod
     def find_by(cls, attr, value):

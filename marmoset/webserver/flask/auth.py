@@ -33,10 +33,9 @@ def __check_auth(username, password):
 
 
 def __is_whitelist_endpoint(endpoint):
-    """ this function will pass the authentication for whitelisted endpoints."""
-
+    """this function will pass the authentication for whitelisted endpoints."""
     whitelist_conf = current_app.config['AUTH_WHITELIST_ENDPOINT']
-    if not whitelist_conf is None:
+    if whitelist_conf is not None:
         whitelist = whitelist_conf.split(',')
         if endpoint in whitelist:
             return True
