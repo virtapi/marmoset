@@ -5,22 +5,20 @@ from marmoset import validation
 
 
 class InstallStatusLatest(Resource):
-    """
-    latest status update for uuid
-    """
+
+    """latest status update for uuid"""
 
     def get(self, uuid):
         install_status = InstallStatus(uuid)
-        install_status = install_status.get_latest_status()
-        if install_status is None:
+        latest_status = install_status.get_latest_status()
+        if latest_status is None:
             return abort(404)
-        return install_status
+        return latest_status
 
 
 class InstallStatusHistory(Resource):
-    """
-    status update history for uuid
-    """
+
+    """status update history for uuid"""
 
     def get(self, uuid):
         install_status = InstallStatus(uuid)
@@ -31,9 +29,8 @@ class InstallStatusHistory(Resource):
 
 
 class InstallStatusReport(Resource):
-    """
-    post new status update for uuid
-    """
+
+    """post new status update for uuid"""
 
     def post(self, uuid):
         if not validation.is_uuid(uuid):
@@ -53,9 +50,8 @@ class InstallStatusReport(Resource):
 
 
 class InstallStatusStats(Resource):
-    """
-    stats related to the installimage job
-    """
+
+    """stats related to the installimage job"""
 
     def get(self, uuid):
         install_status = InstallStatus(uuid)
