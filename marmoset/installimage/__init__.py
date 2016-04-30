@@ -3,7 +3,7 @@ from .installimage_config import InstallimageConfig
 
 
 def create(args):
-    """gets the installimage options and calls the create() method to store them"""
+    """gets the installimage options and passed them further to store them"""
     install_config = InstallimageConfig(args.mac)
 
     for var in args.var:
