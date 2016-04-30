@@ -65,8 +65,8 @@ def load(file_path=None):
             raise Exception('No PXELabel defined in config')
 
         # Create pxe label list.
-        for n, cb in config['PXELabel'].items():
-            pxe.Label(n, cb)
+        for label, callback in config['PXELabel'].items():
+            pxe.Label(label, callback)
         pxe.ClientConfig.CFG_DIR = config['PXEConfig'].get('ConfigDirectory')
 
     if config['Modules'].getboolean('Installimage'):
