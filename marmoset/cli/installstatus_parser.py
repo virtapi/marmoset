@@ -1,8 +1,10 @@
+"""ClI module for installimage status updates"""
 from .. import installstatus
 
 
 def add_to(parser, name, **kwargs):
-    command     = parser.add_parser(name, **kwargs)
+    """Updates the CLI parser to support installimage status updates and stats"""
+    command = parser.add_parser(name, **kwargs)
     subcommands = command.add_subparsers(title='%s subcommands' % name)
 
     installstatus_history = subcommands.add_parser('history',
