@@ -2,7 +2,7 @@ from marmoset import config as config_reader
 from marmoset import validation
 from .isc_dhcp_ldap_config import ISCDhcpLdapConfig
 
-config = config_reader.load()
+config = config_reader.load_config()
 
 
 class DhcpConfig(object):

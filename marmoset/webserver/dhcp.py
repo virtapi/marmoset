@@ -9,7 +9,7 @@ from marmoset import config as config_reader
 from marmoset import dhcp
 from marmoset import validation
 
-config = config_reader.load()
+config = config_reader.load_config()
 
 additional_statements_str = config['DHCPConfig'].get('additional_statements')
 additional_statements = additional_statements_str.split(',')

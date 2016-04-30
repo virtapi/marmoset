@@ -3,7 +3,7 @@ from marmoset import config as config_reader
 import sqlite3
 
 
-config = config_reader.load()
+config = config_reader.load_config()
 DB = config['Installstatus'].get('SQLiteDB')
 
 

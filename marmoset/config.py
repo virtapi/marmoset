@@ -54,7 +54,7 @@ def read_file(file_path=None):
     return config
 
 
-def load(file_path=None):
+def load_config(file_path=None):
     """Get all options from our config"""
     config = read_file(file_path)
 

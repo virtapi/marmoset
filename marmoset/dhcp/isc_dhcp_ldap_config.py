@@ -9,7 +9,7 @@ from ldap3 import Server, Connection, ALL, SUBTREE, ALL_ATTRIBUTES, ALL_OPERATIO
 from marmoset import config as config_reader
 from marmoset import validation
 
-config = config_reader.load()
+config = config_reader.load_config()
 
 
 class ISCDhcpLdapConfig(object):
