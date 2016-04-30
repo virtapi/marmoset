@@ -68,7 +68,7 @@ class DhcpConfig(object):
 
     @staticmethod
     def all():
-        return ISCDhcpLdapConfig.all()
+        return ISCDhcpLdapConfig.get_all_db_entries()
 
     @staticmethod
     def get_by_ip(ip_address):

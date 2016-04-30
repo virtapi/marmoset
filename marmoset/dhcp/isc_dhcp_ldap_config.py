@@ -57,7 +57,7 @@ class ISCDhcpLdapConfig(object):
                  entry_attributes)
 
     @staticmethod
-    def all():
+    def get_all_db_entries():
         """Method to get all entries from our DB"""
         conn = ISCDhcpLdapConfig.__get_server_connection()
 
