@@ -1,7 +1,7 @@
 test-warnings: true
 doc-warnings: true
 ignore-paths:
-  - marmoset/virt/__init__.py
+  - marmoset/virt/
 uses:
   - flask
 pep257:
