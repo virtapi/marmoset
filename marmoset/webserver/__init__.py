@@ -9,12 +9,14 @@ config = None
 
 
 def jsonify_nl(*args, **kwargs):
+    """Encode data to json"""
     resp = jsonify(*args, **kwargs)
     resp.set_data(resp.get_data() + b'\n')
     return resp
 
 
 def app(config):
+    """Setup the initial flask app"""
     auth.Username = config['Webserver'].get('Username')
     auth.Password = config['Webserver'].get('Password')
 
@@ -70,6 +72,7 @@ def app(config):
 
     @app.errorhandler(404)
     def not_found(ex):
+        """Function to generate 404 handler"""
         # pylint: disable-msg=unused-argument
         # pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Route not found.", status=404)
@@ -78,6 +81,7 @@ def app(config):
 
     @app.errorhandler(401)
     def unauthorized(ex):
+        """Function to generate 401 handler"""
         # pylint: disable-msg=unused-argument
         # pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Unauthorized", status=401)
@@ -88,6 +92,7 @@ def app(config):
 
 
 def run(args):
+    """Function to run the app"""
     # pylint: disable-msg=unused-argument
     webserver = app(config)
     print(webserver.url_map)
