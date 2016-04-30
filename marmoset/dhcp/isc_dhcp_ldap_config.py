@@ -160,7 +160,7 @@ class ISCDhcpLdapConfig(object):
         regex_networkmask = 'option subnet-mask\s+([0-9]+.[0-9]+.[0-9]+.[0-9]+)'
 
         mac = re.search('(%s)' % validation.MAC_REGEX, mac_option).group(0)
-        ip = entries[0]['attributes']['cn'][0]
+        ip_address = entries[0]['attributes']['cn'][0]
 
         gateway = None
         networkmask = None
@@ -173,7 +173,7 @@ class ISCDhcpLdapConfig(object):
                 networkmask = re.search(
                     regex_networkmask, dhcp_statement).group(1)
 
-        dhcp_config = DhcpConfig(mac, ip, gateway, networkmask)
+        dhcp_config = DhcpConfig(mac, ip_address, gateway, networkmask)
 
         additional_statements = config['DHCPConfig'].get('additional_statements').split(',')
 
