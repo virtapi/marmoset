@@ -1,6 +1,8 @@
+"""Module to deal will all the installimage configs"""
 import os
 import re
 from collections import defaultdict
+
 
 class InstallimageConfig(object):
     """Handles installimage configuration for clients"""
@@ -29,6 +31,7 @@ class InstallimageConfig(object):
             self.variables[key.upper()].append(value)
 
     def clear_variables(self):
+        """clears our variables"""
         self.variables = defaultdict(list)
 
     def create(self):
