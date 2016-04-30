@@ -1,3 +1,4 @@
+"""Module to provide a database wrapper for installimage status"""
 from marmoset import config as config_reader
 import sqlite3
 
