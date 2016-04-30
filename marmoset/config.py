@@ -1,3 +1,4 @@
+"""Module to parse our config"""
 import configparser
 import socket
 import warnings
@@ -7,6 +8,7 @@ PATH = path.join(path.dirname(__file__), '../marmoset.conf')
 
 
 def default():
+    """Get default values"""
     config = configparser.ConfigParser()
 
     config['Common'] = dict(
@@ -41,6 +43,7 @@ def default():
 
 
 def read_file(file_path=None):
+    """Read our config file"""
     config = default()
     if file_path is None:
         file_path = PATH
@@ -51,7 +54,8 @@ def read_file(file_path=None):
     return config
 
 
-def load(file_path=None):
+def load_config(file_path=None):
+    """Get all options from our config"""
     config = read_file(file_path)
 
     if config['Modules'].getboolean('PXE'):
@@ -61,8 +65,8 @@ def load(file_path=None):
             raise Exception('No PXELabel defined in config')
 
         # Create pxe label list.
-        for n, cb in config['PXELabel'].items():
-            pxe.Label(n, cb)
+        for label, callback in config['PXELabel'].items():
+            pxe.Label(label, callback)
         pxe.ClientConfig.CFG_DIR = config['PXEConfig'].get('ConfigDirectory')
 
     if config['Modules'].getboolean('Installimage'):

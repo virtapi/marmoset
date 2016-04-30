@@ -1,8 +1,9 @@
+"""Module to handle everything related to installimage status"""
 from marmoset import config as config_reader
 from .db_helper import DBHelper
 import datetime
 
-config = config_reader.load()
+config = config_reader.load_config()
 
 
 class InstallStatus:

@@ -2,7 +2,7 @@ from marmoset import config as config_reader
 from marmoset import validation
 from .isc_dhcp_ldap_config import ISCDhcpLdapConfig
 
-config = config_reader.load()
+config = config_reader.load_config()
 
 
 class DhcpConfig(object):
@@ -24,7 +24,7 @@ class DhcpConfig(object):
             ip_address=None,
             gateway=None,
             networkmask=None):
-        #pylint: disable-msg=too-many-arguments
+        # pylint: disable-msg=too-many-arguments
         self.mac = mac
 
         if gateway is not None or allow_none_value_for_not_required_parameter:
@@ -68,7 +68,7 @@ class DhcpConfig(object):
 
     @staticmethod
     def all():
-        return ISCDhcpLdapConfig.all()
+        return ISCDhcpLdapConfig.get_all_db_entries()
 
     @staticmethod
     def get_by_ip(ip_address):

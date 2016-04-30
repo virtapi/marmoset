@@ -1,8 +1,9 @@
+"""Module to provide a database wrapper for installimage status"""
 from marmoset import config as config_reader
 import sqlite3
 
 
-config = config_reader.load()
+config = config_reader.load_config()
 DB = config['Installstatus'].get('SQLiteDB')
 
 
@@ -49,7 +50,7 @@ class DBHelper:
                         "total_steps INTEGER)")
 
     @classmethod
-    #pylint: disable-msg=too-many-arguments
+    # pylint: disable-msg=too-many-arguments
     def insert_status(cls, uid, status_code, step_description,
                       current_step, total_steps):
         """Inserts a new status update into status table.

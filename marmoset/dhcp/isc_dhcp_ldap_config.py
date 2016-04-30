@@ -1,3 +1,6 @@
+"""Module to provide LDAP access for our DHCP stuff"""
+
+
 import re
 from datetime import datetime
 
@@ -6,10 +9,12 @@ from ldap3 import Server, Connection, ALL, SUBTREE, ALL_ATTRIBUTES, ALL_OPERATIO
 from marmoset import config as config_reader
 from marmoset import validation
 
-config = config_reader.load()
+config = config_reader.load_config()
 
 
 class ISCDhcpLdapConfig(object):
+    """Initial class to connect to our LDAP"""
+
     def __init__(self, dhcp_config):
         self.dhcp_config = dhcp_config
 
@@ -27,21 +32,22 @@ class ISCDhcpLdapConfig(object):
         return conn
 
     def save(self):
+        """Method to save a DHCP entry for a single node in the LDAP database"""
         conn = self.__get_server_connection()
 
-        dhcpStatements = ["fixed-address %s;" % self.dhcp_config.ip_address,
-                          "option subnet-mask %s;" % self.dhcp_config.networkmask]
+        dhcp_statements = ["fixed-address %s;" % self.dhcp_config.ip_address,
+                           "option subnet-mask %s;" % self.dhcp_config.networkmask]
 
         if self.dhcp_config.gateway is not None:
-            dhcpStatements.append("option routers %s;" % self.dhcp_config.gateway)
+            dhcp_statements.append("option routers %s;" % self.dhcp_config.gateway)
 
         for additional_statement in self.dhcp_config.additional_statements:
-            dhcpStatements.append("%s %s;" % (additional_statement,
-                                              self.dhcp_config.additional_statements[additional_statement]))
+            dhcp_statements.append("%s %s;" % (additional_statement,
+                                               self.dhcp_config.additional_statements[additional_statement]))
 
         entry_attributes = {
             'dhcpHWAddress': "ethernet %s" % self.dhcp_config.mac,
-            'dhcpStatements': dhcpStatements,
+            'dhcpStatements': dhcp_statements,
             'dhcpComments': "date=%s dhcp-hostname=%s" % (datetime.now().strftime("%Y%m%d_%H%M%S"),
                                                           self.dhcp_config.dhcp_hostname)
         }
@@ -51,7 +57,8 @@ class ISCDhcpLdapConfig(object):
                  entry_attributes)
 
     @staticmethod
-    def all():
+    def get_all_db_entries():
+        """Method to get all entries from our DB"""
         conn = ISCDhcpLdapConfig.__get_server_connection()
 
         entry_generator = conn.extend.standard.paged_search(
@@ -71,6 +78,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def __get_dn_by_ipv4(ip_address, multi=False):
+        """Get a DN for a certain entry based on the provided ipv4 address"""
         conn = ISCDhcpLdapConfig.__get_server_connection()
         conn.search(
             search_base=config['DHCPConfig'].get('ldap_client_base_dn'),
@@ -100,6 +108,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def __get_dn_by_mac(mac_address, multi=False):
+        """Get a DN for a certain entry based on the provided MAC address"""
         conn = ISCDhcpLdapConfig.__get_server_connection()
         conn.search(
             search_base=config['DHCPConfig'].get('ldap_client_base_dn'),
@@ -128,12 +137,13 @@ class ISCDhcpLdapConfig(object):
         return entries[0]['dn']
 
     @staticmethod
-    def __get_dhcp_config(dn):
-        #pylint: disable-msg=too-many-locals
+    def __get_dhcp_config(distinguished_name):
+        """Gets a LDAP object based on the provided DN"""
+        # pylint: disable-msg=too-many-locals
         from marmoset.dhcp import DhcpConfig
 
         conn = ISCDhcpLdapConfig.__get_server_connection()
-        conn.search(search_base=dn,
+        conn.search(search_base=distinguished_name,
                     search_filter='(objectClass=dhcpHost)',
                     search_scope=SUBTREE,
                     paged_size=5,
@@ -150,20 +160,20 @@ class ISCDhcpLdapConfig(object):
         regex_networkmask = 'option subnet-mask\s+([0-9]+.[0-9]+.[0-9]+.[0-9]+)'
 
         mac = re.search('(%s)' % validation.MAC_REGEX, mac_option).group(0)
-        ip = entries[0]['attributes']['cn'][0]
+        ip_address = entries[0]['attributes']['cn'][0]
 
         gateway = None
         networkmask = None
 
-        for dhcpStatement in entries[0]['attributes']['dhcpStatements']:
-            if re.match(regex_gateway, dhcpStatement):
-                gateway = re.search(regex_gateway, dhcpStatement).group(1)
+        for dhcp_statement in entries[0]['attributes']['dhcpStatements']:
+            if re.match(regex_gateway, dhcp_statement):
+                gateway = re.search(regex_gateway, dhcp_statement).group(1)
 
-            if re.match(regex_networkmask, dhcpStatement):
+            if re.match(regex_networkmask, dhcp_statement):
                 networkmask = re.search(
-                    regex_networkmask, dhcpStatement).group(1)
+                    regex_networkmask, dhcp_statement).group(1)
 
-        dhcp_config = DhcpConfig(mac, ip, gateway, networkmask)
+        dhcp_config = DhcpConfig(mac, ip_address, gateway, networkmask)
 
         additional_statements = config['DHCPConfig'].get('additional_statements').split(',')
 
@@ -185,40 +195,44 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def get_by_ip(ip_address):
-        dn = ISCDhcpLdapConfig.__get_dn_by_ipv4(ip_address)
+        """Gets a config based on the provided IP"""
+        distinguished_name = ISCDhcpLdapConfig.__get_dn_by_ipv4(ip_address)
 
-        if dn is None:
+        if distinguished_name is None:
             return None
 
-        return ISCDhcpLdapConfig.__get_dhcp_config(dn)
+        return ISCDhcpLdapConfig.__get_dhcp_config(distinguished_name)
 
     @staticmethod
     def get_by_mac(mac_address):
-        dn = ISCDhcpLdapConfig.__get_dn_by_mac(mac_address)
+        """Gets a config based on the provided MAC"""
+        distinguished_name = ISCDhcpLdapConfig.__get_dn_by_mac(mac_address)
 
-        if dn is None:
+        if distinguished_name is None:
             return None
 
-        return ISCDhcpLdapConfig.__get_dhcp_config(dn)
+        return ISCDhcpLdapConfig.__get_dhcp_config(distinguished_name)
 
     @staticmethod
     def remove_by_ipv4(ipv4):
+        """Remove an entry based on the IP"""
         dn_list = ISCDhcpLdapConfig.__get_dn_by_ipv4(ipv4, multi=True)
 
-        for dn in dn_list:
+        for distinguished_name in dn_list:
             conn = ISCDhcpLdapConfig.__get_server_connection()
-            conn.delete(dn)
+            conn.delete(distinguished_name)
             conn.unbind()
 
         return len(dn_list)
 
     @staticmethod
     def remove_by_mac(mac):
+        """Remove an entry based on the MAC"""
         dn_list = ISCDhcpLdapConfig.__get_dn_by_mac(mac, multi=True)
 
-        for dn in dn_list:
+        for distinguished_name in dn_list:
             conn = ISCDhcpLdapConfig.__get_server_connection()
-            conn.delete(dn)
+            conn.delete(distinguished_name)
             conn.unbind()
 
         return len(dn_list)

@@ -27,9 +27,9 @@ class Storage(base.Parent):
         return [Volume(v) for v in vols]
 
     def create_volume(self, name, capacity, allocation=None):
-        # infinished impl...
-        #pylint: disable-msg=unused-argument
-        #pylint: disable-msg=unused-variable
+        # unfinished impl...
+        # pylint: disable-msg=unused-argument
+        # pylint: disable-msg=unused-variable
         if not allocation:
             allocation = capacity
         capacity, cunit = base.parse_unit(capacity)

@@ -160,7 +160,7 @@ class ClientConfig(object):
             path = self.file_path()
 
         # pylint seems to be wrong on this one
-        #pylint: disable-msg=unexpected-keyword-arg
+        # pylint: disable-msg=unexpected-keyword-arg
         os.makedirs(ClientConfig.CFG_DIR, exist_ok=True)
         with open(path, 'w') as file:
             file.write(content)

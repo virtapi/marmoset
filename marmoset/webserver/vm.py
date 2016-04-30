@@ -1,9 +1,11 @@
+"""File to handle all web interaction with virtual machines"""
 from flask.ext.restful import reqparse, Resource, abort
 
 from .. import virt
 
 
 def find_domain(uuid):
+    """Searches for a given domain based on the provided UUID"""
     domain = virt.Domain.find_by('uuid', uuid)
     if domain is None:
         abort(404)
@@ -12,12 +14,15 @@ def find_domain(uuid):
 
 
 class VMCollection(Resource):
+    """Collection class to deal with all virtual machines"""
 
     def get(self):
+        """returns all domains"""
         domains = virt.Domain.all()
         return [d.attributes() for d in domains]
 
     def post(self):
+        """creates a new virtual machine"""
         parser = reqparse.RequestParser()
         parser.add_argument('user', type=str, required=True)
         parser.add_argument('name', type=str, required=True)
@@ -30,17 +35,20 @@ class VMCollection(Resource):
         try:
             domain = virt.create(args)
             return domain.attributes()
-        except Exception as e:
-            abort(422, message=str(e))
+        except Exception as exception:
+            abort(422, message=str(exception))
 
 
 class VMObject(Resource):
+    """Class to handle a single virtual machine"""
 
     def get(self, uuid):
+        """returns a single domain based on the UUID"""
         domain = find_domain(uuid)
         return domain.attributes()
 
     def put(self, uuid):
+        """Updates a domain based on the provided UUID"""
         domain = find_domain(uuid)
         parser = reqparse.RequestParser()
         parser.add_argument('memory', type=str, store_missing=False)
@@ -50,20 +58,23 @@ class VMObject(Resource):
         try:
             domain = virt.edit(domain, args)
             return domain.attributes()
-        except Exception as e:
-            abort(422, message=str(e))
+        except Exception as exception:
+            abort(422, message=str(exception))
 
     def delete(self, uuid):
+        """Deletes a domain based on the provided UUID"""
         try:
             virt.remove(dict(uuid=uuid))
             return '', 204
-        except Exception as e:
-            abort(422, message=str(e))
+        except Exception as exception:
+            abort(422, message=str(exception))
 
 
 class VMCommand(Resource):
+    """Class to send libvirt commands to a domain"""
 
     def put(self, uuid):
+        """Sends the provided command to a given UUID"""
         parser = reqparse.RequestParser()
         parser.add_argument('command', type=str, required=True,
                             choices=['start', 'stop', 'shutdown', 'reset'])
@@ -73,5 +84,5 @@ class VMCommand(Resource):
         try:
             res = getattr(domain, args.command)(*args.params)
             return ('', 204) if not res else (res, 200)
-        except Exception as e:
-            abort(422, message=str(e))
+        except Exception as exception:
+            abort(422, message=str(exception))

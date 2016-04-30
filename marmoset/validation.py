@@ -11,10 +11,10 @@ def is_mac(mac):
     return True if re.match("^%s$" % MAC_REGEX, mac) else False
 
 
-def is_ipv4(ip):
+def is_ipv4(ipaddr):
     """Returns True if param is a valid IPv4 address"""
     try:
-        ipaddress.IPv4Address(ip)
+        ipaddress.IPv4Address(ipaddr)
     except ipaddress.AddressValueError:
         return False
     return True

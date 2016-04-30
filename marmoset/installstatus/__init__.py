@@ -1,7 +1,7 @@
 """Initial file for installstatus"""
+from uuid import UUID
 from .installstatus import InstallStatus
 from marmoset import validation
-from uuid import UUID
 
 
 def get_history(args):
@@ -50,6 +50,7 @@ def get_stats(args):
 
 
 def is_uuid(uuid):
+    """Check if provided string is a UUID"""
     if validation.is_uuid(uuid):
         return True
     else:
