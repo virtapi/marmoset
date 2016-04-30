@@ -137,13 +137,13 @@ class ISCDhcpLdapConfig(object):
         return entries[0]['dn']
 
     @staticmethod
-    def __get_dhcp_config(dn):
+    def __get_dhcp_config(distinguished_name):
         """Gets a LDAP object based on the provided DN"""
         # pylint: disable-msg=too-many-locals
         from marmoset.dhcp import DhcpConfig
 
         conn = ISCDhcpLdapConfig.__get_server_connection()
-        conn.search(search_base=dn,
+        conn.search(search_base=distinguished_name,
                     search_filter='(objectClass=dhcpHost)',
                     search_scope=SUBTREE,
                     paged_size=5,
@@ -196,31 +196,31 @@ class ISCDhcpLdapConfig(object):
     @staticmethod
     def get_by_ip(ip_address):
         """Gets a config based on the provided IP"""
-        dn = ISCDhcpLdapConfig.__get_dn_by_ipv4(ip_address)
+        distinguished_name = ISCDhcpLdapConfig.__get_dn_by_ipv4(ip_address)
 
-        if dn is None:
+        if distinguished_name is None:
             return None
 
-        return ISCDhcpLdapConfig.__get_dhcp_config(dn)
+        return ISCDhcpLdapConfig.__get_dhcp_config(distinguished_name)
 
     @staticmethod
     def get_by_mac(mac_address):
         """Gets a config based on the provided MAC"""
-        dn = ISCDhcpLdapConfig.__get_dn_by_mac(mac_address)
+        distinguished_name = ISCDhcpLdapConfig.__get_dn_by_mac(mac_address)
 
-        if dn is None:
+        if distinguished_name is None:
             return None
 
-        return ISCDhcpLdapConfig.__get_dhcp_config(dn)
+        return ISCDhcpLdapConfig.__get_dhcp_config(distinguished_name)
 
     @staticmethod
     def remove_by_ipv4(ipv4):
         """Remove an entry based on the IP"""
         dn_list = ISCDhcpLdapConfig.__get_dn_by_ipv4(ipv4, multi=True)
 
-        for dn in dn_list:
+        for distinguished_name in dn_list:
             conn = ISCDhcpLdapConfig.__get_server_connection()
-            conn.delete(dn)
+            conn.delete(distinguished_name)
             conn.unbind()
 
         return len(dn_list)
@@ -230,9 +230,9 @@ class ISCDhcpLdapConfig(object):
         """Remove an entry based on the MAC"""
         dn_list = ISCDhcpLdapConfig.__get_dn_by_mac(mac, multi=True)
 
-        for dn in dn_list:
+        for distinguished_name in dn_list:
             conn = ISCDhcpLdapConfig.__get_server_connection()
-            conn.delete(dn)
+            conn.delete(distinguished_name)
             conn.unbind()
 
         return len(dn_list)
