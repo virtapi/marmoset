@@ -1,5 +1,4 @@
 test-warnings: true
-doc-warnings: true
 ignore-paths:
   - marmoset/virt/
 uses:
@@ -17,7 +16,6 @@ pylint:
   run: true
   enable:
     - unused-variable
-    - invalid-name
 dodgy:
   run: true
 mccabe:
