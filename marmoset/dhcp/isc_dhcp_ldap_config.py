@@ -1,3 +1,6 @@
+"""Module to provide LDAP access for our DHCP stuff"""
+
+
 import re
 from datetime import datetime
 
@@ -10,6 +13,8 @@ config = config_reader.load()
 
 
 class ISCDhcpLdapConfig(object):
+    """Initial class to connect to our LDAP"""
+
     def __init__(self, dhcp_config):
         self.dhcp_config = dhcp_config
 
@@ -27,6 +32,7 @@ class ISCDhcpLdapConfig(object):
         return conn
 
     def save(self):
+        """Method to save a DHCP entry for a single node in the LDAP database"""
         conn = self.__get_server_connection()
 
         dhcpStatements = ["fixed-address %s;" % self.dhcp_config.ip_address,
@@ -52,6 +58,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def all():
+        """Method to get all entries from our DB"""
         conn = ISCDhcpLdapConfig.__get_server_connection()
 
         entry_generator = conn.extend.standard.paged_search(
@@ -71,6 +78,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def __get_dn_by_ipv4(ip_address, multi=False):
+        """Get a DN for a certain entry based on the provided ipv4 address"""
         conn = ISCDhcpLdapConfig.__get_server_connection()
         conn.search(
             search_base=config['DHCPConfig'].get('ldap_client_base_dn'),
@@ -100,6 +108,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def __get_dn_by_mac(mac_address, multi=False):
+        """Get a DN for a certain entry based on the provided MAC address"""
         conn = ISCDhcpLdapConfig.__get_server_connection()
         conn.search(
             search_base=config['DHCPConfig'].get('ldap_client_base_dn'),
@@ -129,6 +138,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def __get_dhcp_config(dn):
+        """Gets a LDAP object based on the provided DN"""
         # pylint: disable-msg=too-many-locals
         from marmoset.dhcp import DhcpConfig
 
@@ -185,6 +195,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def get_by_ip(ip_address):
+        """Gets a config based on the provided IP"""
         dn = ISCDhcpLdapConfig.__get_dn_by_ipv4(ip_address)
 
         if dn is None:
@@ -194,6 +205,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def get_by_mac(mac_address):
+        """Gets a config based on the provided MAC"""
         dn = ISCDhcpLdapConfig.__get_dn_by_mac(mac_address)
 
         if dn is None:
@@ -203,6 +215,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def remove_by_ipv4(ipv4):
+        """Remove an entry based on the IP"""
         dn_list = ISCDhcpLdapConfig.__get_dn_by_ipv4(ipv4, multi=True)
 
         for dn in dn_list:
@@ -214,6 +227,7 @@ class ISCDhcpLdapConfig(object):
 
     @staticmethod
     def remove_by_mac(mac):
+        """Remove an entry based on the MAC"""
         dn_list = ISCDhcpLdapConfig.__get_dn_by_mac(mac, multi=True)
 
         for dn in dn_list:
