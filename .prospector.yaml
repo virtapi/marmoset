@@ -17,6 +17,7 @@ pylint:
   run: true
   enable:
     - unused-variable
+    - invalid-name
 dodgy:
   run: true
 mccabe:
