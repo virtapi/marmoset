@@ -35,19 +35,19 @@ class ISCDhcpLdapConfig(object):
         """Method to save a DHCP entry for a single node in the LDAP database"""
         conn = self.__get_server_connection()
 
-        dhcpStatements = ["fixed-address %s;" % self.dhcp_config.ip_address,
+        dhcp_statements = ["fixed-address %s;" % self.dhcp_config.ip_address,
                           "option subnet-mask %s;" % self.dhcp_config.networkmask]
 
         if self.dhcp_config.gateway is not None:
-            dhcpStatements.append("option routers %s;" % self.dhcp_config.gateway)
+            dhcp_statements.append("option routers %s;" % self.dhcp_config.gateway)
 
         for additional_statement in self.dhcp_config.additional_statements:
-            dhcpStatements.append("%s %s;" % (additional_statement,
+            dhcp_statements.append("%s %s;" % (additional_statement,
                                               self.dhcp_config.additional_statements[additional_statement]))
 
         entry_attributes = {
             'dhcpHWAddress': "ethernet %s" % self.dhcp_config.mac,
-            'dhcpStatements': dhcpStatements,
+            'dhcpStatements': dhcp_statements,
             'dhcpComments': "date=%s dhcp-hostname=%s" % (datetime.now().strftime("%Y%m%d_%H%M%S"),
                                                           self.dhcp_config.dhcp_hostname)
         }
@@ -165,13 +165,13 @@ class ISCDhcpLdapConfig(object):
         gateway = None
         networkmask = None
 
-        for dhcpStatement in entries[0]['attributes']['dhcpStatements']:
-            if re.match(regex_gateway, dhcpStatement):
-                gateway = re.search(regex_gateway, dhcpStatement).group(1)
+        for dhcp_statement in entries[0]['attributes']['dhcpStatements']:
+            if re.match(regex_gateway, dhcp_statement):
+                gateway = re.search(regex_gateway, dhcp_statement).group(1)
 
-            if re.match(regex_networkmask, dhcpStatement):
+            if re.match(regex_networkmask, dhcp_statement):
                 networkmask = re.search(
-                    regex_networkmask, dhcpStatement).group(1)
+                    regex_networkmask, dhcp_statement).group(1)
 
         dhcp_config = DhcpConfig(mac, ip, gateway, networkmask)
 
