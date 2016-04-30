@@ -44,10 +44,10 @@ class PXECollection(Resource):
                 _method='GET',
                 ip_address=client_config.ip_address)
             return vars(client_config), 201, {'Location': location}
-        except pxe.exceptions.InputError as e:
-            abort(400, message=str(e))
-        except Exception as e:
-            abort(500, message=str(e))
+        except pxe.exceptions.InputError as exception:
+            abort(400, message=str(exception))
+        except Exception as exception:
+            abort(500, message=str(exception))
 
 
 class PXEObject(Resource):

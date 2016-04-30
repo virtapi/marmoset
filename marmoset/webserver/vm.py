@@ -35,8 +35,8 @@ class VMCollection(Resource):
         try:
             domain = virt.create(args)
             return domain.attributes()
-        except Exception as e:
-            abort(422, message=str(e))
+        except Exception as exception:
+            abort(422, message=str(exception))
 
 
 class VMObject(Resource):
@@ -58,16 +58,16 @@ class VMObject(Resource):
         try:
             domain = virt.edit(domain, args)
             return domain.attributes()
-        except Exception as e:
-            abort(422, message=str(e))
+        except Exception as exception:
+            abort(422, message=str(exception))
 
     def delete(self, uuid):
         """Deletes a domain based on the provided UUID"""
         try:
             virt.remove(dict(uuid=uuid))
             return '', 204
-        except Exception as e:
-            abort(422, message=str(e))
+        except Exception as exception:
+            abort(422, message=str(exception))
 
 
 class VMCommand(Resource):
@@ -84,5 +84,5 @@ class VMCommand(Resource):
         try:
             res = getattr(domain, args.command)(*args.params)
             return ('', 204) if not res else (res, 200)
-        except Exception as e:
-            abort(422, message=str(e))
+        except Exception as exception:
+            abort(422, message=str(exception))
