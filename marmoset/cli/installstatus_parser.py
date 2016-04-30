@@ -8,20 +8,20 @@ def add_to(parser, name, **kwargs):
     subcommands = command.add_subparsers(title='%s subcommands' % name)
 
     installstatus_history = subcommands.add_parser('history',
-        help='lists all status updates for a uuid',
+        help='lists all status updates for a uuid',  # nopep8
         aliases=['h', 'hist'])
     installstatus_history.add_argument('uuid',
-        help='uuid to list status updates for')
+        help='uuid to list status updates for')  # nopep8
     installstatus_history.set_defaults(func=installstatus.get_history)
     installstatus_stats = subcommands.add_parser('stats',
-        help='list stats for a uuid',
+        help='list stats for a uuid',  # nopep8
         aliases=['s', 'stat'])
     installstatus_stats.add_argument('uuid',
-        help='uuid to list status for')
+        help='uuid to list status for')  # nopep8
     installstatus_stats.set_defaults(func=installstatus.get_stats)
     installstatus_latest = subcommands.add_parser('latest',
-        help='show latest status for a uuid',
+        help='show latest status for a uuid',  # nopep8
         aliases=['l'])
     installstatus_latest.add_argument('uuid',
-        help='uuid to show latest status for')
+        help='uuid to show latest status for')  # nopep8
     installstatus_latest.set_defaults(func=installstatus.get_latest)
