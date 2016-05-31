@@ -48,7 +48,8 @@ class ClientConfig(object):
                 cbs.append(method[3:])
         return cbs
 
-    def __init__(self, ip_address, password=None, script=None, uuid=None):
+    def __init__(self, ip_address, password=None, script=None, uuid=None,
+                 ipv6_address=None, ipv6_prefix=None, ipv6_gateway=None):
         if re.match('[0-9A-Z]{8}', ip_address.upper()):
             octets = [str(int(x, 16)) for x in re.findall('..', ip_address)]
             ip_address = '.'.join(octets)
@@ -58,6 +59,16 @@ class ClientConfig(object):
 
         self.ip_address = ip_address
         self.script = script
+
+        # set ipv6 parameters only when all are provided
+        if (ipv6_address and ipv6_gateway and ipv6_prefix) is not None:
+            self.ipv6_address = ipv6_address
+            self.ipv6_gateway = ipv6_gateway
+            self.ipv6_prefix = ipv6_prefix
+        else:
+            self.ipv6_address = None
+            self.ipv6_gateway = None
+            self.ipv6_prefix = None
 
         # if uuid is passed, validate it. In case validation fails
         # a new uuid is generated
@@ -71,6 +82,12 @@ class ClientConfig(object):
 
         if self.exists():
             self.label = self.get_label()
+
+            if (self.ipv6_address and self.ipv6_gateway and
+                    self.ipv6_prefix) is None:
+                self.ipv6_address = self.get_ipv6_address()
+                self.ipv6_gateway = self.get_ipv6_gateway()
+                self.ipv6_prefix = self.get_ipv6_prefix()
 
             if script is None:
                 self.script = self.get_script()
@@ -111,6 +128,29 @@ class ClientConfig(object):
                 if option is not None:
                     return option.group(1)
 
+    def get_ipv6_address(self):
+        """Parse the ipv6 address option from the config file."""
+        ipv6_address = self.get_from_config('IP6ADDR')
+        return ipv6_address
+
+    def get_ipv6_gateway(self):
+        """Parse the ipv6 gateway option from the config file."""
+        ipv6_gateway = self.get_from_config('IP6GW')
+        return ipv6_gateway
+
+    def get_ipv6_prefix(self):
+        """Parse the ipv6 prefix option from the config file."""
+        ipv6_prefix = self.get_from_config('IP6PRE')
+        return ipv6_prefix
+
+    def get_from_config(self, option_string):
+        """Parse the defined option from the config file."""
+        with open(self.file_path()) as file:
+            for line in file:
+                option = re.match(' *APPEND.*%s=(\S+)' % option_string, line)
+                if option is not None:
+                    return option.group(1)
+
     def create(self, pxe_label):
         """Create the config file for this instance."""
         options = []
@@ -127,6 +167,12 @@ class ClientConfig(object):
 
         if self.uuid is not None:
             options.append("UUID=%s" % self.uuid)
+
+        if (self.ipv6_address and self.ipv6_gateway and
+                self.ipv6_prefix) is not None:
+            options.append("IP6ADDR=%s" % self.ipv6_address)
+            options.append("IP6GW=%s" % self.ipv6_gateway)
+            options.append("IP6PRE=%s" % self.ipv6_prefix)
 
         content = self.__expand_template(pxe_label.name, options)
         self.__write_config_file(content)
