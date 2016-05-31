@@ -48,6 +48,7 @@ class ClientConfig(object):
                 cbs.append(method[3:])
         return cbs
 
+    # pylint: disable-msg=too-many-arguments
     def __init__(self, ip_address, password=None, script=None, uuid=None,
                  ipv6_address=None, ipv6_prefix=None, ipv6_gateway=None):
         if re.match('[0-9A-Z]{8}', ip_address.upper()):
