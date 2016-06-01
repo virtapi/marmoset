@@ -202,6 +202,25 @@ Check if there is an entry currently set:
 
 404 if not found
 
+You can also provide IPv6 parameters for the PXE config. These parameters will be appended to the kernel command line.
+
+    curl -u admin:secret --data 'ip_address=10.10.1.1&label=archrescue&password=SeCrEt&ipv6_address=2001::1&ipv6_gateway=fe80::1&ipv6_prefix=64' http://localhost:5000/v1/pxe
+
+```json
+{
+    "ip_address": "10.10.1.1",
+    "ipv6_address": "2001::1",
+    "ipv6_gateway": "64",
+    "ipv6_prefix": "fe80::1",
+    "label": "archrescue",
+    "password": "SeCrEt",
+    "script": null,
+    "uuid": null
+}
+```
+
+All IPv6 parameters (ipv6_address, ipv6_gateway and ipv6_prefix) need to be present, else they will be ignored.
+
 #### Remove Entries
 
     curl -u admin:secret -X DELETE http://localhost:5000/v1/pxe/10.10.1.1
