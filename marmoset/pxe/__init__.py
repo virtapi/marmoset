@@ -5,7 +5,9 @@ from .label import Label
 
 def create(args):
     """creates a new PXE entry"""
-    pxe_client = ClientConfig(args.ip_address, args.password, args.script)
+    pxe_client = ClientConfig(args.ip_address, args.password, args.script,
+                              args.uuid, args.ipv6_address, args.ipv6_gateway,
+                              args.ipv6_prefix)
     used_options = pxe_client.create(Label.find(args.label))
 
     msg = 'Created %s with following Options: %s'
