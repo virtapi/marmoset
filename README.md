@@ -210,8 +210,8 @@ You can also provide IPv6 parameters for the PXE config. These parameters will b
 {
     "ip_address": "10.10.1.1",
     "ipv6_address": "2001::1",
-    "ipv6_gateway": "64",
-    "ipv6_prefix": "fe80::1",
+    "ipv6_gateway": "fe80::1",
+    "ipv6_prefix": "64",
     "label": "archrescue",
     "password": "SeCrEt",
     "script": null,
