@@ -1,4 +1,4 @@
-from flask.ext.restful import Resource, url_for, abort
+from flask.ext.restful import Resource, abort
 
 from ..imagecatalog.catalog import ImageCatalog
 
