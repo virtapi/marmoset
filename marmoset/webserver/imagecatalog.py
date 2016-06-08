@@ -1,6 +1,6 @@
 from flask.ext.restful import Resource, abort
-
 from ..imagecatalog.catalog import ImageCatalog
+
 
 class ImageMetadataCollection(Resource):
 
@@ -9,6 +9,7 @@ class ImageMetadataCollection(Resource):
         catalog = ImageCatalog()
         metadata_list = catalog.list_all_metadata()
         return metadata_list
+
 
 class ImageMetadata(Resource):
     def get(self, image_file):
@@ -20,11 +21,12 @@ class ImageMetadata(Resource):
         else:
             abort(404)
 
+
 class ImageSignature(Resource):
-    def get (self, image_file):
+    def get(self, image_file):
         catalog = ImageCatalog()
         image = catalog.get_image(image_file)
         if image is not None:
-            return { "signature": image.signature }
+            return {"signature": image.signature}
         else:
             abort(404)

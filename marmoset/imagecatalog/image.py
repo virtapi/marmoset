@@ -4,6 +4,7 @@ import yaml
 
 class Image(object):
     """reads/creates some image related metadata"""
+
     METADATA_EXT = '.metadata'
 
     def __init__(self, image_path):

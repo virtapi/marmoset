@@ -1,7 +1,8 @@
-""" Module for listing all images"""
+"""Module for listing all images"""
 from .image import Image
 import glob
 import os
+
 
 class ImageCatalog(object):
     IMAGE_DIR = '/srv/nfs/images/'
