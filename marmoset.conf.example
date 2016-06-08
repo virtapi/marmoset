@@ -9,6 +9,7 @@ Webserver: True
 Installimage: True
 DHCP: True
 Installstatus: True
+Imagecatalog: True
 
 [Webserver]
 # Settings for HTTP Basic Auth
@@ -71,3 +72,6 @@ force_gateway: True
 
 [Installstatus]
 SQLiteDB: /home/marmoset/installstatus.db
+
+[Imagecatalog]
+ImageDirectory: /srv/nfs/images/
