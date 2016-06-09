@@ -5,6 +5,7 @@ from .catalog import ImageCatalog
 
 def list_all(args):
     """list all images"""
+    # pylint: disable-msg=unused-argument
     catalog = ImageCatalog()
     metadata_list = catalog.list_all_metadata()
     for image_metadata in metadata_list:

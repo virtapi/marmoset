@@ -2,6 +2,7 @@
 import os
 import yaml
 
+
 class Image(object):
     """reads/creates some image related metadata"""
 
