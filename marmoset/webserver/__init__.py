@@ -70,6 +70,15 @@ def app(config):
         api.add_resource(installstatus.InstallStatusStats,
                          '/installstatus/<uuid>/stats')
 
+    if config['Modules'].getboolean('IMAGECATALOG'):
+        from . import imagecatalog
+        api.add_resource(imagecatalog.ImageMetadataCollection,
+                         '/imagecatalog')
+        api.add_resource(imagecatalog.ImageMetadata,
+                         '/imagecatalog/<image_file>')
+        api.add_resource(imagecatalog.ImageSignature,
+                         '/imagecatalog/<image_file>/signature')
+
     @app.errorhandler(404)
     def not_found(ex):
         """Function to generate 404 handler"""

@@ -60,6 +60,14 @@ def parse(config):
             help='get status information on install jobs'
         )
 
+    if config['Modules'].getboolean('IMAGECATALOG'):
+        from . import imagecatalog_parser
+        imagecatalog_parser.add_to(
+            commands,
+            'imagecatalog',
+            help='get available images and related metadata'
+        )
+
     args = parser.parse_args()
     if 'func' in args:
         args.func(args)
