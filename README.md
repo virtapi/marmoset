@@ -29,7 +29,9 @@ Monkeying around with virtual machines and pxe configs.
 
 Clone the repo into the home of a normal user, then copy the service file into the systemd directory and reload systemd to recognize the file:
 ```bash
-useradd -m -g marmoset -s /bin/bash marmoset
+groupadd marmoset
+useradd --create-home --gid marmoset --shell /bin/bash marmoset
+pacman -Syu git
 su marmoset
 cd ~
 git clone https://github.com/virtapi/marmoset.git
