@@ -44,7 +44,7 @@ Checkout the Comments in the file or in our [Configuration](#configuration) sect
 
 Now we need to setup a virtualenv and install the required python packages (remove libvirt from the requirements.txt and `pkg-config libvirt gcc` from the list of packages to install if you don't want to manage VMs with marmoset):
 ```bash
-pacman -Syu python-virtualenv pkg-config libvirt gcc
+pacman -Syu python-virtualenv pkg-config libvirt gcc python-yaml
 su marmoset
 virtualenv prod
 source prod/bin/activate
