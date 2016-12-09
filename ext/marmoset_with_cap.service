@@ -1,0 +1,14 @@
+[Unit]
+Description=marmoset API
+After=network.target
+
+[Service]
+WorkingDirectory=/home/marmoset/marmoset
+ExecStart=/home/marmoset/marmoset/prod/bin/python3 /home/marmoset/marmoset/marmoset.py server
+User=marmoset
+Group=marmoset
+PrivateTmp=true
+AmbientCapabilities=CAP_LINUX_IMMUTABLE
+
+[Install]
+WantedBy=multi-user.target
