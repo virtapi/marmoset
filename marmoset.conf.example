@@ -42,6 +42,7 @@ Storage:
 # this will be used for storing PXE options
 [PXEConfig]
 ConfigDirectory: /srv/tftp/pxelinux.cfg/
+ImmutableSupport: True
 
 # The PXELabel section has no defaults, as its entries depend on
 # the PXE configuration. The syntax is `label: callbackmethod`.
