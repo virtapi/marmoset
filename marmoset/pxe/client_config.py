@@ -6,8 +6,9 @@ import re
 from string import Template as Stringtemplate
 from textwrap import dedent
 from uuid import UUID, uuid4
-
 from marmoset import validation
+from .exceptions import Error
+
 
 
 class ClientConfig(object):
@@ -50,7 +51,8 @@ class ClientConfig(object):
 
     # pylint: disable-msg=too-many-arguments
     def __init__(self, ip_address, password=None, script=None, uuid=None,
-                 ipv6_address=None, ipv6_gateway=None, ipv6_prefix=None):
+                 ipv6_address=None, ipv6_gateway=None, ipv6_prefix=None,
+                 persistent=False):
         if re.match('[0-9A-Z]{8}', ip_address.upper()):
             octets = [str(int(x, 16)) for x in re.findall('..', ip_address)]
             ip_address = '.'.join(octets)
@@ -100,6 +102,8 @@ class ClientConfig(object):
 
         if password not in [None, '']:
             self.password = password
+
+        self.persistent = persistent
 
     def exists(self):
         """Return if there is a config file for this instance."""
@@ -184,6 +188,7 @@ class ClientConfig(object):
     def remove(self):
         """Remove the config file for this instance."""
         if self.exists():
+            self.__make_file_mutable(self.file_path())
             os.remove(self.file_path())
             return True
         else:
@@ -209,8 +214,29 @@ class ClientConfig(object):
         # pylint seems to be wrong on this one
         # pylint: disable-msg=unexpected-keyword-arg
         os.makedirs(ClientConfig.CFG_DIR, exist_ok=True)
+        self.__make_file_mutable(path)
         with open(path, 'w') as file:
             file.write(content)
+        if self.persistent is True:
+            self.__make_file_immutable(path)
+
+    def __make_file_immutable(self, path=None):
+        if path is None:
+            path = self.file_path()
+        if os.path.isfile(path):
+            return_code = os.system('chattr +i {path}'.format(path=path))
+            if return_code > 0:
+                raise Error(message='couldnt set immutable flag for {path}'.
+                            format(path=path))
+
+    def __make_file_mutable(self, path=None):
+        if path is None:
+            path = self.file_path()
+        if os.path.isfile(path):
+            return_code = os.system('chattr -i {path}'.format(path=path))
+            if return_code > 0:
+                raise Error(message='couldnt remove immutable flag for {path}'.
+                            format(path=path))
 
     def __expand_template(self, label, options=None):
         """Return the config file content expanded with the given values."""
