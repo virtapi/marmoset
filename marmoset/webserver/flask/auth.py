@@ -37,7 +37,7 @@ def __check_auth(username, password):  # nopep8
 # we've to disable pep8 here because it detects uppercase chars in the method name
 # pep8 compliance requires lowercase only function names, but thats the case
 def __is_whitelist_endpoint(endpoint):  # nopep8
-    """this function will pass the authentication for whitelisted endpoints."""
+    """Check if a given endpoint is whitelisted in our configuration file"""
     whitelist_conf = current_app.config['AUTH_WHITELIST_ENDPOINT']
     if whitelist_conf is not None:
         whitelist = whitelist_conf.split(',')

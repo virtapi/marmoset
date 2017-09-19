@@ -4,7 +4,7 @@ from .label import Label
 
 
 def create(args):
-    """creates a new PXE entry"""
+    """Creates a new PXE entry"""
     pxe_client = ClientConfig(args.ip_address, args.password, args.script,
                               args.uuid, args.ipv6_address, args.ipv6_gateway,
                               args.ipv6_prefix)
@@ -23,7 +23,7 @@ def dolist(args):
 
 
 def remove(args):
-    """remove a specific PXE entry"""
+    """Remove a specific PXE entry"""
     pxe_client = ClientConfig(args.ip_address)
     if pxe_client.remove():
         print('Removed', pxe_client.file_path())

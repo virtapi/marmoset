@@ -26,20 +26,20 @@ class InstallimageConfig(object):
             self.__read_config_file()
 
     def add_or_set(self, key, value):
-        """adds a new key/value to the config"""
+        """Adds a new key/value to the config"""
         if value not in self.variables[key.upper()]:
             self.variables[key.upper()].append(value)
 
     def clear_variables(self):
-        """clears our variables"""
+        """Clears our variables"""
         self.variables = defaultdict(list)
 
     def create(self):
-        """writes the config from memory to disk"""
+        """Writes the config from memory to disk"""
         self.__write_config_file()
 
     def exists(self):
-        """check if a config is already present on the disk"""
+        """Check if a config is already present on the disk"""
         return os.path.isfile(self.file_path())
 
     def remove(self):
@@ -79,7 +79,7 @@ class InstallimageConfig(object):
                 self.variables[key].append(value)
 
     def get_content(self):
-        """reads a config and parses it"""
+        """Reads a config and parses it"""
         variable_lines = []
         for key in self.variables:
             for value in self.variables[key]:

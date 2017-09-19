@@ -17,12 +17,12 @@ class VMCollection(Resource):
     """Collection class to deal with all virtual machines"""
 
     def get(self):
-        """returns all domains"""
+        """Returns all domains"""
         domains = virt.Domain.all()
         return [d.attributes() for d in domains]
 
     def post(self):
-        """creates a new virtual machine"""
+        """Creates a new virtual machine"""
         parser = reqparse.RequestParser()
         parser.add_argument('user', type=str, required=True)
         parser.add_argument('name', type=str, required=True)
@@ -43,7 +43,7 @@ class VMObject(Resource):
     """Class to handle a single virtual machine"""
 
     def get(self, uuid):
-        """returns a single domain based on the UUID"""
+        """Returns a single domain based on the UUID"""
         domain = find_domain(uuid)
         return domain.attributes()
 
