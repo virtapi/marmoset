@@ -8,6 +8,7 @@ ExecStart=/home/marmoset/marmoset/prod/bin/python3 /home/marmoset/marmoset/marmo
 User=marmoset
 Group=marmoset
 PrivateTmp=true
+AmbientCapabilities=CAP_LINUX_IMMUTABLE
 
 [Install]
 WantedBy=multi-user.target
