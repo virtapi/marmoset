@@ -6,7 +6,7 @@ Jinja2==2.8
 ldap3==2.5.1
 libvirt-python==3.7.0
 MarkupSafe==0.23
-pyasn1==0.1.9
+pyasn1==0.4.4
 python-dateutil==2.4.2
 pytz==2015.7
 six==1.10.0
