@@ -52,7 +52,7 @@ class InstallimageConfig(object):
 
     def file_name(self):
         """Return the file name in the Installimage file name style."""
-        return self.mac.replace(":", "_")
+        return self.mac.replace(":", "_").lower()
 
     def file_path(self, name=None):
         """Return the path to the config file of th instance."""
