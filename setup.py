@@ -11,7 +11,7 @@ def read(fname):
 
 setup(
     name='marmoset',
-    version='0.5.0',
+    version='0.6.0',
     description='Simple HTTP API for managing stuff on libvirt hosts',
     keywords='dhcp dhcpd ldap libvirt management vms virtual-machines',
     author='https://github.com/virtapi/marmoset/graphs/contributors',
@@ -34,7 +34,7 @@ setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ]
 )

@@ -72,8 +72,12 @@ Please checkout our [requirements.txt](requirements.txt) for a complete and auth
 * Werkzeug
 * wheel
 
-In addition to these python packages, you also need Python 3. This project originally started with Python 3.3, we are currently developing and testing on 3.5 but we plan to support Python 3.3 and 3.4 as well.
-We also need pkg-config and libvirt, which you need to install via your system-wide package manager (these aren't python packages).
+In addition to these python packages, you also need Python 3. This project
+originally started with Python 3.3, we are currently developing and testing on
+3.6 and 3.7.
+
+We also need pkg-config and libvirt, which you need to install via your
+system-wide package manager (these aren't python packages).
 
 ---
 
