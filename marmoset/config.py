@@ -29,7 +29,7 @@ def default():
 
     config['PXEConfig'] = dict(
         ConfigDirectory='/srv/tftp/pxelinux.cfg',
-        ImmutableSupport = False
+        ImmutableSupport=False
     )
 
     config['PXELabel'] = dict(

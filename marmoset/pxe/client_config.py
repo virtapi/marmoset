@@ -10,7 +10,6 @@ from marmoset import validation
 from .exceptions import Error
 
 
-
 class ClientConfig(object):
     """Class to handle PXE configs for clients"""
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
@@ -112,7 +111,7 @@ class ClientConfig(object):
         """Parse the label form the config file."""
         with open(self.file_path()) as file:
             for line in file:
-                option = re.match(' *APPEND (\w+)', line)
+                option = re.match(r' *APPEND (\w+)', line)
                 if option is not None:
                     return option.group(1)
 
@@ -120,7 +119,7 @@ class ClientConfig(object):
         """Parse the script option form the config file."""
         with open(self.file_path()) as file:
             for line in file:
-                option = re.match(' *APPEND.*script=(\S+)', line)
+                option = re.match(r' *APPEND.*script=(\S+)', line)
                 if option is not None:
                     return option.group(1)
 
@@ -128,7 +127,7 @@ class ClientConfig(object):
         """Parse the uuid option from the config file."""
         with open(self.file_path()) as file:
             for line in file:
-                option = re.match(' *APPEND.*UUID=(\S+)', line)
+                option = re.match(r' *APPEND.*UUID=(\S+)', line)
                 if option is not None:
                     return option.group(1)
 
@@ -151,7 +150,7 @@ class ClientConfig(object):
         """Parse the defined option from the config file."""
         with open(self.file_path()) as file:
             for line in file:
-                option = re.match(' *APPEND.*%s=(\S+)' % option_string, line)
+                option = re.match(r' *APPEND.*%s=(\S+)' % option_string, line)
                 if option is not None:
                     return option.group(1)
 
@@ -249,7 +248,10 @@ class ClientConfig(object):
                                    options=options)
 
     def __mkpwhash(self):
-        """Return the hashed password. The password attribute is set if not present."""
+        """
+        Return the hashed password.
+        The password attribute is set if not present
+        """
         if 'password' not in vars(self) or self.password in [None, '']:
             password = base64.b64encode(os.urandom(16), b'-_')[:16]
             self.password = password.decode('utf-8')

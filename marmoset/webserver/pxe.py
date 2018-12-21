@@ -28,6 +28,7 @@ else:
 parser.add_argument('persistent', choices=persistent_choices,
                     type=str, default='false')
 
+
 class PXECollection(Resource):
     """Collection class to deal with PXE records"""
 

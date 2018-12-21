@@ -32,14 +32,18 @@ class ISCDhcpLdapConfig(object):
         return conn
 
     def save(self):
-        """Method to save a DHCP entry for a single node in the LDAP database"""
+        """
+        Method to save a DHCP entry for a single node in the LDAP database
+        """
         conn = self.__get_server_connection()
 
         dhcp_statements = ["fixed-address %s;" % self.dhcp_config.ip_address,
-                           "option subnet-mask %s;" % self.dhcp_config.networkmask]
+                           "option subnet-mask %s;"
+                           % self.dhcp_config.networkmask]
 
         if self.dhcp_config.gateway is not None:
-            dhcp_statements.append("option routers %s;" % self.dhcp_config.gateway)
+            dhcp_statements.append("option routers %s;"
+                    % self.dhcp_config.gateway)
 
         for additional_statement in self.dhcp_config.additional_statements:
             dhcp_statements.append("%s %s;" % (additional_statement,
@@ -156,8 +160,8 @@ class ISCDhcpLdapConfig(object):
 
         mac_option = str(entries[0]['attributes']['dhcpHWAddress'])
 
-        regex_gateway = 'option routers\s+([0-9]+.[0-9]+.[0-9]+.[0-9]+)'
-        regex_networkmask = 'option subnet-mask\s+([0-9]+.[0-9]+.[0-9]+.[0-9]+)'
+        regex_gateway = r'option routers\s+([0-9]+.[0-9]+.[0-9]+.[0-9]+)'
+        regex_networkmask = r'option subnet-mask\s+([0-9]+.[0-9]+.[0-9]+.[0-9]+)'
 
         mac = re.search('(%s)' % validation.MAC_REGEX, mac_option).group(0)
         ip_address = entries[0]['attributes']['cn'][0]
@@ -180,7 +184,7 @@ class ISCDhcpLdapConfig(object):
         for ldap_additional_statement in entries[
                 0]['attributes']['dhcpStatements']:
             for additional_statement in additional_statements:
-                regex_additional_statement = '%s\s+(.*);' % additional_statement
+                regex_additional_statement = r'%s\s+(.*);' % additional_statement
 
                 if re.match(
                         regex_additional_statement,

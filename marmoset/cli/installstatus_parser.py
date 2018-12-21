@@ -3,7 +3,9 @@ from .. import installstatus
 
 
 def add_to(parser, name, **kwargs):
-    """Updates the CLI parser to support installimage status updates and stats"""
+    """
+    Updates the CLI parser to support installimage status updates and stats
+    """
     command = parser.add_parser(name, **kwargs)
     subcommands = command.add_subparsers(title='%s subcommands' % name)
 

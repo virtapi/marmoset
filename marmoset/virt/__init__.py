@@ -41,7 +41,7 @@ def create(args):
 
 def dolist(args):
     """list all domains"""
-    #pylint: disable-msg=unused-argument
+    # pylint: disable-msg=unused-argument
     for domain in Domain.all():
         pprint(domain.attributes())
 
