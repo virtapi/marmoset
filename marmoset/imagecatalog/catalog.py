@@ -4,7 +4,7 @@ import glob
 import os
 
 
-class ImageCatalog(object):
+class ImageCatalog:
     IMAGE_DIR = '/srv/nfs/images/'
     IMAGE_EXTENSTIONS = ['tar.gz']
 

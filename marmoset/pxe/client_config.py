@@ -10,8 +10,9 @@ from marmoset import validation
 from .exceptions import Error
 
 
-class ClientConfig(object):
+class ClientConfig:
     """Class to handle PXE configs for clients"""
+
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
 
     CFG_TEMPLATE = Stringtemplate(dedent('''\

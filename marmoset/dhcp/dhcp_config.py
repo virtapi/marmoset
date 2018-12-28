@@ -5,7 +5,7 @@ from .isc_dhcp_ldap_config import ISCDhcpLdapConfig
 config = config_reader.load_config()
 
 
-class DhcpConfig(object):
+class DhcpConfig:
     def __init__(self, mac, ip_address, gateway=None, networkmask=None):
         self.additional_statements = {}
 

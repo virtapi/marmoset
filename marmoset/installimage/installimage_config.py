@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 
 
-class InstallimageConfig(object):
+class InstallimageConfig:
     """Handles installimage configuration for clients"""
 
     CFG_DIR = '/srv/tftp/installimage/'

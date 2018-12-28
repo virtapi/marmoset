@@ -12,7 +12,7 @@ from marmoset import validation
 config = config_reader.load_config()
 
 
-class ISCDhcpLdapConfig(object):
+class ISCDhcpLdapConfig:
     """Initial class to connect to our LDAP"""
 
     def __init__(self, dhcp_config):

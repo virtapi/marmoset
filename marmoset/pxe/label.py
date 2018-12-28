@@ -3,7 +3,7 @@ from .client_config import ClientConfig
 from .exceptions import InputError
 
 
-class Label(object):
+class Label:
     """class to handle PXE lables"""
 
     instances = []

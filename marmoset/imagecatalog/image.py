@@ -3,7 +3,7 @@ import os
 import yaml
 
 
-class Image(object):
+class Image:
     """reads/creates some image related metadata"""
 
     METADATA_EXT = '.metadata'

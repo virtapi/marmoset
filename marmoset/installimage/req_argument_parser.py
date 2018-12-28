@@ -1,7 +1,7 @@
 """Simple module to get access to data from an http request"""
 
 
-class ReqArgumentParser(object):
+class ReqArgumentParser:
     """Simple class to get access to data from an http request"""
 
     def parse_args(self, req):
