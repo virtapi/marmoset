@@ -190,8 +190,7 @@ class ClientConfig:
             self.__make_file_mutable(self.file_path())
             os.remove(self.file_path())
             return True
-        else:
-            return False
+        return False
 
     def file_name(self):
         """Return the file name in the PXE file name style."""

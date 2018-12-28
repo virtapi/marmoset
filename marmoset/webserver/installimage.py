@@ -25,8 +25,7 @@ class InstallimageObject(Resource):
 
         if installimage_config.exists():
             return vars(installimage_config)
-        else:
-            abort(404)
+        abort(404)
 
     def post(self, mac):
         """Creates or updates a config based on the provided MAC"""
@@ -54,8 +53,7 @@ class InstallimageObject(Resource):
         if installimage_config.exists():
             installimage_config.remove()
             return '', 204
-        else:
-            abort(404)
+        abort(404)
 
 
 class InstallimageConfigCommand(Resource):

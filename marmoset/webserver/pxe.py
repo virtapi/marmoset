@@ -84,8 +84,7 @@ class PXEObject(Resource):
         client_config = pxe.ClientConfig(ip_address)
         if client_config.exists():
             return vars(client_config)
-        else:
-            abort(404)
+        abort(404)
 
     def delete(self, ip_address):
         """Remove a PXE entry for the given ip_address."""
@@ -93,5 +92,4 @@ class PXEObject(Resource):
         if client_config.exists():
             client_config.remove()
             return '', 204
-        else:
-            abort(404)
+        abort(404)

@@ -47,8 +47,7 @@ class InstallimageConfig:
         if self.exists():
             os.remove(self.file_path())
             return True
-        else:
-            return False
+        return False
 
     def file_name(self):
         """Return the file name in the Installimage file name style."""
