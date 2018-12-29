@@ -22,6 +22,12 @@ class Label:
         return [x.name for x in cls.instances]
 
     def __init__(self, name, callback=None):
+        """
+        Initialize attributes with defaults
+
+        This also checks if a configured callback method (from our config file)
+        for a PXE label actually exists as a mehod.
+        """
         if callback in (None, ''):
             callback = None
         elif not ClientConfig.has_callback(callback):

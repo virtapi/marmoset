@@ -7,6 +7,7 @@ pep257:
   run: true
   disable:
     - D203
+    - D212
 pep8:
   run: true
   full: true

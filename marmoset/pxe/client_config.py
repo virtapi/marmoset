@@ -52,6 +52,13 @@ class ClientConfig:
     def __init__(self, ip_address, password=None, script=None, uuid=None,
                  ipv6_address=None, ipv6_gateway=None, ipv6_prefix=None,
                  persistent=False):
+        """
+        Initialize a PXE config object with provided data
+
+        We do a lot of data validation here. Besides that we do a lot of
+        assumptions her. Example: IPv6 is a all-or-nothing setup. All IPv6
+        params are mandatory.
+        """
         if re.match('[0-9A-Z]{8}', ip_address.upper()):
             octets = [str(int(x, 16)) for x in re.findall('..', ip_address)]
             ip_address = '.'.join(octets)
@@ -250,7 +257,8 @@ class ClientConfig:
     def __mkpwhash(self):
         """
         Return the hashed password.
-        The password attribute is set if not present
+
+        The password attribute is set if not present.
         """
         if 'password' not in vars(self) or self.password in [None, '']:
             password = base64.b64encode(os.urandom(16), b'-_')[:16]

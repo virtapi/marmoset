@@ -19,6 +19,7 @@ class InstallimageConfig:
         return entries
 
     def __init__(self, mac):
+        """Initialize the attributes properly. Assign provided MAC address"""
         self.variables = defaultdict(list)
         self.mac = mac
 

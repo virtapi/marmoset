@@ -12,7 +12,8 @@ class DBHelper:
 
     @classmethod
     def _connect(cls):
-        """Connects to SQLite DB defined in marmoset config.
+        """
+        Connects to SQLite DB defined in marmoset config.
 
         :return: sqlite3 connection to DB using a row cursor.
         """
@@ -23,7 +24,8 @@ class DBHelper:
 
     @classmethod
     def _test_table_exists(cls, con):
-        """Tests if the 'installstatus' table exists in DB, else creates it.
+        """
+        Tests if the 'installstatus' table exists in DB, else creates it.
 
         :param con: sqlite3 connection
         """
@@ -35,7 +37,8 @@ class DBHelper:
 
     @classmethod
     def _init_table(cls, con):
-        """Initializes the 'installstatus' table
+        """
+        Initializes the 'installstatus' table
 
         :param con: sqlite3 connection
         """
@@ -53,7 +56,8 @@ class DBHelper:
     # pylint: disable-msg=too-many-arguments
     def insert_status(cls, uid, status_code, step_description,
                       current_step, total_steps):
-        """Inserts a new status update into status table.
+        """
+        Inserts a new status update into status table.
 
         :param uid: uuid of the installimage job
         :param status_code: the status code of the current install step from
@@ -73,7 +77,8 @@ class DBHelper:
 
     @classmethod
     def get_history(cls, uid):
-        """Receives a status update history for specified uuid.
+        """
+        Receives a status update history for specified uuid.
 
         :param uid: uuid of the installimage job
         :return: a list of status updates
@@ -95,7 +100,8 @@ class DBHelper:
 
     @classmethod
     def _get_all_entries(cls):
-        """Get all status updates from installstatus table.
+        """
+        Get all status updates from installstatus table.
 
         Get all status updates available in the 'installstatus' table
         Not really useful, escpecially in case of lots table entries, the
@@ -119,7 +125,8 @@ class DBHelper:
 
     @classmethod
     def get_latest_status(cls, uid):
-        """Gets the latest status update available in 'installstatus' table.
+        """
+        Gets the latest status update available in 'installstatus' table.
 
         :param uid: uuid of installimage job
         :return: latest status update

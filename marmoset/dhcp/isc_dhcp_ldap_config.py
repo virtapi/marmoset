@@ -16,6 +16,7 @@ class ISCDhcpLdapConfig:
     """Initial class to connect to our LDAP"""
 
     def __init__(self, dhcp_config):
+        """Initialize the dhcp configuration credentials and URI"""
         self.dhcp_config = dhcp_config
 
     @staticmethod
@@ -32,9 +33,7 @@ class ISCDhcpLdapConfig:
         return conn
 
     def save(self):
-        """
-        Method to save a DHCP entry for a single node in the LDAP database
-        """
+        """Method to save a DHCP entry for a single node in a LDAP database"""
         conn = self.__get_server_connection()
 
         dhcp_statements = ["fixed-address %s;" % self.dhcp_config.ip_address,
