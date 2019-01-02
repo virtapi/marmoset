@@ -33,7 +33,7 @@ class ISCDhcpLdapConfig:
         return conn
 
     def save(self):
-        """Method to save a DHCP entry for a single node in a LDAP database"""
+        """saves a DHCP entry for a single node in an LDAP database"""
         conn = self.__get_server_connection()
 
         dhcp_statements = ["fixed-address %s;" % self.dhcp_config.ip_address,
