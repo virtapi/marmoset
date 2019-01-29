@@ -72,7 +72,7 @@ class InstallimageConfig:
             lines = file.readlines()
 
         for line in lines:
-            if len(line.strip()) > 0:
+            if line.strip():
                 key = line.split(" ")[0]
                 value = line.split(" ", 1)[1].rstrip('\n')
 

@@ -95,7 +95,7 @@ class ISCDhcpLdapConfig:
 
         entries = conn.response
 
-        if entries is None or len(entries) == 0:
+        if not entries:
             if multi:
                 return []
             return None
@@ -125,7 +125,7 @@ class ISCDhcpLdapConfig:
 
         entries = conn.response
 
-        if entries is None or len(entries) == 0:
+        if not entries:
             if multi:
                 return []
             return None
@@ -154,7 +154,7 @@ class ISCDhcpLdapConfig:
 
         entries = conn.response
 
-        if len(entries) == 0:
+        if not entries:
             return None
 
         mac_option = str(entries[0]['attributes']['dhcpHWAddress'])

@@ -32,7 +32,7 @@ class DBHelper:
         result = con.execute("SELECT name FROM sqlite_master "
                              "WHERE type = 'table' AND name = 'installstatus'")
         result = result.fetchall()
-        if len(result) == 0:
+        if not result:
             cls._init_table(con)
 
     @classmethod
