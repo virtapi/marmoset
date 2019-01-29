@@ -33,7 +33,7 @@ class ISCDhcpLdapConfig:
         return conn
 
     def save(self):
-        """saves a DHCP entry for a single node in an LDAP database"""
+        """Saves a DHCP entry for a single node in an LDAP database"""
         conn = self.__get_server_connection()
 
         dhcp_statements = ["fixed-address %s;" % self.dhcp_config.ip_address,
@@ -42,7 +42,7 @@ class ISCDhcpLdapConfig:
 
         if self.dhcp_config.gateway is not None:
             dhcp_statements.append("option routers %s;"
-                    % self.dhcp_config.gateway)
+                                   % self.dhcp_config.gateway)
 
         for additional_statement in self.dhcp_config.additional_statements:
             dhcp_statements.append("%s %s;" % (additional_statement,

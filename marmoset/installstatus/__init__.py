@@ -1,7 +1,7 @@
 """Initial file for installstatus"""
 from uuid import UUID
-from .installstatus import InstallStatus
 from marmoset import validation
+from .installstatus import InstallStatus
 
 
 def get_history(args):

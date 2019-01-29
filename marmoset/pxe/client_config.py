@@ -116,7 +116,7 @@ class ClientConfig:
         return os.path.isfile(self.file_path())
 
     def get_label(self):
-        """Parse the label form the config file."""
+        """Parse the label from the config file."""
         with open(self.file_path()) as file:
             for line in file:
                 option = re.match(r' *APPEND (\w+)', line)
@@ -124,7 +124,7 @@ class ClientConfig:
                     return option.group(1)
 
     def get_script(self):
-        """Parse the script option form the config file."""
+        """Parse the script option from the config file."""
         with open(self.file_path()) as file:
             for line in file:
                 option = re.match(r' *APPEND.*script=(\S+)', line)
