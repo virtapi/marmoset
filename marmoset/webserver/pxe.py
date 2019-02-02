@@ -47,10 +47,7 @@ class PXECollection(Resource):
         """
         args = parser.parse_args()
 
-        if args.persistent in ['true', 'True']:
-            persistent = True
-        else:
-            persistent = False
+        persistent = args.persistent in ['true', 'True']
         print(args)
         client_config = pxe.ClientConfig(
             args.ip_address,
