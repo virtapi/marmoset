@@ -21,7 +21,7 @@ Monkeying around with virtual machines and pxe configs.
 + [Issues](#issues)
 + [License](#license)
 + [Contact](#contact)
-+ [Contribution](#contribution)
++ [Contribution and Development](#contribution-and-development)
 
 ---
 
@@ -614,6 +614,7 @@ will return:
 ---
 
 ## Setup LDAP + isc-dhcpd
+
 We will do all this in a clean Arch nspawn container (login for a new container is always root without password):
 ```bash
 mkdir marmoset_container
@@ -671,24 +672,57 @@ If you don't run btrfs you can still download the tar to /var/lib/machines, extr
 ---
 
 ## Name Origin
+
 The marmosets is a group of monkey species, checkout [wikipedia](https://en.wikipedia.org/wiki/Marmoset) for detailed infos.
 
 ---
 
 ## Issues
+
 [Github Issues](https://www.github.com/virtapi/marmoset/issues)
 
 ---
 
 ## License
+
 The original [project](https://github.com/aibor/marmoset) and all of our changes are based on the AGPL, you can find the license [here](LICENSE).
 
 ---
 
 ## Contact
+
 You can meet us in #virtapi at freenode.
 
 ---
 
-## Contribution
+## Contribution and Development
+
 We've defined our contribution rules in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Let's assume you need to install one of the python dependencies from a git
+repo, because you rely on unreleased code. Instead of waiting for a release,
+you can depend on the git repo instead. And example:
+Add the following to the requirements.txt if you want to install a specific
+commit from the pylint-flask repo.
+
+```
+-e git+https://github.com/simpleweb/pylint-flask.git@ad5ab3048a6975a56667cefd303af1173a554bbb#egg=pylint-flask
+```
+
+List all installed packages in a virtual env:
+
+```
+pip list
+```
+
+List all oudated packages:
+
+```
+pip list --outdated
+```
+
+Update every outdated package:
+
+```
+pip list --outdated | awk '{print $1}' | xargs -n1 pip install --upgrade
+```
