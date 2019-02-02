@@ -277,4 +277,3 @@ class ClientConfig:
         """Callback that creates a password hash file."""
         file_path = self.file_path('PWHASH.' + self.ip_address)
         self.__write_config_file(self.__mkpwhash(), file_path)
-        return None
