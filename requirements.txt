@@ -12,4 +12,3 @@ six==1.12.0
 Werkzeug==0.14.1
 wheel==0.32.3
 pyyaml==3.13
--e git+https://github.com/simpleweb/pylint-flask.git@ad5ab3048a6975a56667cefd303af1173a554bbb#egg=pylint-flask
