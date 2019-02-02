@@ -51,8 +51,4 @@ def get_stats(args):
 
 def is_uuid(uuid):
     """Check if provided string is a UUID"""
-    if validation.is_uuid(uuid):
-        return True
-    else:
-        print('Invalid uuid %s.' % uuid)
-        return False
+    return validation.is_uuid(uuid)
