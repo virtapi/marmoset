@@ -17,6 +17,8 @@ pylint:
   run: true
   enable:
     - unused-variable
+  disable:
+    - inconsistent-return-statements
 dodgy:
   run: true
 mccabe:
