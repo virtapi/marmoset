@@ -5,7 +5,7 @@ from .installstatus import InstallStatus
 
 
 def get_history(args):
-    """Prints status update history related to installimage uuid"""
+    """Print status update history related to installimage uuid."""
     if is_uuid(args.uuid):
         uuid = str(UUID(args.uuid))
         install_status = InstallStatus(uuid)
@@ -21,7 +21,7 @@ def get_history(args):
 
 
 def get_latest(args):
-    """Prints latest status update related to installimage uuid"""
+    """Print latest status update related to installimage uuid."""
     if is_uuid(args.uuid):
         uuid = str(UUID(args.uuid))
         install_status = InstallStatus(uuid)
@@ -36,7 +36,7 @@ def get_latest(args):
 
 
 def get_stats(args):
-    """Prints some stats related to installimage uuid"""
+    """Print some stats related to installimage uuid."""
     if is_uuid(args.uuid):
         uuid = str(UUID(args.uuid))
         install_status = InstallStatus(uuid)
@@ -50,5 +50,5 @@ def get_stats(args):
 
 
 def is_uuid(uuid):
-    """Check if provided string is a UUID"""
+    """Check if provided string is a UUID."""
     return validation.is_uuid(uuid)

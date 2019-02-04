@@ -83,7 +83,7 @@ def app(config):
 
     @app.errorhandler(404)
     def not_found(ex):
-        """Function to generate 404 handler."""
+        """Generate a 404."""
         # pylint: disable-msg=unused-argument
         # pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Route not found.", status=404)
@@ -92,7 +92,7 @@ def app(config):
 
     @app.errorhandler(401)
     def unauthorized(ex):
-        """Function to generate 401 handler."""
+        """Generate a 401"""
         # pylint: disable-msg=unused-argument
         # pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Unauthorized", status=401)
@@ -103,7 +103,7 @@ def app(config):
 
 
 def run(args):
-    """Function to run the app."""
+    """Run the flask app."""
     # pylint: disable-msg=unused-argument
     webserver = app(config)
     print(webserver.url_map)
