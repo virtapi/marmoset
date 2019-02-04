@@ -1,4 +1,4 @@
-"""File to handle all web interaction with installimage configurations"""
+"""File to handle all web interaction with installimage configurations."""
 from flask import request, make_response
 from flask.ext.restful import Resource, url_for, abort
 
@@ -9,18 +9,18 @@ parser = ReqArgumentParser()
 
 
 class InstallimageCollection(Resource):
-    """Collection Class to deal with all installimage configurations"""
+    """Collection Class to deal with all installimage configurations."""
 
     def get(self):
-        """Returns all current configurations"""
+        """Return all current configurations."""
         return [vars(c) for c in InstallimageConfig.all()]
 
 
 class InstallimageObject(Resource):
-    """Class to handle a single installimage configuration"""
+    """Class to handle a single installimage configuration."""
 
     def get(self, mac):
-        """Returns a specific config based on the provided MAC"""
+        """Return a specific config based on the provided MAC."""
         installimage_config = InstallimageConfig(mac)
 
         if installimage_config.exists():
@@ -28,7 +28,7 @@ class InstallimageObject(Resource):
         abort(404)
 
     def post(self, mac):
-        """Creates or updates a config based on the provided MAC"""
+        """Create or updates a config based on the provided MAC."""
         args = parser.parse_args(request)
 
         installimage_config = InstallimageConfig(mac)
@@ -47,7 +47,7 @@ class InstallimageObject(Resource):
         return vars(installimage_config), 201, {'Location': location}
 
     def delete(self, mac):
-        """Deletes a specific config based on the provided MAC"""
+        """Delete a specific config based on the provided MAC."""
         installimage_config = InstallimageConfig(mac)
 
         if installimage_config.exists():
@@ -57,10 +57,10 @@ class InstallimageObject(Resource):
 
 
 class InstallimageConfigCommand(Resource):
-    """Class to do something?"""
+    """Class for handling installimage configs"""
 
     def get(self, mac):
-        """Returns the configuration in a format suitable for the installimage"""
+        """Return the configuration as installimage format."""
         installimage_config = InstallimageConfig(mac)
 
         response = make_response(installimage_config.get_content())

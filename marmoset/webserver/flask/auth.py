@@ -22,11 +22,12 @@ def for_all_routes(app):
     return app
 
 
-# we've to disable pep8 here because it detects uppercase chars in the method name
+# we've to disable pep8 here because
+# it detects uppercase chars in the method name
 # pep8 compliance requires lowercase only function names, but thats the case
 def __check_auth(username, password):  # nopep8
     """
-    Check username/password combination
+    Check username/password combination.
 
     This function is called to check if a username /
     password combination is valid.
@@ -34,10 +35,11 @@ def __check_auth(username, password):  # nopep8
     return username == Username and password == Password
 
 
-# we've to disable pep8 here because it detects uppercase chars in the method name
+# we've to disable pep8 here because
+# it detects uppercase chars in the method name
 # pep8 compliance requires lowercase only function names, but thats the case
 def __is_whitelist_endpoint(endpoint):  # nopep8
-    """Check if a given endpoint is whitelisted in our configuration file"""
+    """Check if a given endpoint is whitelisted in our configuration file."""
     whitelist_conf = current_app.config['AUTH_WHITELIST_ENDPOINT']
     if whitelist_conf is not None:
         whitelist = whitelist_conf.split(',')
@@ -46,7 +48,8 @@ def __is_whitelist_endpoint(endpoint):  # nopep8
     return False
 
 
-# we've to disable pep8 here because it detects uppercase chars in the method name
+# we've to disable pep8 here because
+# it detects uppercase chars in the method name
 # pep8 compliance requires lowercase only function names, but thats the case
 def __authenticate():  # nopep8
     auth = request.authorization

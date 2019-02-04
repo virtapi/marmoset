@@ -1,11 +1,11 @@
-"""Flask extension module which holds a few helper functions"""
+"""Flask extension module which holds a few helper functions."""
 from flask import Flask, jsonify
 from werkzeug.exceptions import default_exceptions, HTTPException
 
 
 # pylint: disable-msg=keyword-arg-before-vararg
 def response(code=200, headers={}, *args, **kwargs):
-    """Creates a json encoded response"""
+    """Create a json encoded response."""
     # pylint: disable-msg=dangerous-default-value
     # pylint: disable-msg=redefined-outer-name
     response = jsonify(*args, **kwargs)
@@ -16,7 +16,7 @@ def response(code=200, headers={}, *args, **kwargs):
 
 
 def error(ex=None, code=500, headers={}):
-    """Creates a proper HTTP error"""
+    """Create a proper HTTP error."""
     # pylint: disable-msg=dangerous-default-value
     code = ex.code if isinstance(ex, HTTPException) else code
     return response(code, headers, message=str(ex))
@@ -24,7 +24,7 @@ def error(ex=None, code=500, headers={}):
 
 def app(import_name, **kwargs):
     """
-    Creates a JSON-oriented Flask app.
+    Create a JSON-oriented Flask app.
 
     All error responses that you don't specifically
     manage yourself will have application/json content
