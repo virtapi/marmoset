@@ -3,7 +3,7 @@ from .client_config import ClientConfig
 from .exceptions import InputError
 
 
-class Label(object):
+class Label:
     """class to handle PXE lables"""
 
     instances = []
@@ -22,6 +22,12 @@ class Label(object):
         return [x.name for x in cls.instances]
 
     def __init__(self, name, callback=None):
+        """
+        Initialize attributes with defaults
+
+        This also checks if a configured callback method (from our config file)
+        for a PXE label actually exists as a mehod.
+        """
         if callback in (None, ''):
             callback = None
         elif not ClientConfig.has_callback(callback):

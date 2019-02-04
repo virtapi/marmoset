@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 
 
-class InstallimageConfig(object):
+class InstallimageConfig:
     """Handles installimage configuration for clients"""
 
     CFG_DIR = '/srv/tftp/installimage/'
@@ -19,6 +19,7 @@ class InstallimageConfig(object):
         return entries
 
     def __init__(self, mac):
+        """Initialize the attributes properly. Assign provided MAC address"""
         self.variables = defaultdict(list)
         self.mac = mac
 
@@ -47,8 +48,7 @@ class InstallimageConfig(object):
         if self.exists():
             os.remove(self.file_path())
             return True
-        else:
-            return False
+        return False
 
     def file_name(self):
         """Return the file name in the Installimage file name style."""
@@ -72,7 +72,7 @@ class InstallimageConfig(object):
             lines = file.readlines()
 
         for line in lines:
-            if len(line.strip()) > 0:
+            if line.strip():
                 key = line.split(" ")[0]
                 value = line.split(" ", 1)[1].rstrip('\n')
 

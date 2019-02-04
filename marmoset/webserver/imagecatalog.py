@@ -18,8 +18,7 @@ class ImageMetadata(Resource):
         image = catalog.get_image(image_file)
         if image is not None:
             return image.metadata
-        else:
-            abort(404)
+        abort(404)
 
 
 class ImageSignature(Resource):
@@ -28,5 +27,4 @@ class ImageSignature(Resource):
         image = catalog.get_image(image_file)
         if image is not None:
             return {"signature": image.signature}
-        else:
-            abort(404)
+        abort(404)

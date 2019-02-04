@@ -47,7 +47,7 @@ def parse_unit(obj):
     string, which will be parsed for a unit (defaults to 'b' as well).
     """
     if isinstance(obj, str):
-        m = match('^(\d+) *(\w+)?$', obj)
+        m = match(r'^(\d+) *(\w+)?$', obj)
         if m:
             value, unit = m.groups()
         else:
@@ -63,7 +63,7 @@ def generate_password(length=32):
 
 
 class Virt(object):
-    """Base class for handling all the virtualization related stuff in marmoset"""
+    """Base class for handling all the virtualization stuff in marmoset"""
 
     TEMPLATE_DIR = path.join(path.dirname(__file__), 'templates')
 

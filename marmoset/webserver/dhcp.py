@@ -64,7 +64,7 @@ class DhcpCollection(Resource):
 
         for args_item in parser.args:
             if not args_item.required and args_item.name in args and args[args_item.name] is not None and \
-                    args_item.name is not 'gateway' and args_item.name is not 'networkmask':
+                    args_item.name != 'gateway' and args_item.name != 'networkmask':
                 dhcp_config.add_additional_statement(
                     args_item.name, args[args_item.name])
 
@@ -113,7 +113,7 @@ class DhcpIpv4Object(Resource):
 
         for args_item in parser.args:
             if not args_item.required and args_item.name in args and args[args_item.name] is not None and \
-                    args_item.name is not 'gateway' and args_item.name is not 'networkmask':
+                    args_item.name != 'gateway' and args_item.name != 'networkmask':
                 dhcp_config.add_additional_statement(
                     args_item.name, args[args_item.name])
 
@@ -177,7 +177,7 @@ class DhcpMacObject(Resource):
 
         for args_item in parser.args:
             if not args_item.required and args_item.name in args and args[args_item.name] is not None and \
-                    args_item.name is not 'gateway' and args_item.name is not 'networkmask':
+                    args_item.name != 'gateway' and args_item.name != 'networkmask':
                 dhcp_config.add_additional_statement(
                     args_item.name, args[args_item.name])
 

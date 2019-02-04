@@ -5,8 +5,11 @@ from .isc_dhcp_ldap_config import ISCDhcpLdapConfig
 config = config_reader.load_config()
 
 
-class DhcpConfig(object):
+class DhcpConfig:
+    """Model for a DHCP object"""
+
     def __init__(self, mac, ip_address, gateway=None, networkmask=None):
+        """Initialize all attributes with default values"""
         self.additional_statements = {}
 
         self.mac = None

@@ -1,6 +1,8 @@
 """initial file for providing a Flask based API"""
 from flask import Flask, jsonify
-from flask.ext import restful
+# https://flask-restful.readthedocs.io/en/latest/quickstart.html
+from flask_restful import Api
+# from flask.ext import restful
 
 from .flask import auth
 
@@ -26,7 +28,7 @@ def app(config):
     app.config['AUTH_WHITELIST_ENDPOINT'] = \
         config['Webserver'].get('AuthWhitelistEndpoint')
 
-    api = restful.Api(
+    api = Api(
         app=app,
         prefix='/v{}'.format(API_VERSION)
     )

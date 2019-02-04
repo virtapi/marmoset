@@ -30,8 +30,10 @@ def add_to(parser, name, **kwargs):
         '-u', '--uuid', help='UUID which will be appended to kernel cmdline,'
         'this will be used for tracking the status'
         'of an installation', default=None)
-    pxe_create.add_argument('--ipv6_address', help='IPv6 Address', default=None)
-    pxe_create.add_argument('--ipv6_gateway', help='IPv6 Gateway', default=None)
+    pxe_create.add_argument(
+            '--ipv6_address', help='IPv6 Address', default=None)
+    pxe_create.add_argument(
+            '--ipv6_gateway', help='IPv6 Gateway', default=None)
     pxe_create.add_argument('--ipv6_prefix', help='IPv6 Prefix', default=None)
 
     pxe_list = subcommands.add_parser(

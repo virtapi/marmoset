@@ -3,6 +3,7 @@ from flask import Flask, jsonify
 from werkzeug.exceptions import default_exceptions, HTTPException
 
 
+# pylint: disable-msg=keyword-arg-before-vararg
 def response(code=200, headers={}, *args, **kwargs):
     """Creates a json encoded response"""
     # pylint: disable-msg=dangerous-default-value
@@ -34,7 +35,7 @@ def app(import_name, **kwargs):
     # pylint: disable-msg=redefined-outer-name
     app = Flask(import_name, **kwargs)
 
-    for code in default_exceptions.keys():
+    for code in default_exceptions:
         app.error_handler_spec[None][code] = error
 
     return app

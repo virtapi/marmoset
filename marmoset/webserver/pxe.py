@@ -28,6 +28,7 @@ else:
 parser.add_argument('persistent', choices=persistent_choices,
                     type=str, default='false')
 
+
 class PXECollection(Resource):
     """Collection class to deal with PXE records"""
 
@@ -46,10 +47,7 @@ class PXECollection(Resource):
         """
         args = parser.parse_args()
 
-        if args.persistent in ['true', 'True']:
-            persistent = True
-        else:
-            persistent = False
+        persistent = args.persistent in ['true', 'True']
         print(args)
         client_config = pxe.ClientConfig(
             args.ip_address,
@@ -83,8 +81,7 @@ class PXEObject(Resource):
         client_config = pxe.ClientConfig(ip_address)
         if client_config.exists():
             return vars(client_config)
-        else:
-            abort(404)
+        abort(404)
 
     def delete(self, ip_address):
         """Remove a PXE entry for the given ip_address."""
@@ -92,5 +89,4 @@ class PXEObject(Resource):
         if client_config.exists():
             client_config.remove()
             return '', 204
-        else:
-            abort(404)
+        abort(404)

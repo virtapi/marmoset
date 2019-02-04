@@ -10,9 +10,9 @@ from marmoset import validation
 from .exceptions import Error
 
 
-
-class ClientConfig(object):
+class ClientConfig:
     """Class to handle PXE configs for clients"""
+
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
 
     CFG_TEMPLATE = Stringtemplate(dedent('''\
@@ -52,6 +52,13 @@ class ClientConfig(object):
     def __init__(self, ip_address, password=None, script=None, uuid=None,
                  ipv6_address=None, ipv6_gateway=None, ipv6_prefix=None,
                  persistent=False):
+        """
+        Initialize a PXE config object with provided data
+
+        We do a lot of data validation here. Besides that we do a lot of
+        assumptions her. Example: IPv6 is a all-or-nothing setup. All IPv6
+        params are mandatory.
+        """
         if re.match('[0-9A-Z]{8}', ip_address.upper()):
             octets = [str(int(x, 16)) for x in re.findall('..', ip_address)]
             ip_address = '.'.join(octets)
@@ -109,18 +116,18 @@ class ClientConfig(object):
         return os.path.isfile(self.file_path())
 
     def get_label(self):
-        """Parse the label form the config file."""
+        """Parse the label from the config file."""
         with open(self.file_path()) as file:
             for line in file:
-                option = re.match(' *APPEND (\w+)', line)
+                option = re.match(r' *APPEND (\w+)', line)
                 if option is not None:
                     return option.group(1)
 
     def get_script(self):
-        """Parse the script option form the config file."""
+        """Parse the script option from the config file."""
         with open(self.file_path()) as file:
             for line in file:
-                option = re.match(' *APPEND.*script=(\S+)', line)
+                option = re.match(r' *APPEND.*script=(\S+)', line)
                 if option is not None:
                     return option.group(1)
 
@@ -128,7 +135,7 @@ class ClientConfig(object):
         """Parse the uuid option from the config file."""
         with open(self.file_path()) as file:
             for line in file:
-                option = re.match(' *APPEND.*UUID=(\S+)', line)
+                option = re.match(r' *APPEND.*UUID=(\S+)', line)
                 if option is not None:
                     return option.group(1)
 
@@ -151,7 +158,7 @@ class ClientConfig(object):
         """Parse the defined option from the config file."""
         with open(self.file_path()) as file:
             for line in file:
-                option = re.match(' *APPEND.*%s=(\S+)' % option_string, line)
+                option = re.match(r' *APPEND.*%s=(\S+)' % option_string, line)
                 if option is not None:
                     return option.group(1)
 
@@ -190,8 +197,7 @@ class ClientConfig(object):
             self.__make_file_mutable(self.file_path())
             os.remove(self.file_path())
             return True
-        else:
-            return False
+        return False
 
     def file_name(self):
         """Return the file name in the PXE file name style."""
@@ -249,7 +255,11 @@ class ClientConfig(object):
                                    options=options)
 
     def __mkpwhash(self):
-        """Return the hashed password. The password attribute is set if not present."""
+        """
+        Return the hashed password.
+
+        The password attribute is set if not present.
+        """
         if 'password' not in vars(self) or self.password in [None, '']:
             password = base64.b64encode(os.urandom(16), b'-_')[:16]
             self.password = password.decode('utf-8')
@@ -267,4 +277,3 @@ class ClientConfig(object):
         """Callback that creates a password hash file."""
         file_path = self.file_path('PWHASH.' + self.ip_address)
         self.__write_config_file(self.__mkpwhash(), file_path)
-        return None

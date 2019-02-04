@@ -24,7 +24,7 @@ class InstallStatusHistory(Resource):
         """Returns the history for a provided UUID"""
         install_status = InstallStatus(uuid)
         history = install_status.get_history()
-        if len(history) == 0:
+        if not history:
             return abort(404)
         return history
 
