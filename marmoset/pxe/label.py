@@ -1,10 +1,10 @@
-"""File for dealing with PXE lables"""
+"""File for dealing with PXE lables."""
 from .client_config import ClientConfig
 from .exceptions import InputError
 
 
 class Label:
-    """class to handle PXE lables"""
+    """class to handle PXE lables."""
 
     instances = []
 
@@ -23,7 +23,7 @@ class Label:
 
     def __init__(self, name, callback=None):
         """
-        Initialize attributes with defaults
+        Initialize attributes with defaults.
 
         This also checks if a configured callback method (from our config file)
         for a PXE label actually exists as a mehod.

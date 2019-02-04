@@ -1,1 +1,1 @@
-"""flask initial file"""
+"""flask initial file."""

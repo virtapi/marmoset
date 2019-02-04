@@ -1,4 +1,4 @@
-"""File to handle all web interaction with PXE records"""
+"""File to handle all web interaction with PXE records."""
 from flask.ext.restful import reqparse, Resource, url_for, abort
 
 from .. import pxe
@@ -30,7 +30,7 @@ parser.add_argument('persistent', choices=persistent_choices,
 
 
 class PXECollection(Resource):
-    """Collection class to deal with PXE records"""
+    """Collection class to deal with PXE records."""
 
     def get(self):
         """List all PXE entries."""
@@ -38,7 +38,7 @@ class PXECollection(Resource):
 
     def post(self):
         """
-        Accepts a new PXE entry
+        Accept a new PXE entry.
 
         Add a PXE entry for the given ip_address. Password, uuid, script and
         IPv6 parameteres are optional parameters. The IPv6 parameters are used
@@ -74,7 +74,7 @@ class PXECollection(Resource):
 
 
 class PXEObject(Resource):
-    """Class to handle a single PXE record"""
+    """Class to handle a single PXE record."""
 
     def get(self, ip_address):
         """Lookup a PXE entry for the given ip_address."""

@@ -1,4 +1,4 @@
-"""file for dealing with PXE client configs"""
+"""file for dealing with PXE client configs."""
 import base64
 import crypt
 import os
@@ -11,7 +11,7 @@ from .exceptions import Error
 
 
 class ClientConfig:
-    """Class to handle PXE configs for clients"""
+    """Class to handle PXE configs for clients."""
 
     CFG_DIR = '/srv/tftp/pxelinux.cfg/'
 
@@ -53,7 +53,7 @@ class ClientConfig:
                  ipv6_address=None, ipv6_gateway=None, ipv6_prefix=None,
                  persistent=False):
         """
-        Initialize a PXE config object with provided data
+        Initialize a PXE config object with provided data.
 
         We do a lot of data validation here. Besides that we do a lot of
         assumptions her. Example: IPv6 is a all-or-nothing setup. All IPv6

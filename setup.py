@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Basic setup.py that describes the project"""
+"""Basic setup.py that describes the project."""
 import os
 
 try:
@@ -9,7 +9,7 @@ except ImportError:
 
 
 def read(fname):
-    """Read a file with absolute path, based on provided filename"""
+    """Read a file with absolute path, based on provided filename."""
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
