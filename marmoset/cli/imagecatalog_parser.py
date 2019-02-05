@@ -1,9 +1,9 @@
-"""ClI module for imagecatalog"""
+"""ClI module for imagecatalog."""
 from .. import imagecatalog
 
 
 def add_to(parser, name, **kwargs):
-    """Updates the CLI parser to support imagecatalog"""
+    """Update the CLI parser to support imagecatalog."""
     command = parser.add_parser(name, **kwargs)
     subcommands = command.add_subparsers(title='%s subcommands' % name)
 

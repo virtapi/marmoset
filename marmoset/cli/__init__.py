@@ -1,4 +1,4 @@
-"""initial file that handles all CLI operations"""
+"""initial file that handles all CLI operations."""
 from argparse import ArgumentParser
 
 

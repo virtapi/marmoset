@@ -49,7 +49,7 @@ class InstallStatus:
 
     def get_stats(self):
         """
-        Generates some stats related to the installimage job.
+        Generate some stats related to the installimage job.
 
         :return: stats
         :rtype: dict

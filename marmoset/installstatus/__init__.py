@@ -1,4 +1,4 @@
-"""Initial file for installstatus"""
+"""Initial file for installstatus."""
 from uuid import UUID
 from marmoset import validation
 from .installstatus import InstallStatus

@@ -1,4 +1,4 @@
-"""Module for listing all images"""
+"""Module for listing all images."""
 from .image import Image
 import glob
 import os
@@ -9,7 +9,7 @@ class ImageCatalog:
     IMAGE_EXTENSTIONS = ['tar.gz']
 
     def __init__(self):
-        """We don't initialize anything here"""
+        """We don't initialize anything here."""
         pass
 
     def list_all_image_files(self):

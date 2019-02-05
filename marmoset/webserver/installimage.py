@@ -57,7 +57,7 @@ class InstallimageObject(Resource):
 
 
 class InstallimageConfigCommand(Resource):
-    """Class for handling installimage configs"""
+    """Class for handling installimage configs."""
 
     def get(self, mac):
         """Return the configuration as installimage format."""

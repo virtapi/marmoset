@@ -5,7 +5,7 @@ from collections import defaultdict
 
 
 class InstallimageConfig:
-    """Handles installimage configuration for clients"""
+    """Handle installimage configuration for clients."""
 
     CFG_DIR = '/srv/tftp/installimage/'
 
@@ -79,7 +79,7 @@ class InstallimageConfig:
                 self.variables[key].append(value)
 
     def get_content(self):
-        """Reads a config and parses it."""
+        """Read a config and parses it."""
         variable_lines = []
         for key in self.variables:
             for value in self.variables[key]:

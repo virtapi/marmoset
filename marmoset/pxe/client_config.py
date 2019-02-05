@@ -270,10 +270,10 @@ class ClientConfig:
         return crypt.mksalt(crypt.METHOD_SHA512)
 
     def cb_setpwhash(self):
-        """Callback that adds a HASH= string to the command line."""
+        """Create a callback that adds a HASH= string to the command line."""
         return 'HASH=' + self.__mkpwhash()
 
     def cb_createpwhashfile(self):
-        """Callback that creates a password hash file."""
+        """Create a callback that creates a password hash file."""
         file_path = self.file_path('PWHASH.' + self.ip_address)
         self.__write_config_file(self.__mkpwhash(), file_path)
