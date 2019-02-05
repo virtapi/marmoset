@@ -1,15 +1,15 @@
-"""Module for reading the image metadata"""
+"""Module for reading the image metadata."""
 import os
 import yaml
 
 
 class Image:
-    """reads/creates some image related metadata"""
+    """read/create some image related metadata."""
 
     METADATA_EXT = '.metadata'
 
     def __init__(self, image_path):
-        """Initialize all attributes with default values"""
+        """Initialize all attributes with default values."""
         self.image_path = image_path
         self.basename = os.path.basename(self.image_path)
         self.dirname = os.path.dirname(image_path)

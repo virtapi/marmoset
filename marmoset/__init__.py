@@ -1,4 +1,4 @@
-"""initial file that handles marmoset"""
+"""initial file that handles marmoset."""
 from marmoset import cli
 from marmoset import config
 

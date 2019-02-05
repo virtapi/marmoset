@@ -18,7 +18,7 @@ def jsonify_nl(*args, **kwargs):
 
 
 def app(config):
-    """Setup the initial flask app."""
+    """Prepare the initial flask app."""
     auth.Username = config['Webserver'].get('Username')
     auth.Password = config['Webserver'].get('Password')
 
@@ -92,7 +92,7 @@ def app(config):
 
     @app.errorhandler(401)
     def unauthorized(ex):
-        """Generate a 401"""
+        """Generate a 401."""
         # pylint: disable-msg=unused-argument
         # pylint: disable-msg=unused-variable
         resp = jsonify_nl(message="Unauthorized", status=401)

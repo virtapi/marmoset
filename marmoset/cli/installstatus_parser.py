@@ -1,10 +1,10 @@
-"""ClI module for installimage status updates"""
+"""ClI module for installimage status updates."""
 from .. import installstatus
 
 
 def add_to(parser, name, **kwargs):
     """
-    Updates the CLI parser to support installimage status updates and stats.
+    Update the CLI parser to support installimage status updates and stats.
 
     supports a lot of information based on a UUID. For example a list of
     all status updates a UUID got, the last update it got or some stats for it.

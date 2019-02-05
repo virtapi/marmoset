@@ -128,7 +128,7 @@ class DhcpIpv4Object(Resource):
         return vars(dhcp_config), 201, {'Location': location}
 
     def delete(self, ipv4):
-        """Deletes a DHCP record"""
+        """Delete a DHCP record."""
         if not validation.is_ipv4(ipv4):
             return {'message': 'please provide a valid ipv4 address'}, 406
 

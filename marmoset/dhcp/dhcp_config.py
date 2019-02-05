@@ -6,10 +6,10 @@ config = config_reader.load_config()
 
 
 class DhcpConfig:
-    """Model for a DHCP object"""
+    """Model for a DHCP object."""
 
     def __init__(self, mac, ip_address, gateway=None, networkmask=None):
-        """Initialize all attributes with default values"""
+        """Initialize all attributes with default values."""
         self.additional_statements = {}
 
         self.mac = None

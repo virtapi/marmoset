@@ -13,7 +13,7 @@ class DBHelper:
     @classmethod
     def _connect(cls):
         """
-        Connects to SQLite DB defined in marmoset config.
+        Connect to SQLite DB defined in marmoset config.
 
         :return: sqlite3 connection to DB using a row cursor.
         """
