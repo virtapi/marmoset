@@ -1,4 +1,4 @@
-"""Module to deal will all the installimage configs"""
+"""Module to deal will all the installimage configs."""
 import os
 import re
 from collections import defaultdict
@@ -19,7 +19,7 @@ class InstallimageConfig:
         return entries
 
     def __init__(self, mac):
-        """Initialize the attributes properly. Assign provided MAC address"""
+        """Initialize the attributes properly. Assign provided MAC address."""
         self.variables = defaultdict(list)
         self.mac = mac
 
@@ -27,20 +27,20 @@ class InstallimageConfig:
             self.__read_config_file()
 
     def add_or_set(self, key, value):
-        """Adds a new key/value to the config"""
+        """Add a new key/value to the config."""
         if value not in self.variables[key.upper()]:
             self.variables[key.upper()].append(value)
 
     def clear_variables(self):
-        """Clears our variables"""
+        """Clear our variables."""
         self.variables = defaultdict(list)
 
     def create(self):
-        """Writes the config from memory to disk"""
+        """Write the config from memory to disk."""
         self.__write_config_file()
 
     def exists(self):
-        """Check if a config is already present on the disk"""
+        """Check if a config is already present on the disk."""
         return os.path.isfile(self.file_path())
 
     def remove(self):
@@ -79,7 +79,7 @@ class InstallimageConfig:
                 self.variables[key].append(value)
 
     def get_content(self):
-        """Reads a config and parses it"""
+        """Reads a config and parses it."""
         variable_lines = []
         for key in self.variables:
             for value in self.variables[key]:

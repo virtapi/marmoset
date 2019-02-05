@@ -1,4 +1,4 @@
-"""Module to handle everything related to installimage status"""
+"""Module to handle everything related to installimage status."""
 from marmoset import config as config_reader
 from .db_helper import DBHelper
 import datetime
@@ -7,15 +7,15 @@ config = config_reader.load_config()
 
 
 class InstallStatus:
-    """Installimage status updates can be stored/retrieved by uuid"""
+    """Installimage status updates can be stored/retrieved by uuid."""
 
     def __init__(self, uuid):
-        """Initializes the uuid attribute with the provided data"""
+        """Initialize the uuid attribute with the provided data."""
         self.uuid = uuid
 
     def get_latest_status(self):
         """
-        Fetches latest status update for the installimage job
+        Fetch latest status update for the installimage job.
 
         :return: latest status update for the
         :rtpye: dict
@@ -25,7 +25,7 @@ class InstallStatus:
 
     def get_history(self):
         """
-        Fetches all status updates related to the installimage job
+        Fetch all status updates related to the installimage job.
 
         :return: a list including one dict per status update
         :rtype: list
@@ -36,7 +36,7 @@ class InstallStatus:
     def insert_status(self, status_code, step_description,
                       current_step, total_steps):
         """
-        Insert new status update for installimage job
+        Insert new status update for installimage job.
 
         :param status_code: the status code of the current install step from
         installimage
@@ -49,7 +49,7 @@ class InstallStatus:
 
     def get_stats(self):
         """
-        Generates some stats related to the installimage job
+        Generates some stats related to the installimage job.
 
         :return: stats
         :rtype: dict
@@ -84,7 +84,7 @@ class InstallStatus:
 
     def convert_date(self, date_string):
         """
-        Converts the date string from database to datetime object
+        Convert the date string from database to datetime object.
 
         :param date_string:
         :return: datetime

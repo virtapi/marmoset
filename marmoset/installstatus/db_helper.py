@@ -1,4 +1,4 @@
-"""Module to provide a database wrapper for installimage status"""
+"""Module to provide a database wrapper for installimage status."""
 from marmoset import config as config_reader
 import sqlite3
 
@@ -8,7 +8,7 @@ DB = config['Installstatus'].get('SQLiteDB')
 
 
 class DBHelper:
-    """Interface to the installstatus SQLite DB"""
+    """Interface to the installstatus SQLite DB."""
 
     @classmethod
     def _connect(cls):
@@ -25,7 +25,7 @@ class DBHelper:
     @classmethod
     def _test_table_exists(cls, con):
         """
-        Tests if the 'installstatus' table exists in DB, else creates it.
+        Test if the 'installstatus' table exists in DB, else creates it.
 
         :param con: sqlite3 connection
         """
@@ -38,7 +38,7 @@ class DBHelper:
     @classmethod
     def _init_table(cls, con):
         """
-        Initializes the 'installstatus' table
+        Initialize the 'installstatus' table.
 
         :param con: sqlite3 connection
         """
@@ -57,7 +57,7 @@ class DBHelper:
     def insert_status(cls, uid, status_code, step_description,
                       current_step, total_steps):
         """
-        Inserts a new status update into status table.
+        Insert a new status update into status table.
 
         :param uid: uuid of the installimage job
         :param status_code: the status code of the current install step from
@@ -78,7 +78,7 @@ class DBHelper:
     @classmethod
     def get_history(cls, uid):
         """
-        Receives a status update history for specified uuid.
+        Receive a status update history for specified uuid.
 
         :param uid: uuid of the installimage job
         :return: a list of status updates
@@ -126,7 +126,7 @@ class DBHelper:
     @classmethod
     def get_latest_status(cls, uid):
         """
-        Gets the latest status update available in 'installstatus' table.
+        Get the latest status update available in 'installstatus' table.
 
         :param uid: uuid of installimage job
         :return: latest status update
