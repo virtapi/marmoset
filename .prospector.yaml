@@ -8,6 +8,9 @@ pep257:
   disable:
     - D203
     - D212
+  enable:
+    - D400
+    - D401
 pep8:
   run: true
   full: true
