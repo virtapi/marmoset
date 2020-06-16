@@ -597,6 +597,25 @@ this will return the new created entry:
 
 an update works the same way, just submit the command again and change new updated params, again the API will respond with the updated entry.
 
+#### Create a new Entry with additional statements:
+
+```
+curl -u admin:secret --data 'ip_address=10.10.10.2&mac=fe:54:6c:9e:10:e8&gateway=10.10.10.1&networkmask=255.255.255.128&option domain-name-servers=192.168.178.1,192.168.178.2' http://localhost:5000/v1/dhcp
+```
+
+```json
+{
+    "additional_statements": {
+        "option domain-name-servers": "192.168.178.1,192.168.178.2"
+    },
+    "dhcp_hostname": "example.com",
+    "gateway": "10.10.10.1",
+    "ip_address": "10.10.10.2",
+    "mac": "fe:54:6c:9e:10:e8",
+    "networkmask": "255.255.255.128"
+}
+```
+
 #### Delete an Entry:
     curl -u admin:secret -X DELETE http://localhost:5000/v1/dhcp/ipv4/10.3.7.41
 
