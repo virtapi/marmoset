@@ -1,9 +1,6 @@
 """File to handle all web interaction with DHCP records."""
 from flask import request
-from flask.ext.restful import Resource
-from flask.ext.restful import abort
-from flask.ext.restful import reqparse
-from flask.ext.restful import url_for
+from flask_restful import Resource, abort, reqparse, url_for
 
 from marmoset import config as config_reader
 from marmoset import dhcp

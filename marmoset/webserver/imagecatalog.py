@@ -1,5 +1,5 @@
 """Class for handling image metadata."""
-from flask.ext.restful import Resource, abort
+from flask_restful import Resource, abort
 from ..imagecatalog.catalog import ImageCatalog
 
 
