@@ -15,7 +15,7 @@ def read(fname):
 
 setup(
     name='marmoset',
-    version='0.6.0',
+    version='0.7.0',
     description='Simple HTTP API for managing stuff on libvirt hosts',
     keywords='dhcp dhcpd ldap libvirt management vms virtual-machines',
     author='https://github.com/virtapi/marmoset/graphs/contributors',
@@ -29,9 +29,9 @@ setup(
     tests_require=['nose>=1.3.7',
                    'mock>=1.3.0',
                    'testfixtures>=4.7.0',
-                   'prospector'],
+                   'prospector[pyroma]'],
     test_suite='nose.collector',
-    license='GNU Affero General Public License',
+    license='GNU Affero General Public License v3',
     author_email='tim@bastelfreak.de',
     zip_safe=False,
     long_description=read('README.md'),
@@ -47,6 +47,6 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
-        'License :: OSI Approved :: GNU Affero General Public License v3.0 only (AGPL-3.0-only)',
+        'License :: OSI Approved :: GNU Affero General Public License v3',
     ]
 )

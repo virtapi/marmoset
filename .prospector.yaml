@@ -22,6 +22,8 @@ pylint:
     - unused-variable
   disable:
     - inconsistent-return-statements
+    - import-outside-toplevel
+    - cyclic-import
 dodgy:
   run: true
 mccabe:

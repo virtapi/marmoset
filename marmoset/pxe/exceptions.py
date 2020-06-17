@@ -11,5 +11,3 @@ class Error(Exception):
 
 class InputError(Error):
     """Dummy class."""
-
-    pass
