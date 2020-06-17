@@ -8,7 +8,7 @@ MAC_REGEX = "([0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}"
 
 def is_mac(mac):
     """Return True if param is a valid MAC."""
-    return True if re.match("^%s$" % MAC_REGEX, mac) else False
+    re.match("^%s$" % MAC_REGEX, mac)
 
 
 def is_ipv4(ipaddr):
