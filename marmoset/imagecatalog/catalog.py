@@ -6,7 +6,7 @@ import os
 
 class ImageCatalog:
     IMAGE_DIR = '/srv/nfs/images/'
-    IMAGE_EXTENSTIONS = ['tar.gz']
+    IMAGE_EXTENSTIONS = ['tar.gz', 'bin.bz2']
 
     def __init__(self):
         """We don't initialize anything here."""
