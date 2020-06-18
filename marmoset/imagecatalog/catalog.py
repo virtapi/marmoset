@@ -55,3 +55,6 @@ class ImageCatalog:
         else:
             image = None
         return image
+
+    def list_filtered_by(self, filter=None):
+        pass
