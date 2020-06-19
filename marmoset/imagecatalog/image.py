@@ -46,6 +46,8 @@ class Image:
                 parsed_yaml.get("distribution_version", None)
             metadata['architecture'] = parsed_yaml.get("architecture", None)
             metadata['active'] = parsed_yaml.get("active", True)
+            metadata['internal'] = parsed_yaml.get("internal", False)
+            metadata['minimal'] = parsed_yaml.get("minimal", True)
             try:
                 created_at = parsed_yaml.get("created_at", None)
                 created_at = created_at.strftime("%Y-%m-%d %H:%M:%S")
